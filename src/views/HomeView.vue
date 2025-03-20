@@ -1,7 +1,11 @@
 <script setup></script>
 
 <template>
-  <div class="wrapp"></div>
+  <main>
+    <section class="py-auto bg-black">
+      <div class="container mx-auto"></div>
+    </section>
+  </main>
 </template>
 
 <style></style>
