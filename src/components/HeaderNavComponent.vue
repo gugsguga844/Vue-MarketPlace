@@ -1,12 +1,12 @@
 <script setup>
 // import { ref, onMounted } from 'vue'
 // import { ChevronDown, Heart, Menu, ShoppingBag, Search, Store, ShoppingCart, User, X } from 'lucide-vue-next'
-import { Store, Heart, Search, ShoppingCart, User } from 'lucide-vue-next'
+import { Store, Heart, Search, ShoppingCart, User, Menu } from 'lucide-vue-next'
 </script>
 
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg bg-black fixed-top py-2 px-4">
+    <nav class="navbar navbar-expand-lg bg-black py-2 px-4">
       <div class="container-fluid">
         <!-- Toggle Button -->
         <button
@@ -17,7 +17,7 @@ import { Store, Heart, Search, ShoppingCart, User } from 'lucide-vue-next'
           aria-controls="offcanvasNavbar"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <Menu color="white" style="width: 32px; height: 32px" />
         </button>
         <!-- navbar logo -->
         <RouterLink

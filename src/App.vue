@@ -3,9 +3,11 @@ import HeaderNavComponent from './components/HeaderNavComponent.vue'
 </script>
 
 <template>
-  <header><HeaderNavComponent /></header>
+  <HeaderNavComponent />
 
-  <RouterView />
+  <main>
+    <RouterView />
+  </main>
 </template>
 
 <style scoped></style>
