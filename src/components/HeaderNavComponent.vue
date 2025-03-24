@@ -6,7 +6,7 @@ import { Store, Heart, Search, ShoppingCart, User, Menu } from 'lucide-vue-next'
 
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg bg-black py-2 px-4">
+    <nav class="navbar navbar-expand-lg bg-black py-2 px-4 sticky-top">
       <div class="container-fluid">
         <!-- Toggle Button -->
         <button
