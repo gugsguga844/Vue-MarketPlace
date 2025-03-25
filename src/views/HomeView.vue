@@ -11,7 +11,9 @@ const productData = useProductStore()
 
 onMounted(() => {
   categoryData.saveCategories()
+  categoryData.filterCategories()
   productData.saveProducts()
+  productData.filterProducts()
 })
 
 import { Truck, Star, ShoppingBag } from 'lucide-vue-next'
@@ -19,7 +21,7 @@ import { onMounted } from 'vue'
 </script>
 
 <template>
-  <section class="bg-secondary-subtle py-30">
+  <section class="bg-warning-subtle py-30">
     <div class="row container mx-auto">
       <div class="col-12 col-md-6">
         <div class="home-card-title">
@@ -60,8 +62,8 @@ import { onMounted } from 'vue'
       <SectionTitle title-text="Categorias" />
       <div class="row g-4">
         <div
-          class="col-12 col-md-4 col-lg-3"
-          v-for="category in categoryData.categories"
+          class="col-12 col-md-4 col-lg-2"
+          v-for="category in categoryData.filteredCategories"
           :key="category.id"
         >
           <CategoryCard :category-name="category.name" />
@@ -76,13 +78,14 @@ import { onMounted } from 'vue'
       <div class="row g-4">
         <div
           class="col-12 col-md-4 col-lg-3"
-          v-for="product in productData.products"
+          v-for="product in productData.filteredProducts"
           :key="product.id"
         >
           <ProductCardComponent
             :product-name="product.name"
             :product-image="product.image_path"
             :product-price="product.price"
+            :category-name="product.category.name"
           />
         </div>
       </div>

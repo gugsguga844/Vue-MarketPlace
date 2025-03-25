@@ -4,6 +4,9 @@ import { ref } from 'vue'
 
 export const useCategoryStore = defineStore('category', () => {
   const categories = ref([])
+  const filteredCategories = ref([])
+  const startValue = ref(0)
+  const endValue = ref(6)
 
   async function saveCategories() {
     const apiResult = await getCategories()
@@ -12,5 +15,9 @@ export const useCategoryStore = defineStore('category', () => {
     console.log(categories)
   }
 
-  return { saveCategories, categories }
+  function filterCategories() {
+    filteredCategories.value = categories.value.slice(startValue.value, endValue.value)
+  }
+
+  return { saveCategories, categories, filterCategories, filteredCategories }
 })

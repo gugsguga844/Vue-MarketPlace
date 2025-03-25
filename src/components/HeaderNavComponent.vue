@@ -5,8 +5,8 @@ import { Store, Heart, Search, ShoppingCart, User, Menu } from 'lucide-vue-next'
 </script>
 
 <template>
-  <header>
-    <nav class="navbar navbar-expand-lg bg-black py-2 px-4 sticky-top">
+  <header class="sticky-top">
+    <nav class="navbar navbar-expand-lg bg-warning py-2 px-4">
       <div class="container-fluid">
         <!-- Toggle Button -->
         <button
@@ -21,11 +21,11 @@ import { Store, Heart, Search, ShoppingCart, User, Menu } from 'lucide-vue-next'
         </button>
         <!-- navbar logo -->
         <RouterLink
-          class="d-flex link-underline link-underline-opacity-0 text-light fw-bold"
+          class="d-flex text-dark link-underline link-underline-opacity-0 text-light fw-bold"
           to="/"
         >
           <Store style="width: 42px; height: 42px" />
-          <span class="pl-2 display-6">3CMark</span>
+          <span class="pl-2 display-6 fw-bold">3CMark</span>
         </RouterLink>
 
         <!-- Sidebar -->
@@ -62,22 +62,22 @@ import { Store, Heart, Search, ShoppingCart, User, Menu } from 'lucide-vue-next'
                   aria-label="Search"
                 />
               </form>
-              <ul class="d-flex p-0">
+              <ul class="d-flex p-0 fw-bold">
                 <li class="nav-item mx-2">
-                  <a class="nav-link active text-light" aria-current="page" href="#">Ofertas</a>
+                  <a class="nav-link active text-dark" aria-current="page" href="#">Ofertas</a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link text-light" href="#">Cupons</a>
+                  <a class="nav-link text-dark" href="#">Cupons</a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link text-light" href="#">Novidades</a>
+                  <a class="nav-link text-dark" href="#">Novidades</a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link text-light" href="#">Lançamentos</a>
+                  <a class="nav-link text-dark" href="#">Lançamentos</a>
                 </li>
                 <li class="nav-item mx-2 dropdown">
                   <a
-                    class="nav-link dropdown-toggle text-light"
+                    class="nav-link dropdown-toggle text-dark"
                     href="#"
                     role="button"
                     data-bs-toggle="dropdown"
@@ -95,43 +95,48 @@ import { Store, Heart, Search, ShoppingCart, User, Menu } from 'lucide-vue-next'
                   </ul>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link text-light" href="#">Contato</a>
+                  <a class="nav-link text-dark" href="#">Contato</a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link text-light" href="#">Vender</a>
+                  <a class="nav-link text-dark" href="#">Vender</a>
                 </li>
               </ul>
             </ul>
-
-            <ul class="navbar-nav d-flex align-items-center justify-content-end gap-3">
-              <li class="nav-item mx-2">
-                <a class="nav-link active text-light" aria-current="page" href="#"> <Search /></a>
-              </li>
-              <li class="nav-item mx-2">
-                <a class="nav-link active text-light" aria-current="page" href="#"> <Heart /></a>
-              </li>
-              <li class="nav-item mx-2 dropdown">
-                <a
-                  class="nav-link dropdown d-flex align-items-center text-light"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <User />
-                </a>
-                <ul class="dropdown-menu dropdown-menu-lg-start">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li>
-                    <hr class="dropdown-divider" />
-                  </li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-              <li class="nav-item mx-2">
-                <a class="nav-link text-light" href="#"><ShoppingCart /></a>
-              </li>
+            <ul class="d-flex flex-column justify-content-center mb-0">
+              <ul class="navbar-nav d-flex align-items-center justify-content-end gap-3">
+                <li class="nav-item mx-2">
+                  <a class="nav-link active" aria-current="page" href="#"> <Search /></a>
+                </li>
+                <li class="nav-item mx-2">
+                  <a class="nav-link active =" aria-current="page" href="#"> <Heart /></a>
+                </li>
+                <li class="nav-item mx-2 dropdown">
+                  <a
+                    class="nav-link dropdown d-flex align-items-center"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <User />
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-lg-start">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li>
+                      <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item mx-2">
+                  <a class="nav-link" href="#"><ShoppingCart /></a>
+                </li>
+              </ul>
+              <div class="d-flex mt-3 justify-content-center gap-4">
+                <RouterLink class="text-dark fw-bold" to="">Entre</RouterLink>
+                <RouterLink class="text-dark fw-bold" to="register">Cadastre-se</RouterLink>
+              </div>
             </ul>
           </div>
         </div>

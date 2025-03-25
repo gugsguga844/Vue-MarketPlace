@@ -3,7 +3,7 @@ defineProps(['categoryName', 'categoryImage'])
 </script>
 
 <template>
-  <div class="category-card rounded-1 border-1">
+  <div class="category-card rounded-1 shadow-lg">
     <div class="category-card-img">
       <!-- <img alt="" class="" :src="categoryImage" /> -->
       <img alt="" class="" src="../assets/images/eletronics.jpg" />
@@ -14,3 +14,13 @@ defineProps(['categoryName', 'categoryImage'])
     </div>
   </div>
 </template>
+
+<style scoped>
+.category-card {
+  transition: 0.3s;
+}
+
+.category-card:hover {
+  transform: scale(1.05);
+}
+</style>
