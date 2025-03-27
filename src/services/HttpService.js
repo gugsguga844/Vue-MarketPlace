@@ -25,3 +25,12 @@ export async function getProducts() {
     throw error
   }
 }
+
+export async function login(payload) {
+  try {
+    const response = await api.post('/login', payload)
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}

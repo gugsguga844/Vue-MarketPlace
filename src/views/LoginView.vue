@@ -1,6 +1,30 @@
 <script setup>
 import FormButton from '@/components/FormButton.vue'
 import FormInput from '@/components/FormInput.vue'
+import { login } from '@/services/HttpService'
+import { useAuthStore } from '@/stores/auth'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const email = ref('')
+const password = ref('')
+const router = useRouter()
+
+const auth = useAuthStore
+
+async function sendForm() {
+  console.log(email.value)
+  const result = await login({ email: email.value, password: password.value })
+
+  if (result.status === 200) {
+    alert('Login sucesso')
+    auth.saveUser(result.data)
+    router.push('/')
+  } else {
+    alert('Login falhou')
+    router.push('/')
+  }
+}
 </script>
 
 <template>
@@ -9,38 +33,37 @@ import FormInput from '@/components/FormInput.vue'
       <div
         class="whiteCol col-12 col-lg-8 d-flex flex-column justify-content-center align-items-center mt-lg-3 mb-lg-3 bg-light text-center overflow-hidden"
       >
-        <form class="w-100">
-          <h2 class="h1">Cadastre-se</h2>
+        <form @submit.prevent="sendForm" class="w-100">
+          <h2 class="h1 fw-bold">Acesse sua conta</h2>
           <div class="form-inputs my-5">
             <div class="row mb-4">
-              <div class="col-12 col-lg-6">
-                <FormInput form-label="Primeiro nome:" input-for="firstName" input-type="text" />
-              </div>
-              <div class="col-12 col-lg-6">
-                <FormInput form-label="Último nome:" input-for="lastName" input-type="text" />
+              <div class="col-12">
+                <FormInput
+                  label-icon="bi bi-envelope"
+                  form-label="E-mail:"
+                  input-for="email"
+                  input-type="email"
+                  input-placeholder="exemplo@gmail.com"
+                  v-model="email"
+                />
               </div>
             </div>
             <div class="row mb-4">
               <div class="col-12">
-                <FormInput form-label="E-mail:" input-for="name" input-type="text" />
-              </div>
-            </div>
-            <div class="row mb-4">
-              <div class="col-12 col-lg-6">
-                <FormInput form-label="Senha:" input-for="password" input-type="password" />
-              </div>
-              <div class="col-12 col-lg-6">
                 <FormInput
-                  form-label="Confirme sua Senha:"
-                  input-for="confirmPassword"
+                  label-icon="bi bi-lock"
+                  form-label="Senha:"
+                  input-for="password"
                   input-type="password"
+                  input-placeholder="••••••••"
+                  v-model="password"
                 />
               </div>
             </div>
           </div>
-          <FormButton form-button-text="Cadastrar" />
+          <FormButton button-type="submit" form-button-text="Cadastrar" />
           <div class="my-4">
-            <span class="">Ou registre-se com</span>
+            <span class="">Ou entre com</span>
           </div>
           <div class="register-options d-flex justify-content-center gap-4">
             <svg
@@ -90,7 +113,7 @@ import FormInput from '@/components/FormInput.vue'
 @media (min-width: 1024px) {
   .whiteCol {
     border-radius: 0 200px 200px 0;
-    padding: 0 10% 0 10%;
+    padding: 0 15% 0 15%;
   }
 }
 @media (max-width: 1023px) {
