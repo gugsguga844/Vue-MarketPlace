@@ -20,7 +20,12 @@ export const useAuthStore = defineStore(
       isAuthenticated.value = false
     }
 
-    return { token, user, isAuthenticated, saveUser, logout }
+    function registerUser(result) {
+      user.value = result.user
+      isAuthenticated.value = true
+    }
+
+    return { token, user, isAuthenticated, saveUser, logout, registerUser }
   },
   { persist: true },
 )

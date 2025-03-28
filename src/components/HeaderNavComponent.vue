@@ -1,7 +1,10 @@
 <script setup>
 // import { ref, onMounted } from 'vue'
 // import { ChevronDown, Heart, Menu, ShoppingBag, Search, Store, ShoppingCart, User, X } from 'lucide-vue-next'
+import { useAuthStore } from '@/stores/auth'
 import { Store, Heart, Search, ShoppingCart, User, Menu } from 'lucide-vue-next'
+
+const auth = useAuthStore()
 </script>
 
 <template>
@@ -25,7 +28,9 @@ import { Store, Heart, Search, ShoppingCart, User, Menu } from 'lucide-vue-next'
           to="/"
         >
           <Store style="width: 42px; height: 42px" />
-          <span class="pl-2 display-6 fw-bold">3CMark</span>
+          <span class="pl-2 display-6 fw-bold d-flex justify-content-center align-items-center"
+            >3CMark</span
+          >
         </RouterLink>
 
         <!-- Sidebar -->
@@ -36,13 +41,13 @@ import { Store, Heart, Search, ShoppingCart, User, Menu } from 'lucide-vue-next'
           aria-labelledby="offcanvasNavbarLabel"
         >
           <!-- Sidebar Header -->
-          <div class="offcanvas-header text-white border-bottom">
+          <div class="offcanvas-header text-dark border-bottom border-black">
             <RouterLink
-              class="d-flex link-underline link-underline-opacity-0 text-light fw-bold"
+              class="d-flex link-underline link-underline-opacity-0 text-dark fw-bold"
               to="/"
             >
               <Store />
-              <span class="pl-2">3CMarketP</span>
+              <span class="pl-2">3CMark</span>
             </RouterLink>
             <button
               type="button"
@@ -62,7 +67,7 @@ import { Store, Heart, Search, ShoppingCart, User, Menu } from 'lucide-vue-next'
                   aria-label="Search"
                 />
               </form>
-              <ul class="d-flex p-0 fw-bold">
+              <ul class="d-lg-flex p-0 fw-bold">
                 <li class="nav-item mx-2">
                   <a class="nav-link active text-dark" aria-current="page" href="#">Ofertas</a>
                 </li>
@@ -133,9 +138,24 @@ import { Store, Heart, Search, ShoppingCart, User, Menu } from 'lucide-vue-next'
                   <a class="nav-link" href="#"><ShoppingCart /></a>
                 </li>
               </ul>
-              <div class="d-flex mt-3 justify-content-center gap-4">
-                <RouterLink class="text-dark fw-bold" to="">Entre</RouterLink>
+              <div v-if="!auth.isAuthenticated" class="d-flex mt-3 justify-content-center gap-4">
+                <RouterLink class="text-dark fw-bold" to="login">Entre</RouterLink>
                 <RouterLink class="text-dark fw-bold" to="register">Cadastre-se</RouterLink>
+              </div>
+              <div class="dropdown d-flex justify-content-center mt-lg-3" v-else>
+                <button
+                  class="btn border-2 border-black rounded-5 dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Olá, Gustavo
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" @click="auth.logout"> Sair </a></li>
+                </ul>
               </div>
             </ul>
           </div>
@@ -155,7 +175,7 @@ import { Store, Heart, Search, ShoppingCart, User, Menu } from 'lucide-vue-next'
 }
 @media (max-width: 991px) {
   .sidebar {
-    background-color: black;
+    background-color: yellow;
   }
 }
 </style>

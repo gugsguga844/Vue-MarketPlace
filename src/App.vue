@@ -1,9 +1,12 @@
 <script setup>
+import { useRoute } from 'vue-router'
 import HeaderNavComponent from './components/HeaderNavComponent.vue'
+
+const route = useRoute()
 </script>
 
 <template>
-  <!-- <HeaderNavComponent /> -->
+  <HeaderNavComponent v-if="!route.meta.hideNav" />
 
   <main>
     <RouterView />

@@ -1,6 +1,33 @@
 <script setup>
 import FormButton from '@/components/FormButton.vue'
 import FormInput from '@/components/FormInput.vue'
+import { useAuthStore } from '@/stores/auth'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const name = ref('')
+const email = ref('')
+const password = ref('')
+const router = useRouter()
+const auth = useAuthStore()
+
+async function register() {
+  const result = await register({ name: name.value, email: email.value, password: password.value })
+
+  if (result.status === 201) {
+    console.log(result)
+    alert('Login sucesso')
+    auth.registerUser(result.data)
+    router.push({ name: 'home' })
+  } else {
+    alert('Erro')
+    console.log(result.status)
+  }
+}
+
+function redirect() {
+  router.push({ name: 'login' })
+}
 </script>
 
 <template>
@@ -9,12 +36,17 @@ import FormInput from '@/components/FormInput.vue'
       <div
         class="whiteCol col-12 col-lg-8 d-flex flex-column justify-content-center align-items-center mt-lg-3 mb-lg-3 bg-light text-center overflow-hidden"
       >
-        <form class="w-100">
+        <form @submit.prevent="register" class="w-100">
           <h2 class="h1">Cadastre-se</h2>
           <div class="form-inputs my-5">
             <div class="row mb-4">
               <div class="col-12 col-lg-6">
-                <FormInput form-label="Primeiro nome:" input-for="firstName" input-type="text" />
+                <FormInput
+                  v-model="name"
+                  form-label="Primeiro nome:"
+                  input-for="firstName"
+                  input-type="text"
+                />
               </div>
               <div class="col-12 col-lg-6">
                 <FormInput form-label="Último nome:" input-for="lastName" input-type="text" />
@@ -22,12 +54,22 @@ import FormInput from '@/components/FormInput.vue'
             </div>
             <div class="row mb-4">
               <div class="col-12">
-                <FormInput form-label="E-mail:" input-for="name" input-type="text" />
+                <FormInput
+                  v-model="email"
+                  form-label="E-mail:"
+                  input-for="name"
+                  input-type="text"
+                />
               </div>
             </div>
             <div class="row mb-4">
               <div class="col-12 col-lg-6">
-                <FormInput form-label="Senha:" input-for="password" input-type="password" />
+                <FormInput
+                  v-model="password"
+                  form-label="Senha:"
+                  input-for="password"
+                  input-type="password"
+                />
               </div>
               <div class="col-12 col-lg-6">
                 <FormInput
@@ -38,7 +80,7 @@ import FormInput from '@/components/FormInput.vue'
               </div>
             </div>
           </div>
-          <FormButton form-button-text="Cadastrar" />
+          <FormButton button-type="submit" form-button-text="Cadastrar" />
           <div class="my-4">
             <span class="">Ou registre-se com</span>
           </div>
@@ -80,7 +122,7 @@ import FormInput from '@/components/FormInput.vue'
           <h1 class="text-black">Bem-vindo</h1>
           <p>Já possui uma conta em nossa loja?</p>
         </div>
-        <FormButton button-style="blackButton" form-button-text="Entrar" />
+        <FormButton @click="redirect" button-style="blackButton" form-button-text="Entrar" />
       </div>
     </div>
   </div>

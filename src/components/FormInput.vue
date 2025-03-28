@@ -1,5 +1,5 @@
 <script setup>
-defineProps(['labelIcon', 'formLabel', 'inputFor', 'inputType', 'inputPlaceholder', 'vModel'])
+defineProps(['labelIcon', 'formLabel', 'inputFor', 'inputType', 'inputPlaceholder'])
 const model = defineModel()
 </script>
 
@@ -14,7 +14,7 @@ const model = defineModel()
       class="p-2 border-1 border-bottom border-dark-subtle"
       :type="inputFor"
       :placeholder="inputPlaceholder"
-      :v-model="model"
+      v-model="model"
     />
   </div>
 </template>

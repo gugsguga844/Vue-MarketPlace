@@ -34,3 +34,12 @@ export async function login(payload) {
     console.log(error)
   }
 }
+
+export async function register(payload) {
+  try {
+    const response = await api.post('/register', payload)
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}

@@ -10,20 +10,27 @@ const email = ref('')
 const password = ref('')
 const router = useRouter()
 
-const auth = useAuthStore
+const auth = useAuthStore()
 
 async function sendForm() {
   console.log(email.value)
   const result = await login({ email: email.value, password: password.value })
 
   if (result.status === 200) {
+    console.log(result.status)
     alert('Login sucesso')
     auth.saveUser(result.data)
-    router.push('/')
+    router.push({
+      name: 'home',
+    })
   } else {
     alert('Login falhou')
     router.push('/')
   }
+}
+
+function redirect() {
+  router.push({ name: 'register' })
 }
 </script>
 
@@ -61,7 +68,7 @@ async function sendForm() {
               </div>
             </div>
           </div>
-          <FormButton button-type="submit" form-button-text="Cadastrar" />
+          <FormButton button-type="submit" form-button-text="Entrar" />
           <div class="my-4">
             <span class="">Ou entre com</span>
           </div>
@@ -101,9 +108,9 @@ async function sendForm() {
         <img class="mb-4 w-50" src="../assets/images/3clogo.png" />
         <div class="text-center mb-0 mb-lg-5">
           <h1 class="text-black">Bem-vindo</h1>
-          <p>Já possui uma conta em nossa loja?</p>
+          <p>Ainda não possui uma conta em nossa loja?</p>
         </div>
-        <FormButton button-style="blackButton" form-button-text="Entrar" />
+        <FormButton @click="redirect" button-style="blackButton" form-button-text="Cadastre-se" />
       </div>
     </div>
   </div>

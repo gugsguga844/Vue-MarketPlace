@@ -15,11 +15,17 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: RegisterView,
+      meta: {
+        hideNav: true,
+      },
     },
     {
       path: '/login',
       name: 'login',
       component: LoginView,
+      meta: {
+        hideNav: true,
+      },
     },
   ],
 })
