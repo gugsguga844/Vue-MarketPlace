@@ -2,13 +2,13 @@
 // import { ref, onMounted } from 'vue'
 // import { ChevronDown, Heart, Menu, ShoppingBag, Search, Store, ShoppingCart, User, X } from 'lucide-vue-next'
 import { useAuthStore } from '@/stores/auth'
-import { Store, Heart, Search, ShoppingCart, User, Menu } from 'lucide-vue-next'
+import { Store, Heart, Search, ShoppingCart, Menu } from 'lucide-vue-next'
 
 const auth = useAuthStore()
 </script>
 
 <template>
-  <header class="sticky-top">
+  <header class="sticky-top z-3">
     <nav class="navbar navbar-expand-lg bg-warning py-2 px-4">
       <div class="container-fluid">
         <!-- Toggle Button -->
@@ -115,25 +115,6 @@ const auth = useAuthStore()
                 <li class="nav-item mx-2">
                   <a class="nav-link active =" aria-current="page" href="#"> <Heart /></a>
                 </li>
-                <li class="nav-item mx-2 dropdown">
-                  <a
-                    class="nav-link dropdown d-flex align-items-center"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <User />
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-lg-start">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li>
-                      <hr class="dropdown-divider" />
-                    </li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
-                </li>
                 <li class="nav-item mx-2">
                   <a class="nav-link" href="#"><ShoppingCart /></a>
                 </li>
@@ -151,10 +132,30 @@ const auth = useAuthStore()
                 >
                   Olá, Gustavo
                 </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" @click="auth.logout"> Sair </a></li>
+                <ul class="dropdown-menu dropdown-menu-lg-start p-0 overflow-hidden">
+                  <li class="border-bottom border-black">
+                    <RouterLink to="profile" class="dropdown-item fw-bold py-2" href="#"
+                      ><i class="bi bi-person-circle mr-1"></i> Minha Conta</RouterLink
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item py-2" href="#"
+                      ><i class="bi bi-bag-check-fill mr-1"></i> Meus Pedidos</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item py-2" href="#"
+                      ><i class="bi bi-arrow-left-right mr-1"></i> Trocas</a
+                    >
+                  </li>
+                  <li class="border-top border-black text-center overflow-hidden">
+                    <a
+                      class="dropdown-item py-2 fw-bold text-danger cursor-pointer"
+                      @click="auth.logout"
+                    >
+                      Sair
+                    </a>
+                  </li>
                 </ul>
               </div>
             </ul>

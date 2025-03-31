@@ -1,10 +1,37 @@
 import axios from 'axios'
 
-const baseUrl = 'http://34.138.111.33:8000/'
+const baseUrl = 'http://35.196.79.227:8000/'
 
 const api = axios.create({
   baseURL: baseUrl,
 })
+
+export async function login(payload) {
+  try {
+    const response = await api.post('/login', payload)
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function register(payload) {
+  try {
+    const response = await api.post('/register', payload)
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function getUser() {
+  try {
+    const response = await api.get('/users/me')
+    return response.data
+  } catch (error) {
+    return error
+  }
+}
 
 export async function getCategories() {
   try {
@@ -23,23 +50,5 @@ export async function getProducts() {
   } catch (error) {
     console.error('Erro ao buscar itens: ', error)
     throw error
-  }
-}
-
-export async function login(payload) {
-  try {
-    const response = await api.post('/login', payload)
-    return response
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-export async function register(payload) {
-  try {
-    const response = await api.post('/register', payload)
-    return response
-  } catch (error) {
-    console.log(error)
   }
 }

@@ -1,6 +1,7 @@
 <script setup>
 import FormButton from '@/components/FormButton.vue'
 import FormInput from '@/components/FormInput.vue'
+import { register } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -11,7 +12,7 @@ const password = ref('')
 const router = useRouter()
 const auth = useAuthStore()
 
-async function register() {
+async function sendRegister() {
   const result = await register({ name: name.value, email: email.value, password: password.value })
 
   if (result.status === 201) {
@@ -36,7 +37,7 @@ function redirect() {
       <div
         class="whiteCol col-12 col-lg-8 d-flex flex-column justify-content-center align-items-center mt-lg-3 mb-lg-3 bg-light text-center overflow-hidden"
       >
-        <form @submit.prevent="register" class="w-100">
+        <form @submit.prevent="sendRegister" class="w-100">
           <h2 class="h1">Cadastre-se</h2>
           <div class="form-inputs my-5">
             <div class="row mb-4">
