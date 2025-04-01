@@ -4,12 +4,10 @@ import ProfileNav from '@/components/ProfileNav.vue'
 
 <template>
   <div class="container-fluid overflow-hidden z-0">
-    <div class="row vh-100 overflow-auto">
+    <div class="row overflow-auto">
       <ProfileNav />
-      <div class="col d-flex flex-column h-sm-100">
-        <main class="row overflow-auto">
-          <RouterView />
-        </main>
+      <div class="col offset-2 d-flex flex-column h-sm-100 py-4 px-5">
+        <RouterView />
       </div>
     </div>
   </div>

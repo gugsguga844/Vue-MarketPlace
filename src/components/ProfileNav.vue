@@ -5,9 +5,11 @@ const auth = useAuthStore()
 </script>
 
 <template>
-  <div class="col-12 col-sm-3 col-xl-3 bg-warning-subtle px-sm-2 px-0 d-flex sticky-top z-0">
+  <div
+    class="col-12 fixed vh-100 col-sm-2 col-xl-2 bg-warning-subtle px-sm-2 px-0 d-flex z-0 overflow-hidden"
+  >
     <div
-      class="d-flex flex-column flex-row align-items-center align-items-sm-start px-3 pt-2 text-white w-100"
+      class="d-flex flex-column flex-row align-items-center align-items-sm-start px-2 pt-2 text-white w-100"
     >
       <a
         href="/"
@@ -23,63 +25,63 @@ const auth = useAuthStore()
         </div>
       </a>
       <ul
-        class="nav nav-pills flex-sm-column flex-row flex-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-sm-auto mb-0 justify-content-center align-items-center align-items-sm-start"
+        class="nav nav-pills w-100 flex-sm-column flex-row flex-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-sm-auto mb-0 justify-content-center align-items-center align-items-sm-start"
         id="menu"
       >
         <li class="nav-item">
-          <a href="#" class="nav-link px-sm-0 px-2">
-            <i class="fs-5 bi-house"></i
-            ><span class="ms-2 d-none d-sm-inline">Informações Pessoais</span>
-          </a>
+          <RouterLink to="profile/personalData" href="#" class="nav-link px-sm-0 px-2">
+            <i class="fs-5 bi-house"></i><span class="ms-2 d-none d-sm-inline">Dados Pessoais</span>
+          </RouterLink>
         </li>
-        <li>
-          <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-sm-0 px-2">
+        <li class="nav-item">
+          <RouterLink href="#submenu1" data-bs-toggle="collapse" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-box"></i>
             <span class="ms-2 d-none d-sm-inline">Meus Pedidos</span>
-          </a>
+          </RouterLink>
         </li>
-        <li>
-          <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-sm-0 px-2">
+        <li class="nav-item">
+          <RouterLink href="#submenu1" data-bs-toggle="collapse" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-arrow-left-right"></i>
             <span class="ms-2 d-none d-sm-inline">Trocas Efetuadas</span>
-          </a>
+          </RouterLink>
         </li>
 
-        <li>
-          <a href="#" class="nav-link px-sm-0 px-2">
+        <li class="nav-item">
+          <RouterLink href="#" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-geo-alt"></i
-            ><span class="ms-2 d-none d-sm-inline">Endereços</span></a
+            ><span class="ms-2 d-none d-sm-inline">Endereços</span></RouterLink
           >
         </li>
-        <li>
-          <a href="#" class="nav-link px-sm-0 px-2">
+        <li class="nav-item">
+          <RouterLink href="#" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-credit-card"></i
-            ><span class="ms-2 d-none d-sm-inline">Pagamentos</span></a
-          >
+            ><span class="ms-2 d-none d-sm-inline">Pagamentos</span>
+          </RouterLink>
         </li>
-        <li>
-          <a href="#" class="nav-link px-sm-0 px-2">
+        <li class="nav-item">
+          <RouterLink href="#" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-heart"></i
             ><span class="ms-2 d-none d-sm-inline">Lista de Desejos</span>
-          </a>
+          </RouterLink>
         </li>
-        <li>
-          <a href="#" class="nav-link px-sm-0 px-2">
+        <li class="nav-item">
+          <RouterLink href="#" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-lock"></i><span class="ms-2 d-none d-sm-inline">Segurança</span>
-          </a>
+          </RouterLink>
         </li>
-        <li>
-          <a href="#" class="nav-link px-sm-0 px-2">
+        <li class="nav-item">
+          <RouterLink href="#" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-question-circle"></i
             ><span class="ms-2 d-none d-sm-inline">Ajuda</span>
-          </a>
+          </RouterLink>
+        </li>
+        <li class="nav-item">
+          <RouterLink href="#" class="nav-link px-sm-0 px-2 text-danger fw-bold">
+            <i class="fs-5 bi bi-box-arrow-right"></i>
+            <span class="ms-2 d-sm-inline">Sair</span>
+          </RouterLink>
         </li>
       </ul>
-      <div class="py-sm-4 mt-sm-auto ms-auto ms-sm-0 flex-shrink-1">
-        <a href="#" class="nav-link px-sm-0 px-2 text-danger fw-bold">
-          <i class="fs-5 bi bi-box-arrow-right"></i><span class="ms-2 d-sm-inline">Sair</span>
-        </a>
-      </div>
     </div>
   </div>
 </template>
@@ -93,6 +95,13 @@ const auth = useAuthStore()
   color: black;
 }
 
+.nav-link:hover {
+  background-color: rgb(0, 0, 0, 0.2);
+}
+
+.nav-item {
+  width: 100%;
+}
 .fs-half {
   font-size: 0.8rem;
 }

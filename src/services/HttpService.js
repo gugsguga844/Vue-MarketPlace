@@ -24,9 +24,9 @@ export async function register(payload) {
   }
 }
 
-export async function getUser() {
+export async function updateUser(payload) {
   try {
-    const response = await api.get('/users/me')
+    const response = await api.put('/users/me', payload)
     return response.data
   } catch (error) {
     return error

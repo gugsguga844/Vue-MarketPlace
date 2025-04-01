@@ -11,7 +11,8 @@ const model = defineModel()
     <input
       autofocus
       :id="inputFor"
-      class="p-2 border-1 border-bottom border-dark-subtle"
+      :name="inputFor"
+      class="p-2 border-1 border-bottom rounded-2 border-dark-subtle"
       :type="inputFor"
       :placeholder="inputPlaceholder"
       v-model="model"

@@ -1,9 +1,9 @@
 <script setup>
-defineProps(['buttonText', 'buttonStyle'])
+defineProps(['buttonText', 'buttonStyle', 'buttonType'])
 </script>
 
 <template>
-  <button class="py-2 px-8" :class="buttonStyle">{{ buttonText }}</button>
+  <button type="buttonType" class="py-2 px-8" :class="buttonStyle">{{ buttonText }}</button>
 </template>
 
 <style scoped>
@@ -15,6 +15,11 @@ defineProps(['buttonText', 'buttonStyle'])
 .buttonWhite {
   background-color: white;
   color: black;
+}
+
+.buttonDelete {
+  background-color: white;
+  color: red;
 }
 
 .bigRadius {

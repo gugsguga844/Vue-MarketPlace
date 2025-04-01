@@ -120,8 +120,8 @@ const auth = useAuthStore()
                 </li>
               </ul>
               <div v-if="!auth.isAuthenticated" class="d-flex mt-3 justify-content-center gap-4">
-                <RouterLink class="text-dark fw-bold" to="login">Entre</RouterLink>
-                <RouterLink class="text-dark fw-bold" to="register">Cadastre-se</RouterLink>
+                <RouterLink class="text-dark fw-bold" to="/login">Entre</RouterLink>
+                <RouterLink class="text-dark fw-bold" to="/register">Cadastre-se</RouterLink>
               </div>
               <div class="dropdown d-flex justify-content-center mt-lg-3" v-else>
                 <button
