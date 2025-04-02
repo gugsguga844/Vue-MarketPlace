@@ -21,7 +21,7 @@ import { onMounted } from 'vue'
 </script>
 
 <template>
-  <section class="bg-warning-subtle py-30">
+  <section class="bg-warning-subtle py-20">
     <div class="row container mx-auto">
       <div class="col-12 col-md-6">
         <div class="home-card-title">

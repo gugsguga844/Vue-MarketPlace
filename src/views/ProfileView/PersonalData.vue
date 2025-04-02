@@ -3,20 +3,19 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
 import FormInput from '@/components/FormInput.vue'
 import { updateUser } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
-import { useUserStore } from '@/stores/UserStore'
 import { ref } from 'vue'
 
 const auth = useAuthStore()
-const user = useUserStore()
 const name = ref('')
 const email = ref('')
 
 async function update() {
-  const result = await updateUser({ name: name.value, email: name.value })
+  const token = auth.token
+  const result = await updateUser({ name: name.value, email: email.value }, token)
 
   if (result.status === 200) {
     alert('Login sucesso')
-    user.saveUpdatedUser(result.data)
+    auth.saveUpdatedUser(result.data)
   }
 }
 </script>

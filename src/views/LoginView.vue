@@ -9,6 +9,7 @@ import { useRouter } from 'vue-router'
 const email = ref('')
 const password = ref('')
 const router = useRouter()
+const remember = ref(false)
 
 const auth = useAuthStore()
 
@@ -20,9 +21,13 @@ async function sendForm() {
     console.log(result.status)
     alert('Login sucesso')
     auth.saveUser(result.data)
+
     router.push({
       name: 'home',
     })
+    if (remember.value) {
+      auth.rememberUser = true
+    }
   } else {
     alert('Login falhou')
     router.push('/')
@@ -66,6 +71,13 @@ function redirect() {
                   v-model="password"
                 />
               </div>
+            </div>
+            <div class="d-flex mt-4 justify-content-between">
+              <div class="rememberMe">
+                <input type="checkbox" name="remember" v-model="remember" id="remember" />
+                <label class="ml-1" for="remember">Permanecer Conectado</label>
+              </div>
+              <RouterLink to="/" class="passwordReset"> Esqueci minha senha </RouterLink>
             </div>
           </div>
           <FormButton button-type="submit" form-button-text="Entrar" />

@@ -4,6 +4,8 @@ import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
 import ProfileView from '@/views/ProfileView/ProfileView.vue'
 import PersonalData from '@/views/ProfileView/PersonalData.vue'
+import { useAuthStore } from '@/stores/auth'
+import ProfileAddresses from '@/views/ProfileView/ProfileAddresses.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,9 +42,27 @@ const router = createRouter({
           name: 'personalData',
           component: PersonalData,
         },
+        {
+          path: 'addresses',
+          anme: 'addresses',
+          component: ProfileAddresses,
+        },
       ],
+      meta: {
+        requiresAuth: true,
+      },
     },
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  const auth = useAuthStore()
+
+  if (to.meta.requiresAuth && !auth.isAuthenticated) {
+    next({ name: 'home' })
+  } else {
+    next()
+  }
 })
 
 export default router

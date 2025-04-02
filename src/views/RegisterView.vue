@@ -1,7 +1,7 @@
 <script setup>
 import FormButton from '@/components/FormButton.vue'
 import FormInput from '@/components/FormInput.vue'
-import { register } from '@/services/HttpService'
+import { login, register } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -13,16 +13,28 @@ const router = useRouter()
 const auth = useAuthStore()
 
 async function sendRegister() {
-  const result = await register({ name: name.value, email: email.value, password: password.value })
+  const registerResult = await register({
+    name: name.value,
+    email: email.value,
+    password: password.value,
+  })
 
-  if (result.status === 201) {
-    console.log(result)
-    alert('Login sucesso')
-    auth.registerUser(result.data)
-    router.push({ name: 'home' })
+  if (registerResult.status === 201) {
+    console.log(registerResult)
+    alert('Usuário cadastrado com sucesso')
+
+    const loginResult = await login({ email: email.value, password: password.value })
+    if (loginResult.status === 200) {
+      auth.saveUser(loginResult.data)
+      router.push({
+        name: 'home',
+      })
+    } else {
+      console.log(loginResult.status)
+    }
   } else {
     alert('Erro')
-    console.log(result.status)
+    console.log(registerResult.status)
   }
 }
 
@@ -58,7 +70,7 @@ function redirect() {
                 <FormInput
                   v-model="email"
                   form-label="E-mail:"
-                  input-for="name"
+                  input-for="email"
                   input-type="text"
                 />
               </div>

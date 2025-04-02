@@ -29,7 +29,7 @@ const auth = useAuthStore()
         id="menu"
       >
         <li class="nav-item">
-          <RouterLink to="profile/personalData" href="#" class="nav-link px-sm-0 px-2">
+          <RouterLink to="personalData" href="#" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi-house"></i><span class="ms-2 d-none d-sm-inline">Dados Pessoais</span>
           </RouterLink>
         </li>
@@ -47,7 +47,7 @@ const auth = useAuthStore()
         </li>
 
         <li class="nav-item">
-          <RouterLink href="#" class="nav-link px-sm-0 px-2">
+          <RouterLink to="addresses" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-geo-alt"></i
             ><span class="ms-2 d-none d-sm-inline">Endereços</span></RouterLink
           >

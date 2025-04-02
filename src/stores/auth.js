@@ -7,11 +7,16 @@ export const useAuthStore = defineStore(
     const token = ref(null)
     const user = ref({})
     const isAuthenticated = ref(false)
+    const rememberUser = ref(false)
 
     function saveUser(result) {
       user.value = result.user
       isAuthenticated.value = true
       token.value = result.token
+    }
+
+    function saveUpdatedUser(result) {
+      user.value = result.user
     }
 
     function logout() {
@@ -20,12 +25,20 @@ export const useAuthStore = defineStore(
       isAuthenticated.value = false
     }
 
-    function registerUser(result) {
-      user.value = result.user
-      isAuthenticated.value = true
+    function renewToken(newToken) {
+      token.value = newToken
     }
 
-    return { token, user, isAuthenticated, saveUser, logout, registerUser }
+    return {
+      token,
+      user,
+      isAuthenticated,
+      rememberUser,
+      saveUser,
+      saveUpdatedUser,
+      logout,
+      renewToken,
+    }
   },
   { persist: true },
 )
