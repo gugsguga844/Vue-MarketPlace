@@ -6,19 +6,6 @@ const api = axios.create({
   baseURL: baseUrl,
 })
 
-export async function verifyToken(token) {
-  try {
-    const response = await api.get('/verify-token', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    return response
-  } catch (error) {
-    return error.response
-  }
-}
-
 export async function login(payload) {
   try {
     const response = await api.post('/login', payload)
@@ -37,15 +24,29 @@ export async function register(payload) {
   }
 }
 
-export async function renewToken(token) {
+export async function verifyToken(token) {
   try {
-    const response = await api.post('/renew-token', token)
+    const response = await api.get('/verify-token', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error.response
+  }
+}
+
+export async function renewToken(payload) {
+  try {
+    const response = await api.post('/renew-token', payload)
     return response
   } catch (error) {
     return error
   }
 }
 
+/* User endpoints */
 export async function updateUser(payload, token) {
   try {
     const response = await api.put('/users/me', payload, {
@@ -59,6 +60,30 @@ export async function updateUser(payload, token) {
   }
 }
 
+export async function deleteUser(token) {
+  try {
+    const response = await api.delete('/users/me', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+/* Address endpoints */
+export async function getAdresses() {
+  try {
+    const response = await api.get('/addresses/')
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+/* Category endpoints */
 export async function getCategories() {
   try {
     const response = await api.get('/categories')

@@ -1,7 +1,7 @@
 <script setup>
 import ButtonComponent from '@/components/ButtonComponent.vue'
 import FormInput from '@/components/FormInput.vue'
-import { updateUser } from '@/services/HttpService'
+import { deleteUser, updateUser } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
 
@@ -11,11 +11,25 @@ const email = ref('')
 
 async function update() {
   const token = auth.token
-  const result = await updateUser({ name: name.value, email: email.value }, token)
+  const result = await updateUser(
+    { name: name.value || auth.user.name, email: email.value || auth.user.email },
+    token,
+  )
 
   if (result.status === 200) {
     alert('Login sucesso')
+    console.log(result.data)
     auth.saveUpdatedUser(result.data)
+  }
+}
+
+async function deleteAccount() {
+  const result = await deleteUser(auth.token)
+
+  if (result.status === 204) {
+    console.log(result.status)
+    alert('Usuario Deletado')
+    auth.logout()
   }
 }
 </script>
@@ -72,6 +86,7 @@ async function update() {
     <div class="row mt-5">
       <div class="col-12 d-flex justify-content-between">
         <ButtonComponent
+          @click.prevent="deleteAccount"
           class="border-1"
           button-style="buttonDelete bigRadius"
           button-text="Excluir Conta"

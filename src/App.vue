@@ -12,16 +12,17 @@ const auth = useAuthStore()
 onMounted(async () => {
   console.log('Token antes da verificação:', auth.token)
   console.log(auth.rememberUser)
+  console.log(auth.user)
+  console.log(auth.isAuthenticated)
 
   if (auth.token) {
     const response = await verifyToken(auth.token)
 
-    if (response.status !== 200) {
-      if (auth.rememberUser == true) {
-        const response = await renewToken(auth.token)
-        if (response.status === 200) {
-          auth.renewToken(response.data)
-        }
+    if (response.status !== 200 && auth.rememberUser == true) {
+      const renewResponse = await renewToken(auth.token)
+
+      if (renewResponse.status === 200) {
+        auth.renewToken(renewResponse.data)
       } else {
         auth.logout()
       }

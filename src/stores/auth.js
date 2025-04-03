@@ -9,6 +9,13 @@ export const useAuthStore = defineStore(
     const isAuthenticated = ref(false)
     const rememberUser = ref(false)
 
+    console.log('Carregando auth store:', {
+      token: token.value,
+      user: user.value,
+      isAuthenticated: isAuthenticated.value,
+      rememberUser: rememberUser.value,
+    })
+
     function saveUser(result) {
       user.value = result.user
       isAuthenticated.value = true
@@ -16,13 +23,14 @@ export const useAuthStore = defineStore(
     }
 
     function saveUpdatedUser(result) {
-      user.value = result.user
+      user.value = result
     }
 
     function logout() {
       token.value = null
       user.value = {}
       isAuthenticated.value = false
+      rememberUser.value = false
     }
 
     function renewToken(newToken) {
@@ -40,5 +48,7 @@ export const useAuthStore = defineStore(
       renewToken,
     }
   },
-  { persist: true },
+  {
+    persist: true,
+  },
 )

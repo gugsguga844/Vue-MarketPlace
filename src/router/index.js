@@ -6,6 +6,7 @@ import ProfileView from '@/views/ProfileView/ProfileView.vue'
 import PersonalData from '@/views/ProfileView/PersonalData.vue'
 import { useAuthStore } from '@/stores/auth'
 import ProfileAddresses from '@/views/ProfileView/ProfileAddresses.vue'
+import AddModeratorView from '@/views/ProfileView/AddModeratorView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,8 +45,13 @@ const router = createRouter({
         },
         {
           path: 'addresses',
-          anme: 'addresses',
+          name: 'addresses',
           component: ProfileAddresses,
+        },
+        {
+          path: 'addModerator',
+          name: 'addModerator',
+          component: AddModeratorView,
         },
       ],
       meta: {
@@ -55,7 +61,7 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const auth = useAuthStore()
 
   if (to.meta.requiresAuth && !auth.isAuthenticated) {
