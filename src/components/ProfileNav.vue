@@ -6,14 +6,14 @@ const auth = useAuthStore()
 
 <template>
   <div
-    class="col-12 fixed vh-100 col-sm-2 col-xl-2 bg-warning-subtle px-sm-2 px-0 d-flex z-0 overflow-hidden"
+    class="col-12 fixed vh-100 col-sm-2 col-xl-2 border-1 border-top-0 border-secondary-subtle px-sm-2 px-0 d-flex z-0 overflow-hidden"
   >
     <div
       class="d-flex flex-column flex-row align-items-center align-items-sm-start px-2 pt-2 text-white w-100"
     >
       <a
         href="/"
-        class="d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-dark text-decoration-none"
+        class="d-flex align-items-center pb-sm-3 mb-md-0 mt-lg-3 me-md-auto text-dark text-decoration-none"
       >
         <i class="bi bi-person-circle mb-0 mr-2 h1 h-100 d-flex align-items-center"></i>
         <div class="d-flex flex-column h-100 justify-content-center">
@@ -21,7 +21,7 @@ const auth = useAuthStore()
             >{{ auth.user.name }}
             <span class="d-none d-sm-inline"><!-- Se quiser add algo so p desktop --></span>
           </span>
-          <span class="fs-half">{{ auth.user.email }}</span>
+          <span class="fs-half text-secondary">{{ auth.user.email }}</span>
         </div>
       </a>
       <ul

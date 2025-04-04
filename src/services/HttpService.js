@@ -74,9 +74,13 @@ export async function deleteUser(token) {
 }
 
 /* Address endpoints */
-export async function getAdresses() {
+export async function getAdresses(token) {
   try {
-    const response = await api.get('/addresses/')
+    const response = await api.get('/addresses/', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     return response
   } catch (error) {
     return error

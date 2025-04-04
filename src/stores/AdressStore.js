@@ -7,8 +7,9 @@ export const useAddressStore = defineStore(
   () => {
     const addresses = ref([])
 
-    async function saveAddresses() {
-      addresses.value = await getAdresses()
+    async function saveAddresses(token) {
+      const response = await getAdresses(token)
+      addresses.value = response.data
     }
 
     return { addresses, saveAddresses }

@@ -133,7 +133,7 @@ const auth = useAuthStore()
                   Olá, Gustavo
                 </button>
                 <ul class="dropdown-menu dropdown-menu-lg-start p-0 overflow-hidden">
-                  <li class="border-bottom border-black">
+                  <li class="border-bottom border-secondary-subtle">
                     <RouterLink to="profile" class="dropdown-item fw-bold py-2" href="#"
                       ><i class="bi bi-person-circle mr-1"></i> Minha Conta</RouterLink
                     >
@@ -148,7 +148,7 @@ const auth = useAuthStore()
                       ><i class="bi bi-arrow-left-right mr-1"></i> Trocas</a
                     >
                   </li>
-                  <li class="border-top border-black text-center overflow-hidden">
+                  <li class="border-top border-secondary-subtle text-center overflow-hidden">
                     <a
                       class="dropdown-item py-2 fw-bold text-danger cursor-pointer"
                       @click="auth.logout"

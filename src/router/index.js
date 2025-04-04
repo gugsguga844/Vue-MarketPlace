@@ -7,6 +7,7 @@ import PersonalData from '@/views/ProfileView/PersonalData.vue'
 import { useAuthStore } from '@/stores/auth'
 import ProfileAddresses from '@/views/ProfileView/ProfileAddresses.vue'
 import AddModeratorView from '@/views/ProfileView/AddModeratorView.vue'
+import AddAddress from '@/views/ProfileView/AddAddress.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +53,11 @@ const router = createRouter({
           path: 'addModerator',
           name: 'addModerator',
           component: AddModeratorView,
+        },
+        {
+          path: 'addAddress',
+          name: 'addAddress',
+          component: AddAddress,
         },
       ],
       meta: {
