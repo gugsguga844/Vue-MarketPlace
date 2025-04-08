@@ -6,6 +6,7 @@ const api = axios.create({
   baseURL: baseUrl,
 })
 
+/* Auth endpoints */
 export async function login(payload) {
   try {
     const response = await api.post('/login', payload)
@@ -77,6 +78,32 @@ export async function deleteUser(token) {
 export async function getAdresses(token) {
   try {
     const response = await api.get('/addresses/', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export async function createAddress(payload, token) {
+  try {
+    const response = await api.post('/addresses/', payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export async function deleteAddress(id, token) {
+  try {
+    const response = await api.delete(`/addresses/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

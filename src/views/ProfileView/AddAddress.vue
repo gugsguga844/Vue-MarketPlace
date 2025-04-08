@@ -1,28 +1,86 @@
 <script setup>
 import ButtonComponent from '@/components/ButtonComponent.vue'
 import FormInput from '@/components/FormInput.vue'
+import FormSelect from '@/components/FormSelect.vue';
+import { getCep } from '@/services/AddressService';
+import { createAddress } from '@/services/HttpService';
+import { useAddressStore } from '@/stores/AdressStore';
+import { useAuthStore } from '@/stores/auth';
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const auth = useAuthStore()
+const address = useAddressStore()
+const router = useRouter()
+
+const street = ref('')
+const number = ref('')
+const zip = ref('')
+const city = ref('')
+const state = ref('')
+const country = ref('')
+
+async function saveAddress() {
+  const token = auth.token
+  const response = await createAddress({street: street.value, number: number.value, zip: zip.value, city: city.value, state: state.value, country: country.value}, token)
+
+  if (response.status === 201){
+    router.back()
+  } else {
+    alert('Erro ao criar endereço')
+  }
+}
+
+async function searchCep() {
+  const response = await getCep(zip.value)
+
+  if (response.status === 200) {
+    street.value = response.data.street
+    city.value = response.data.city
+    state.value = response.data.state
+    country.value = response.data.country
+  } else {
+    alert('Erro ao buscar CEP')
+    console.log(response.status)
+  }
+}
+
+onMounted(() => {
+  address.saveCountries()
+})
 </script>
 
 <template>
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="fw-bold m-0">Adicionar Endereço</h4>
-    <ButtonComponent button-style="buttonBlack smallRadius" button-text="+ Adicionar Endereço" />
+    <ButtonComponent button-style="buttonYellow" button-text="Voltar" />
   </div>
 
-  <div class="container-fluid border-1 border-dark border-opacity-10 rounded-1">
+  <form @submit.prevent="saveAddress" class="container-fluid border-2 border-dark border-opacity-10 rounded-1">
     <div class="title-info m-3">
       <h4 class="fw-bold">Informações do Endereço</h4>
       <p>Preencha os dados do seu novo endereço de entrega</p>
 
       <div class="row mb-4">
+        <div class="col-12">
+          <FormInput
+            input-for="street"
+            input-type="text"
+            form-label="Nome do Endereço:"
+            input-placeholder="Minha Casa"
+          />
+        </div>
+      </div>
+
+      <div class="row mb-4">
         <div class="col-12 col-lg-12 d-flex">
           <div class="addressType px-2">
             <input type="radio" name="addressType" id="addressType1" value="residential" />
-            <label class="ml-1 form-check-label" for="addressType1">Residencial</label>
+            <label class="ml-1 form-check-label" for="addressType1"><i class="bi bi-house-door"></i> Residencial</label>
           </div>
           <div class="addressType px-2">
             <input type="radio" name="addressType" id="addressType2" value="commercial" />
-            <label class="ml-1 form-check-label" for="addressType2">Comercial</label>
+            <label class="ml-1 form-check-label" for="addressType2"><i class="bi bi-building"></i> Comercial</label>
           </div>
           <div class="addressType px-2">
             <input type="radio" name="addressType" id="addressType3" value="other" />
@@ -31,12 +89,34 @@ import FormInput from '@/components/FormInput.vue'
         </div>
       </div>
       <div class="row mb-4">
+        <div class="col-6">
+          <FormSelect
+            input-for="country"
+            form-label="País:"
+            v-model="country"
+            :options="address.countries"
+          />
+        </div>
+        <div class="col-6">
+          <FormInput
+            input-for="zip"
+            input-type="text"
+            form-label="CEP:"
+            input-placeholder="CEP exemplo"
+            v-model="zip"
+          />
+          <button class="btn btn-secondary" @click.prevent="searchCep"><i class="bi bi-search"></i></button>
+        </div>
+      </div>
+
+      <div class="row mb-4">
         <div class="col-12 col-lg-6">
           <FormInput
             input-for="street"
             input-type="text"
             form-label="Rua/Avenida:"
             input-placeholder="Rua exemplo"
+            v-model="street"
           />
         </div>
         <div class="col-12 col-lg-6">
@@ -45,16 +125,18 @@ import FormInput from '@/components/FormInput.vue'
             input-type="text"
             form-label="Número:"
             input-placeholder="Número exemplo"
+            v-model="number"
           />
         </div>
       </div>
       <div class="row mb-4">
-        <div class="col-6">
+        <div class="col-12 col-lg-6">
           <FormInput
-            input-for="zip"
+            input-for="state"
             input-type="text"
-            form-label="CEP:"
-            input-placeholder="CEP exemplo"
+            form-label="Estado:"
+            input-placeholder="Estado"
+            v-model="state"
           />
         </div>
         <div class="col-6">
@@ -63,38 +145,21 @@ import FormInput from '@/components/FormInput.vue'
             input-type="text"
             form-label="Cidade:"
             input-placeholder="Cidade exemplo"
-          />
-        </div>
-      </div>
-      <div class="row mb-4">
-        <div class="col-6">
-          <FormInput
-            input-for="state"
-            input-type="text"
-            form-label="Estado:"
-            input-placeholder="Estado"
-          />
-        </div>
-        <div class="col-6">
-          <FormInput
-            input-for="country"
-            input-type="text"
-            form-label="Estado:"
-            input-placeholder="País"
+            v-model="city"
           />
         </div>
       </div>
       <div class="row mb-4">
         <div class="col-12">
-          <div class="form-check form-switch d-flex align-items-center">
+          <div class="col-12 form-check form-switch d-flex align-items-center p-0">
             <input
-              class="form-check-input border-0 shadow-none"
+              class="form-check-input border-0 shadow-none h3 ms-2"
               type="checkbox"
               role="switch"
               id="switchCheckDefault"
             />
-            <div class="d-flex flex-column">
-              <label class="form-check-label" for="switchCheckDefault"
+            <div class="d-flex flex-column ms-2">
+              <label class="form-check-label fw-bold" for="switchCheckDefault"
                 ><i class="bi bi-star"></i> Definir como endereço padrão</label
               >
               <label class="form-check-label" for="switchCheckDefault"
@@ -112,14 +177,15 @@ import FormInput from '@/components/FormInput.vue'
             button-text="Excluir Conta"
           />
           <ButtonComponent
+            class="border-1"
             button-type="submit"
-            button-style="buttonBlack bigRadius"
+            button-style="buttonWhite bigRadius"
             button-text="Salvar Alterações"
           />
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <style scoped>

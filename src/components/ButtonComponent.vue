@@ -17,6 +17,13 @@ defineProps(['buttonText', 'buttonStyle', 'buttonType'])
   color: black;
 }
 
+.buttonYellow {
+  background-color: #5c90b3;
+  color: #ffffff;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
 .buttonDelete {
   background-color: white;
   color: red;
