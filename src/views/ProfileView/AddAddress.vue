@@ -6,8 +6,9 @@ import { getCep } from '@/services/AddressService';
 import { createAddress } from '@/services/HttpService';
 import { useAddressStore } from '@/stores/AdressStore';
 import { useAuthStore } from '@/stores/auth';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
 
 const auth = useAuthStore()
 const address = useAddressStore()
@@ -19,15 +20,26 @@ const zip = ref('')
 const city = ref('')
 const state = ref('')
 const country = ref('')
+const toast = useToast()
+
+const countryOptions = computed(() => {
+  return address.countries.map(country => ({
+    value: country,
+    label: country
+  }))
+})
 
 async function saveAddress() {
   const token = auth.token
   const response = await createAddress({street: street.value, number: number.value, zip: zip.value, city: city.value, state: state.value, country: country.value}, token)
 
   if (response.status === 201){
+    toast.success('Endereço criado com sucesso')
     router.back()
   } else {
-    alert('Erro ao criar endereço')
+    toast.error('Ocorreu um erro ao salvar os dados.', {
+      timeout: 2500,
+    })
   }
 }
 
@@ -47,6 +59,7 @@ async function searchCep() {
 
 onMounted(() => {
   address.saveCountries()
+  console.log('endereços: ', address.countries)
 })
 </script>
 
@@ -94,18 +107,25 @@ onMounted(() => {
             input-for="country"
             form-label="País:"
             v-model="country"
-            :options="address.countries"
+            :options="countryOptions"
           />
         </div>
         <div class="col-6">
-          <FormInput
-            input-for="zip"
-            input-type="text"
-            form-label="CEP:"
-            input-placeholder="CEP exemplo"
-            v-model="zip"
-          />
-          <button class="btn btn-secondary" @click.prevent="searchCep"><i class="bi bi-search"></i></button>
+          <div class="form-group d-flex flex-column">
+            <label class="text-start fw-bold mb-2" for="zip">CEP:</label>
+            <div class="d-flex gap-2">
+              <input
+                id="zip"
+                type="text"
+                class="form-control p-2 border-1 rounded-2 border-dark-subtle"
+                placeholder="CEP exemplo"
+                v-model="zip"
+              />
+              <button class="btn btn-secondary" @click.prevent="searchCep">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 

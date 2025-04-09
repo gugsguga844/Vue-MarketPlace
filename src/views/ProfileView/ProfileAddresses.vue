@@ -5,11 +5,13 @@ import { useAddressStore } from '@/stores/AdressStore'
 import { useAuthStore } from '@/stores/auth'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
 
 const router = useRouter()
 
 const useAddresses = useAddressStore()
 const auth = useAuthStore()
+const toast = useToast()
 
 function redirect() {
   router.push({ name: 'addAddress' })
@@ -21,7 +23,9 @@ async function removeAddress(address_id) {
 
   if (response.status === 204) {
     useAddresses.removeArrayAddress(address_id)
-    alert('Endereço deletado com sucesso')
+    toast.success('Endereço deletado com sucesso', {
+      timeout: 2500,
+    })
   } else {
     alert('Erro ao deletar endereço')
   }

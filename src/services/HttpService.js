@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'http://35.196.79.227:8000/'
+const baseUrl = import.meta.env.VITE_API_URL
 
 const api = axios.create({
   baseURL: baseUrl,
@@ -64,6 +64,19 @@ export async function updateUser(payload, token) {
 export async function deleteUser(token) {
   try {
     const response = await api.delete('/users/me', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export async function uploadImage(payload, token) {
+  try {
+    const response = await api.put('/users/image', payload, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

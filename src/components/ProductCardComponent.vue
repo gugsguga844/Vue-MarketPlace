@@ -8,8 +8,7 @@ defineProps(['productName', 'productImage', 'productPrice', 'categoryName'])
 <template>
   <div class="product-card rounded-1 shadow-lg bg-white">
     <div class="product-card-img">
-      <!-- <img alt="" class="" :src="productImage" /> -->
-      <img alt="" class="" src="../assets/images/noimage.jpg" />
+      <img alt="" class="" :src="productImage" />
     </div>
     <div class="p-3">
       <div class="product-info d-flex justify-content-between">

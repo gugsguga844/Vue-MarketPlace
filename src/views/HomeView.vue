@@ -14,10 +14,16 @@ onMounted(() => {
   categoryData.filterCategories()
   productData.saveProducts()
   productData.filterProducts()
+  console.log('Pordutos: ', productData.filteredProducts)
 })
 
 import { Truck, Star, ShoppingBag } from 'lucide-vue-next'
 import { onMounted } from 'vue'
+
+function imageURL(path) {
+  const apiURL = import.meta.env.VITE_API_URL
+  return `${apiURL}${path}`
+}
 </script>
 
 <template>
@@ -83,7 +89,7 @@ import { onMounted } from 'vue'
         >
           <ProductCardComponent
             :product-name="product.name"
-            :product-image="product.image_path"
+            :product-image="imageURL(product.image_path)"
             :product-price="product.price"
             :category-name="product.category.name"
           />

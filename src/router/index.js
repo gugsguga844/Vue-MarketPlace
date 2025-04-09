@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
 import ProfileView from '@/views/ProfileView/ProfileView.vue'
-import PersonalData from '@/views/ProfileView/PersonalData.vue'
+import ProfileData from '@/views/ProfileView/ProfileData.vue'
 import { useAuthStore } from '@/stores/auth'
 import ProfileAddresses from '@/views/ProfileView/ProfileAddresses.vue'
 import AddModeratorView from '@/views/ProfileView/AddModeratorView.vue'
@@ -37,12 +37,12 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: ProfileView,
-      redirect: '/profile/personalData',
+      redirect: '/profile/profileData',
       children: [
         {
-          path: 'personalData',
-          name: 'personalData',
-          component: PersonalData,
+          path: 'profileData',
+          name: 'profileData',
+          component: ProfileData,
         },
         {
           path: 'addresses',

@@ -20,7 +20,7 @@ export const useAddressStore = defineStore(
 
     async function saveCountries() {
       const response = await getCountry()
-      countries.value = response.data
+      countries.value = response.data.data.map(item => item.country)
     }
 
     return { addresses, saveAddresses, removeArrayAddress, countries, saveCountries }

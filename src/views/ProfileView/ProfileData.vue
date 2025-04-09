@@ -1,7 +1,7 @@
 <script setup>
 import ButtonComponent from '@/components/ButtonComponent.vue'
 import FormInput from '@/components/FormInput.vue'
-import { deleteUser, updateUser } from '@/services/HttpService'
+import { deleteUser, updateUser, uploadImage } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
 
@@ -32,6 +32,20 @@ async function deleteAccount() {
     auth.logout()
   }
 }
+
+async function chooseImage() {
+  const token = auth.token
+  const result = await uploadImage(auth.user.image_path, token)
+  if (result.status === 200) {
+    console.log(result.data)
+    auth.saveUpdatedUser(result.data)
+  }
+}
+
+function getUserImage(path) {
+  const apiURL = import.meta.env.VITE_API_URL
+  return `${apiURL}${path}`
+}
 </script>
 
 <template>
@@ -49,8 +63,12 @@ async function deleteAccount() {
         <h4 class="m-0">Foto de Perfil</h4>
         <p class="m-0 text-secondary">Atualize sua foto de perfil</p>
       </div>
-      <div class="px-6 text-center align-content-center">
-        <i class="bi bi-person-circle icon-big"></i>
+      <div class="d-flex justify-content-center p-6">
+        <div class="border-1 border-dark-subtle rounded-circle w-30">
+          <img :src="getUserImage(auth.user.image_path)" alt="Foto de Perfil" class="object-fit-cover" />
+          <!-- <img v-else src="@/assets/images/logo.png" alt="Foto de Perfil" class="object-fit-cover" /> -->
+          <input type="file" @change="chooseImage" />
+        </div>
       </div>
     </div>
     <div class="rounded-2 border-1 border-dark-subtle p-6">
