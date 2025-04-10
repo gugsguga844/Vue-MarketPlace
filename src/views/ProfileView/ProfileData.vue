@@ -1,20 +1,19 @@
 <script setup>
 import ButtonComponent from '@/components/ButtonComponent.vue'
 import FormInput from '@/components/FormInput.vue'
-import { deleteUser, updateUser, uploadImage } from '@/services/HttpService'
+import { deleteUser, updateUser } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
 
 const auth = useAuthStore()
 const name = ref('')
 const email = ref('')
+const imageFile = ref('')
+const imageUrl = ref('')
 
 async function update() {
   const token = auth.token
-  const result = await updateUser(
-    { name: name.value || auth.user.name, email: email.value || auth.user.email },
-    token,
-  )
+  const result = await updateUser({ name: name.value || auth.user.name, email: email.value || auth.user.email }, token)
 
   if (result.status === 200) {
     alert('Login sucesso')
@@ -33,18 +32,18 @@ async function deleteAccount() {
   }
 }
 
-async function chooseImage() {
-  const token = auth.token
-  const result = await uploadImage(auth.user.image_path, token)
-  if (result.status === 200) {
-    console.log(result.data)
-    auth.saveUpdatedUser(result.data)
-  }
-}
-
 function getUserImage(path) {
   const apiURL = import.meta.env.VITE_API_URL
   return `${apiURL}${path}`
+}
+
+function handleImageChange(event) {
+  if (imageUrl.value) {
+    URL.revokeObjectURL(imageUrl.value)
+  }
+
+  imageFile.value = event.target.files[0]
+  imageUrl.value = URL.createObjectURL(imageFile.value)
 }
 </script>
 
@@ -64,10 +63,34 @@ function getUserImage(path) {
         <p class="m-0 text-secondary">Atualize sua foto de perfil</p>
       </div>
       <div class="d-flex justify-content-center p-6">
-        <div class="border-1 border-dark-subtle rounded-circle w-30">
-          <img :src="getUserImage(auth.user.image_path)" alt="Foto de Perfil" class="object-fit-cover" />
-          <!-- <img v-else src="@/assets/images/logo.png" alt="Foto de Perfil" class="object-fit-cover" /> -->
-          <input type="file" @change="chooseImage" />
+        <div class="profile-image-container bg-dark position-relative">
+          <img
+            v-if="imageUrl"
+            :src="imageUrl"
+            alt="Foto de Perfil"
+            class="profile-image w-100 h-100 object-fit-cover object-position-center"
+          />
+          <img
+            v-else
+            :src="getUserImage(auth.user.image_path)"
+            alt="Foto de Perfil"
+            class="profile-image w-100 h-100 object-fit-cover object-position-center"
+          />
+          <div class="profile-image-overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center gap-3">
+            <input
+              type="file"
+              class="d-none"
+              id="imageInput"
+              accept=".jpeg, .png"
+              @change="handleImageChange"
+            >
+            <label for="imageInput" class="btn btn-light rounded-circle">
+              <i class="bi bi-camera fs-4"></i>
+            </label>
+            <button class="btn btn-light rounded-circle">
+              <i class="bi bi-trash fs-4"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -127,7 +150,44 @@ function getUserImage(path) {
 </template>
 
 <style scoped>
-.icon-big {
-  font-size: 150px;
+.profile-image-container {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #dee2e6;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.profile-image {
+  transition: opacity 0.3s ease;
+}
+
+.profile-image-container:hover .profile-image {
+  opacity: 0.5;
+}
+
+.profile-image-overlay {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.profile-image-container:hover .profile-image-overlay {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .profile-image-container {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 576px) {
+  .profile-image-container {
+    width: 120px;
+    height: 120px;
+  }
 }
 </style>
