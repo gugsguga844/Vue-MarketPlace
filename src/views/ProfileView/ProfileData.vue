@@ -1,6 +1,7 @@
 <script setup>
 import ButtonComponent from '@/components/ButtonComponent.vue'
 import FormInput from '@/components/FormInput.vue'
+import ImageCropperModal from '@/components/ImageCropperModal.vue'
 import { deleteUser, updateUser } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
@@ -10,6 +11,7 @@ const name = ref('')
 const email = ref('')
 const imageFile = ref('')
 const imageUrl = ref('')
+const showCropper = ref(false)
 
 async function update() {
   const token = auth.token
@@ -44,6 +46,12 @@ function handleImageChange(event) {
 
   imageFile.value = event.target.files[0]
   imageUrl.value = URL.createObjectURL(imageFile.value)
+  showCropper.value = true
+}
+
+function handleCroppedImage(blob) {
+  imageFile.value = blob
+  imageUrl.value = URL.createObjectURL(blob)
 }
 </script>
 
@@ -147,6 +155,13 @@ function handleImageChange(event) {
       </div>
     </div>
   </form>
+
+  <ImageCropperModal
+    :show="showCropper"
+    :image="imageUrl"
+    @close="showCropper = false"
+    @cropped="handleCroppedImage"
+  />
 </template>
 
 <style scoped>
