@@ -2,7 +2,7 @@
 import ButtonComponent from '@/components/ButtonComponent.vue'
 import FormInput from '@/components/FormInput.vue'
 import ImageCropperModal from '@/components/ImageCropperModal.vue'
-import { deleteUser, updateUser } from '@/services/HttpService'
+import { deleteUser, updateUser, uploadImage } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
 
@@ -12,16 +12,52 @@ const email = ref('')
 const imageFile = ref('')
 const imageUrl = ref('')
 const showCropper = ref(false)
+const payload = ref({})
 
-async function update() {
+async function updateProfileImage() {
+  const formData = new FormData()
+  formData.append('image', imageFile.value)
   const token = auth.token
-  const result = await updateUser({ name: name.value || auth.user.name, email: email.value || auth.user.email }, token)
+  const result = await uploadImage(formData, token)
 
   if (result.status === 200) {
-    alert('Login sucesso')
-    console.log(result.data)
-    auth.saveUpdatedUser(result.data)
+    auth.user.image_path = result.data.image_path
+    console.log(auth.user.image_path)
+    alert('Imagem atualizada com sucesso')
   }
+}
+
+function checkChanges() {
+  if (name.value && name.value !== auth.user.name) {
+    payload.value.name = name.value
+  }
+
+  if (email.value && email.value !== auth.user.email) {
+    payload.value.email = email.value
+  }
+
+  return payload.value
+}
+
+async function update() {
+  const changes = checkChanges()
+  console.log('Mudanças: ', changes)
+  const token = auth.token
+
+  if (Object.keys(changes).length > 0) {
+    const result = await updateUser(changes, token)
+
+  if (result.status === 200) {
+      alert('Login sucesso')
+      console.log(result.data)
+      auth.saveUpdatedUser(result.data)
+    }
+  }
+}
+
+function handleSubmit() {
+  update()
+  updateProfileImage()
 }
 
 async function deleteAccount() {
@@ -52,6 +88,7 @@ function handleImageChange(event) {
 function handleCroppedImage(blob) {
   imageFile.value = blob
   imageUrl.value = URL.createObjectURL(blob)
+  console.log(imageFile.value)
 }
 </script>
 
@@ -64,7 +101,7 @@ function handleCroppedImage(blob) {
       to="/"
     />
   </div>
-  <form @submit.prevent="update">
+  <form @submit.prevent="handleSubmit">
     <div class="rounded-2 border-1 border-dark-subtle mb-4">
       <div class="title-info p-6 pb-0">
         <h4 class="m-0">Foto de Perfil</h4>

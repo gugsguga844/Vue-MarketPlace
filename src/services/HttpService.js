@@ -79,6 +79,7 @@ export async function uploadImage(payload, token) {
     const response = await api.put('/users/image', payload, {
       headers: {
         Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
       },
     })
     return response

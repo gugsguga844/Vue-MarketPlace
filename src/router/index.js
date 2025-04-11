@@ -8,6 +8,8 @@ import { useAuthStore } from '@/stores/auth'
 import ProfileAddresses from '@/views/ProfileView/ProfileAddresses.vue'
 import AddModeratorView from '@/views/ProfileView/AddModeratorView.vue'
 import AddAddress from '@/views/ProfileView/AddAddress.vue'
+import ApiChecklist from '@/views/ProfileView/ApiChecklist.vue'
+import ProfileSecurity from '@/views/ProfileView/ProfileSecurity.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +60,16 @@ const router = createRouter({
           path: 'addAddress',
           name: 'addAddress',
           component: AddAddress,
+        },
+        {
+          path: 'apiChecklist',
+          name: 'apiChecklist',
+          component: ApiChecklist,
+        },
+        {
+          path: 'security',
+          name: 'security',
+          component: ProfileSecurity,
         },
       ],
       meta: {

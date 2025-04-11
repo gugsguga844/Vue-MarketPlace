@@ -37,6 +37,11 @@ export const useAuthStore = defineStore(
       token.value = newToken
     }
 
+    function getUserImage() {
+      const apiURL = import.meta.env.VITE_API_URL
+      return `${apiURL}${user.value.image_path}`
+    }
+
     return {
       token,
       user,
@@ -46,6 +51,7 @@ export const useAuthStore = defineStore(
       saveUpdatedUser,
       logout,
       renewToken,
+      getUserImage,
     }
   },
   {

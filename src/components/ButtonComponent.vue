@@ -25,8 +25,12 @@ defineProps(['buttonText', 'buttonStyle', 'buttonType'])
 }
 
 .buttonDelete {
-  background-color: white;
-  color: red;
+  background-color: red;
+  color: white;
+}
+
+.buttonDelete:hover {
+  background-color: #ff2a2a;
 }
 
 .bigRadius {

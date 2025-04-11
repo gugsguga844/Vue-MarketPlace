@@ -15,7 +15,13 @@ const auth = useAuthStore()
         href="/"
         class="d-flex align-items-center pb-sm-3 mb-md-0 mt-lg-3 me-md-auto text-dark text-decoration-none"
       >
-        <i class="bi bi-person-circle mb-0 mr-2 h1 h-100 d-flex align-items-center"></i>
+        <div class="profile-image-container bg-dark position-relative">
+          <img
+            :src="auth.getUserImage()"
+            alt="Foto de Perfil"
+            class="profile-image w-100 h-100 object-fit-cover object-position-center"
+          />
+        </div>
         <div class="d-flex flex-column h-100 justify-content-center">
           <span class="fs-6"
             >{{ auth.user.name }}
@@ -65,7 +71,7 @@ const auth = useAuthStore()
           </RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink href="#" class="nav-link px-sm-0 px-2">
+          <RouterLink to="security" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-lock"></i><span class="ms-2 d-none d-sm-inline">Segurança</span>
           </RouterLink>
         </li>
@@ -79,6 +85,12 @@ const auth = useAuthStore()
           <RouterLink to="addModerator" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-person-add"></i
             ><span class="ms-2 d-none d-sm-inline">Moderador</span>
+          </RouterLink>
+        </li>
+        <li class="nav-item" v-if="auth.user.role === 'ADMIN'">
+          <RouterLink to="apiChecklist" class="nav-link px-sm-0 px-2">
+            <i class="fs-5 bi bi-person-add"></i
+            ><span class="ms-2 d-none d-sm-inline">Checklist</span>
           </RouterLink>
         </li>
         <li class="nav-item">
@@ -108,7 +120,29 @@ const auth = useAuthStore()
 .nav-item {
   width: 100%;
 }
+
 .fs-half {
   font-size: 0.8rem;
+}
+
+.profile-image-container {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 576px) {
+  .profile-image-container {
+    width: 40px;
+    height: 40px;
+  }
 }
 </style>
