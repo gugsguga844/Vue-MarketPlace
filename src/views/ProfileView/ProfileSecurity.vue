@@ -1,11 +1,28 @@
 <script setup>
 import ButtonComponent from '@/components/ButtonComponent.vue';
+import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
+import { deleteUser } from '@/services/HttpService';
+import { useToast } from 'vue-toastification';
 
 const router = useRouter()
+const auth = useAuthStore()
+const toast = useToast()
 
 function redirect() {
   router.push({ name: 'addAddress' })
+}
+
+async function deleteAccount() {
+  const token = auth.token
+  const response = await deleteUser(token)
+  if (response.status === 204) {
+    auth.logout()
+    router.push({ name: 'home' })
+    toast.success('Conta excluída com sucesso')
+  } else {
+    toast.error('Erro ao excluir conta')
+  }
 }
 
 </script>

@@ -115,6 +115,32 @@ export async function createAddress(payload, token) {
   }
 }
 
+export async function getAddress(id, token) {
+  try {
+    const response = await api.get(`/addresses/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export async function updateAddress(id, payload, token) {
+  try {
+    const response = await api.put(`/addresses/${id}`, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
 export async function deleteAddress(id, token) {
   try {
     const response = await api.delete(`/addresses/${id}`, {

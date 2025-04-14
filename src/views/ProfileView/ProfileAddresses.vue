@@ -1,6 +1,6 @@
 <script setup>
 import ButtonComponent from '@/components/ButtonComponent.vue'
-import { deleteAddress } from '@/services/HttpService'
+import { deleteAddress, getAddress } from '@/services/HttpService'
 import { useAddressStore } from '@/stores/AdressStore'
 import { useAuthStore } from '@/stores/auth'
 import { onMounted } from 'vue'
@@ -28,6 +28,16 @@ async function removeAddress(address_id) {
     })
   } else {
     alert('Erro ao deletar endereço')
+  }
+}
+
+async function editAddress(address_id) {
+  const token = auth.token
+  const response = await getAddress(address_id, token)
+
+  if (response.status === 200) {
+    useAddresses.saveAddress(response.data)
+    router.push({ name: 'editAddress', params: { id: address_id } })
   }
 }
 
@@ -68,7 +78,7 @@ onMounted(() => {
                     {{ address.state }}, {{ address.zip }}
                   </p>
                   <div class="buttons d-flex gap-2">
-                    <button class="border-1 border-dark-subtle rounded-3 px-3 fs-7">
+                    <button @click.prevent="editAddress(address.id)" class="border-1 border-dark-subtle rounded-3 px-3 fs-7">
                       <i class="bi bi-pencil-square"></i>
                       <span class=""> Editar</span>
                     </button>

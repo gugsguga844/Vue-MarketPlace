@@ -5,11 +5,13 @@ import { login } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
 
 const email = ref('')
 const password = ref('')
 const router = useRouter()
 const remember = ref(false)
+const toast = useToast()
 
 const auth = useAuthStore()
 
@@ -19,8 +21,8 @@ async function sendForm() {
 
   if (result.status === 200) {
     console.log(result.status)
-    alert('Login sucesso')
     auth.saveUser(result.data)
+    toast.success(`Ótimas compras ${auth.user.name}`)
 
     router.push({
       name: 'home',
@@ -29,8 +31,7 @@ async function sendForm() {
       auth.rememberUser = true
     }
   } else {
-    alert('Login falhou')
-    router.push('/')
+    toast.error('Login falhou')
   }
 }
 

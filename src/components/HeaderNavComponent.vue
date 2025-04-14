@@ -9,7 +9,7 @@ const auth = useAuthStore()
 
 <template>
   <header class="sticky-top z-3">
-    <nav class="navbar navbar-expand-lg bg-warning py-2 px-4">
+    <nav class="navbar navbar-expand-lg py-2 px-4 bg-black">
       <div class="container-fluid">
         <!-- Toggle Button -->
         <button
@@ -24,30 +24,30 @@ const auth = useAuthStore()
         </button>
         <!-- navbar logo -->
         <RouterLink
-          class="d-flex text-dark link-underline link-underline-opacity-0 text-light fw-bold"
+          class="d-flex text-white link-underline link-underline-opacity-0 fw-bold"
           to="/"
         >
-          <Store style="width: 42px; height: 42px" />
+          <img src="../assets/images/f1-logo.png" alt="F1 Logo" style="height: 40px; margin-right: 10px" />
           <span class="pl-2 display-6 fw-bold d-flex justify-content-center align-items-center"
-            >3CMark</span
+            >STORE</span
           >
         </RouterLink>
 
         <!-- Sidebar -->
         <div
-          class="sidebar offcanvas offcanvas-start"
+          class="sidebar offcanvas offcanvas-start bg-dark text-white"
           tabindex="-1"
           id="offcanvasNavbar"
           aria-labelledby="offcanvasNavbarLabel"
         >
           <!-- Sidebar Header -->
-          <div class="offcanvas-header text-dark border-bottom border-black">
+          <div class="offcanvas-header text-white border-bottom border-danger">
             <RouterLink
-              class="d-flex link-underline link-underline-opacity-0 text-dark fw-bold"
+              class="d-flex link-underline link-underline-opacity-0 text-white fw-bold"
               to="/"
             >
-              <Store />
-              <span class="pl-2">3CMark</span>
+              <img src="../assets/images/f1-logo.png" alt="F1 Logo" style="height: 30px; margin-right: 10px" />
+              <span class="pl-2">STORE</span>
             </RouterLink>
             <button
               type="button"
@@ -61,28 +61,28 @@ const auth = useAuthStore()
             <ul class="ul-justify navbar-nav flex-column flex-grow-1 px-3">
               <form class="d-flex p-3 w-75" role="search">
                 <input
-                  class="form-control"
+                  class="form-control bg-dark text-white border-danger"
                   type="search"
-                  placeholder="Search"
+                  placeholder="Pesquisar produtos..."
                   aria-label="Search"
                 />
               </form>
               <ul class="d-lg-flex p-0 fw-bold">
                 <li class="nav-item mx-2">
-                  <a class="nav-link active text-dark" aria-current="page" href="#">Ofertas</a>
+                  <a class="nav-link active text-white" aria-current="page" href="#">Equipes</a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link text-dark" href="#">Cupons</a>
+                  <a class="nav-link text-white" href="#">Pilotos</a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link text-dark" href="#">Novidades</a>
+                  <a class="nav-link text-white" href="#">Circuitos</a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link text-dark" href="#">Lançamentos</a>
+                  <a class="nav-link text-white" href="#">Colecionáveis</a>
                 </li>
                 <li class="nav-item mx-2 dropdown">
                   <a
-                    class="nav-link dropdown-toggle text-dark"
+                    class="nav-link dropdown-toggle text-white"
                     href="#"
                     role="button"
                     data-bs-toggle="dropdown"
@@ -90,65 +90,57 @@ const auth = useAuthStore()
                   >
                     Categorias
                   </a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li>
-                      <hr class="dropdown-divider" />
-                    </li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  <ul class="dropdown-menu bg-dark">
+                    <li><a class="dropdown-item text-white" href="#">Camisetas</a></li>
+                    <li><a class="dropdown-item text-white" href="#">Bonés</a></li>
+                    <li><a class="dropdown-item text-white" href="#">Miniaturas</a></li>
+                    <li><a class="dropdown-item text-white" href="#">Acessórios</a></li>
                   </ul>
-                </li>
-                <li class="nav-item mx-2">
-                  <a class="nav-link text-dark" href="#">Contato</a>
-                </li>
-                <li class="nav-item mx-2">
-                  <a class="nav-link text-dark" href="#">Vender</a>
                 </li>
               </ul>
             </ul>
             <ul class="d-flex flex-column justify-content-center mb-0">
               <ul class="navbar-nav d-flex align-items-center justify-content-end gap-3">
                 <li class="nav-item mx-2">
-                  <a class="nav-link active" aria-current="page" href="#"> <Search /></a>
+                  <a class="nav-link active text-white" aria-current="page" href="#"> <Search /></a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link active =" aria-current="page" href="#"> <Heart /></a>
+                  <a class="nav-link active text-white" aria-current="page" href="#"> <Heart /></a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link" href="#"><ShoppingCart /></a>
+                  <a class="nav-link text-white" href="#"><ShoppingCart /></a>
                 </li>
               </ul>
               <div v-if="!auth.isAuthenticated" class="d-flex mt-3 justify-content-center gap-4">
-                <RouterLink class="text-dark fw-bold" to="/login">Entre</RouterLink>
-                <RouterLink class="text-dark fw-bold" to="/register">Cadastre-se</RouterLink>
+                <RouterLink class="text-white fw-bold" to="/login">Entre</RouterLink>
+                <RouterLink class="text-white fw-bold" to="/register">Cadastre-se</RouterLink>
               </div>
               <div class="dropdown d-flex justify-content-center mt-lg-3" v-else>
                 <button
-                  class="btn border-2 border-black rounded-5 dropdown-toggle"
+                  class="btn border-2 border-danger rounded-5 dropdown-toggle text-white"
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Olá, Gustavo
+                  Olá, {{ auth.user.name }}
                 </button>
-                <ul class="dropdown-menu dropdown-menu-lg-start p-0 overflow-hidden">
-                  <li class="border-bottom border-secondary-subtle">
-                    <RouterLink to="profile" class="dropdown-item fw-bold py-2" href="#"
+                <ul class="dropdown-menu dropdown-menu-lg-start p-0 overflow-hidden bg-dark">
+                  <li class="border-bottom border-danger">
+                    <RouterLink to="profile" class="dropdown-item fw-bold py-2 text-white" href="#"
                       ><i class="bi bi-person-circle mr-1"></i> Minha Conta</RouterLink
                     >
                   </li>
                   <li>
-                    <a class="dropdown-item py-2" href="#"
+                    <a class="dropdown-item py-2 text-white" href="#"
                       ><i class="bi bi-bag-check-fill mr-1"></i> Meus Pedidos</a
                     >
                   </li>
                   <li>
-                    <a class="dropdown-item py-2" href="#"
+                    <a class="dropdown-item py-2 text-white" href="#"
                       ><i class="bi bi-arrow-left-right mr-1"></i> Trocas</a
                     >
                   </li>
-                  <li class="border-top border-secondary-subtle text-center overflow-hidden">
+                  <li class="border-top border-danger text-center overflow-hidden">
                     <a
                       class="dropdown-item py-2 fw-bold text-danger cursor-pointer"
                       @click="auth.logout"
@@ -174,9 +166,32 @@ const auth = useAuthStore()
     justify-content: center;
   }
 }
+
+.nav-link:hover {
+  color: #ff0000 !important;
+}
+
+.dropdown-menu {
+  background-color: #000000 !important;
+}
+
+.dropdown-item:hover {
+  background-color: #1a1a1a !important;
+  color: #ff0000 !important;
+}
+
+.form-control:focus {
+  border-color: #ff0000;
+  box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.25);
+}
+
+.btn-close:focus {
+  box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.25);
+}
+
 @media (max-width: 991px) {
   .sidebar {
-    background-color: yellow;
+    background-color: #000000;
   }
 }
 </style>

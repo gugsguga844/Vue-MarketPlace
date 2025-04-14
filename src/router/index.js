@@ -10,6 +10,7 @@ import AddModeratorView from '@/views/ProfileView/AddModeratorView.vue'
 import AddAddress from '@/views/ProfileView/AddAddress.vue'
 import ApiChecklist from '@/views/ProfileView/ApiChecklist.vue'
 import ProfileSecurity from '@/views/ProfileView/ProfileSecurity.vue'
+import EditAddress from '@/views/ProfileView/EditAddress.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -70,6 +71,12 @@ const router = createRouter({
           path: 'security',
           name: 'security',
           component: ProfileSecurity,
+        },
+        {
+          path: 'editAddress',
+          name: 'editAddress',
+          component: EditAddress,
+          props: true,
         },
       ],
       meta: {

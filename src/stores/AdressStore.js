@@ -6,8 +6,13 @@ import { ref } from 'vue'
 export const useAddressStore = defineStore(
   'address',
   () => {
+    const address = ref({})
     const addresses = ref([])
     const countries = ref([])
+
+    async function saveAddress(addressData) {
+      address.value = addressData
+    }
 
     async function saveAddresses(token) {
       const response = await getAdresses(token)
@@ -23,7 +28,7 @@ export const useAddressStore = defineStore(
       countries.value = response.data.data.map(item => item.country)
     }
 
-    return { addresses, saveAddresses, removeArrayAddress, countries, saveCountries }
+    return { addresses, address, saveAddress,saveAddresses, removeArrayAddress, countries, saveCountries }
   },
   { persist: true },
 )

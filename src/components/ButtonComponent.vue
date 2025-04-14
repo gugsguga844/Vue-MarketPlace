@@ -33,6 +33,15 @@ defineProps(['buttonText', 'buttonStyle', 'buttonType'])
   background-color: #ff2a2a;
 }
 
+.buttonRed {
+  background-color: #ff0000;
+  color: white;
+}
+
+.buttonRed:hover {
+  background-color: #ff1d1d;
+}
+
 .bigRadius {
   border-radius: 50px;
 }

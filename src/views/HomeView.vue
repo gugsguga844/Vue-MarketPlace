@@ -5,9 +5,11 @@ import ProductCardComponent from '@/components/ProductCardComponent.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import { useCategoryStore } from '@/stores/CategoryStore'
 import { useProductStore } from '@/stores/ProductStore'
+import { useImageStore } from '@/stores/ImageStore'
 
 const categoryData = useCategoryStore()
 const productData = useProductStore()
+const imageStore = useImageStore()
 
 onMounted(() => {
   categoryData.saveCategories()
@@ -19,32 +21,26 @@ onMounted(() => {
 
 import { Truck, Star, ShoppingBag } from 'lucide-vue-next'
 import { onMounted } from 'vue'
-
-function imageURL(path) {
-  const apiURL = import.meta.env.VITE_API_URL
-  return `${apiURL}${path}`
-}
 </script>
 
 <template>
-  <section class="bg-warning-subtle py-20">
+  <section class="bg-dark py-20">
     <div class="row container mx-auto">
       <div class="col-12 col-md-6">
         <div class="home-card-title">
-          <h1 class="fw-bold mb-4">Encontre os melhores produtos com os melhores preços</h1>
-          <p class="h3">
-            Descubra uma seleção incrível de produtos para todas as suas necessidades, com entrega
-            rápida e segura
+          <h1 class="text-white fw-bold mb-3">A loja para verdadeiros apaixonados por <span style="color: #ff1100">Fórmula 1</span> </h1>
+          <p class="h5 text-secondary">
+            Mercadoria exclusiva de alta qualidade para entusiastas de automobilismo. Equipamentos oficiais de equipes, acessórios, colecionáveis e muito mais.
           </p>
         </div>
-        <div class="home-card-buttons mt-4">
-          <ButtonComponent button-text="Explorar Produtos" button-style="buttonBlack bigRadius" />
-          <ButtonComponent button-text="Ver Ofertas" button-style="buttonWhite bigRadius" />
+        <div class="home-card-buttons mt-5 d-flex gap-3">
+          <ButtonComponent button-text="Explorar Produtos" button-style="buttonRed smallRadius" />
+          <ButtonComponent button-text="Ver Ofertas" button-style="buttonWhite smallRadius" />
         </div>
         <div class="attributes flex mt-4 gap-4">
-          <div class="mt-4 flex gap-1"><Truck /> Entrega Rápida</div>
-          <div class="mt-4 flex gap-1"><Star /> Produtos de Qualidade</div>
-          <div class="mt-4 flex gap-1"><ShoppingBag /> Compra Segura</div>
+          <div class="mt-4 flex gap-1 text-white"><Truck /> Entrega Rápida</div>
+          <div class="mt-4 flex gap-1 text-white"><Star /> Produtos de Qualidade</div>
+          <div class="mt-4 flex gap-1 text-white"><ShoppingBag /> Compra Segura</div>
         </div>
       </div>
       <div
@@ -72,7 +68,7 @@ function imageURL(path) {
           v-for="category in categoryData.filteredCategories"
           :key="category.id"
         >
-          <CategoryCard :category-name="category.name" />
+          <CategoryCard :category-name="category.name" :category-image="imageStore.imageURL(category.image_path)" />
         </div>
       </div>
     </div>
@@ -89,7 +85,7 @@ function imageURL(path) {
         >
           <ProductCardComponent
             :product-name="product.name"
-            :product-image="imageURL(product.image_path)"
+            :product-image="imageStore.imageURL(product.image_path)"
             :product-price="product.price"
             :category-name="product.category.name"
           />

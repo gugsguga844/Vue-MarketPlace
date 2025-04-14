@@ -5,8 +5,7 @@ defineProps(['categoryName', 'categoryImage'])
 <template>
   <div class="category-card rounded-1 shadow-lg">
     <div class="category-card-img">
-      <!-- <img alt="" class="" :src="categoryImage" /> -->
-      <img alt="" class="" src="../assets/images/eletronics.jpg" />
+      <img alt="" class="" :src="categoryImage" />
     </div>
     <div class="p-3 text-center">
       <h4 class="fw-bold">{{ categoryName }}</h4>
