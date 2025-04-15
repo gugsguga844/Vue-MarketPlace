@@ -61,10 +61,11 @@ const auth = useAuthStore()
             <ul class="ul-justify navbar-nav flex-column flex-grow-1 px-3">
               <form class="d-flex p-3 w-75" role="search">
                 <input
-                  class="form-control bg-dark text-white border-danger"
+                  class="form-control bg-dark text-white border-white"
                   type="search"
                   placeholder="Pesquisar produtos..."
                   aria-label="Search"
+                  autofocus
                 />
               </form>
               <ul class="d-lg-flex p-0 fw-bold">
@@ -117,7 +118,7 @@ const auth = useAuthStore()
               </div>
               <div class="dropdown d-flex justify-content-center mt-lg-3" v-else>
                 <button
-                  class="btn border-2 border-danger rounded-5 dropdown-toggle text-white"
+                  class="btn border-2 border-white rounded-5 dropdown-toggle text-white px-4"
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
@@ -181,7 +182,7 @@ const auth = useAuthStore()
 }
 
 .form-control:focus {
-  border-color: #ff0000;
+  border-color: #fff;
   box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.25);
 }
 

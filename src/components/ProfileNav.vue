@@ -82,9 +82,9 @@ const auth = useAuthStore()
           </RouterLink>
         </li>
         <li class="nav-item" v-if="auth.user.role === 'ADMIN'">
-          <RouterLink to="addModerator" class="nav-link px-sm-0 px-2">
+          <RouterLink to="admin" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-person-add"></i
-            ><span class="ms-2 d-none d-sm-inline">Moderador</span>
+            ><span class="ms-2 d-none d-sm-inline">Admin</span>
           </RouterLink>
         </li>
         <li class="nav-item" v-if="auth.user.role === 'ADMIN'">

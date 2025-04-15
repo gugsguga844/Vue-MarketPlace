@@ -24,11 +24,11 @@ import { onMounted } from 'vue'
 </script>
 
 <template>
-  <section class="bg-dark py-20">
+  <section class="bg-dark py-10 py-lg-20">
     <div class="row container mx-auto">
       <div class="col-12 col-md-6">
         <div class="home-card-title">
-          <h1 class="text-white fw-bold mb-3">A loja para verdadeiros apaixonados por <span style="color: #ff1100">Fórmula 1</span> </h1>
+          <h1 class="text-white fw-bold mb-3">A loja para verdadeiros apaixonados por <span style="color: #ff0000">Fórmula 1</span> </h1>
           <p class="h5 text-secondary">
             Mercadoria exclusiva de alta qualidade para entusiastas de automobilismo. Equipamentos oficiais de equipes, acessórios, colecionáveis e muito mais.
           </p>
@@ -44,24 +44,16 @@ import { onMounted } from 'vue'
         </div>
       </div>
       <div
-        class="col-12 col-md-6 home-card-img flex justify-content-center align-items-center rounded-3 shadow"
+        class="col-12 col-md-6 home-card-img d-flex justify-content-start align-items-end rounded-3 shadow m-lg-0 mt-5"
       >
-        <div
-          class="home-card-special-offer bg-black bg-opacity-75 hover-zoom d-flex flex-column justify-content-center align-items-center p-8 rounded-3 gap-1"
-        >
-          <h2 class="text-white fw-bold">Oferta do Dia</h2>
-          <p class="text-white">
-            Até 40% de desconto em <span class="underline">eletrônicos</span>
-          </p>
-          <ButtonComponent button-text="Ver Ofertas" button-style="buttonWhite smallRadius" />
-        </div>
+        <h2 class="text-white fw-bold m-5">Acelere com Estilo</h2>
       </div>
     </div>
   </section>
 
   <section class="py-12">
     <div class="container-fluid px-4 w-100 m-0">
-      <SectionTitle title-text="Categorias" />
+      <SectionTitle title-text="Categorias de Produtos" title-text-color="secondaryText" />
       <div class="row g-4">
         <div
           class="col-12 col-md-4 col-lg-2"
@@ -97,7 +89,19 @@ import { onMounted } from 'vue'
 
 <style scoped>
 .home-card-img {
-  background-image: url(../assets/images/eletronics.avif);
+  background-image: url(../assets/images/background.jpg);
   background-size: 100% 100%;
+  transition: 0.3s;
+}
+
+.home-card-img:hover {
+  transform: scale(1.03);
+}
+
+@media (min-width: 992px) {
+  .py-lg-20 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
 }
 </style>
