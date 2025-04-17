@@ -1,5 +1,5 @@
 <script setup>
-defineProps(['titleText', 'linkText', 'titleTextColor', 'subTitleTextColor'])
+defineProps(['titleText', 'titleDescription', 'linkText', 'titleTextColor', 'subTitleTextColor'])
 </script>
 
 <template>
@@ -8,7 +8,7 @@ defineProps(['titleText', 'linkText', 'titleTextColor', 'subTitleTextColor'])
       {{ titleText }}
     </h1>
     <p class="adjust-sub-title-text fs-5" :class="subTitleTextColor">
-      Explore nosso grid completo de produtos oficiais da Fórmula 1 e encontre itens exclusivos das suas equipes e pilotos favoritos.
+      {{ titleDescription }}
     </p>
 
     <RouterLink to="/"> {{ linkText }} </RouterLink>
@@ -27,7 +27,7 @@ defineProps(['titleText', 'linkText', 'titleTextColor', 'subTitleTextColor'])
 }
 
 .tertiaryText {
-  color: #acacac;
+  color: #A1A1AA;
   font-weight: bold;
 }
 

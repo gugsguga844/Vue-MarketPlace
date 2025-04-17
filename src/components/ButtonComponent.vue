@@ -12,9 +12,18 @@ defineProps(['buttonText', 'buttonStyle', 'buttonType'])
   color: white;
 }
 
+.buttonBlack:hover {
+  background-color: #1a1a1a;
+}
+
 .buttonWhite {
   background-color: white;
   color: black;
+  border: 1px solid #9b9b9b;
+}
+
+.buttonWhite:hover {
+  background-color: #dee2e6;
 }
 
 .buttonYellow {

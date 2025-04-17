@@ -155,9 +155,13 @@ export async function deleteAddress(id, token) {
 }
 
 /* Category endpoints */
-export async function getCategories() {
+export async function getCategories(token, user_id) {
   try {
-    const response = await api.get('/categories')
+    const response = await api.get(`/categories/user/${user_id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     return response.data
   } catch (error) {
     console.error('Erro ao buscar itens: ', error)
@@ -165,6 +169,21 @@ export async function getCategories() {
   }
 }
 
+export async function createCategory(payload, token) {
+  try {
+    const response = await api.post('/categories', payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+/* Product endpoints */
 export async function getProducts() {
   try {
     const response = await api.get('/products')

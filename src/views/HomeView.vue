@@ -21,6 +21,7 @@ onMounted(() => {
 
 import { Truck, Star, ShoppingBag } from 'lucide-vue-next'
 import { onMounted } from 'vue'
+import PaginatorComponent from '../components/PaginatorComponent.vue'
 </script>
 
 <template>
@@ -51,24 +52,34 @@ import { onMounted } from 'vue'
     </div>
   </section>
 
-  <section class="py-12">
+  <section class="py-12 bg-black">
     <div class="container-fluid px-4 w-100 m-0">
-      <SectionTitle title-text="Categorias de Produtos" title-text-color="secondaryText" />
+      <SectionTitle
+        title-text="Categorias de Produtos"
+        title-description="Explore nossas categorias de produtos oficiais da Fórmula 1 e encontre itens exclusivos das suas equipes e pilotos favoritos."
+        title-text-color="primaryText"
+        subTitle-text-color="tertiaryText" />
       <div class="row g-4">
         <div
-          class="col-12 col-md-4 col-lg-2"
+          class="col-6 col-md-4 col-lg-4"
           v-for="category in categoryData.filteredCategories"
           :key="category.id"
         >
           <CategoryCard :category-name="category.name" :category-image="imageStore.imageURL(category.image_path)" />
         </div>
+        <PaginatorComponent />
       </div>
     </div>
   </section>
 
-  <section class="py-12 bg-secondary-subtle">
+  <section class="py-12 bg-dark">
     <div class="container-fluid px-4 w-100 m-0">
-      <SectionTitle title-text="Produtos em Destaque" />
+      <SectionTitle
+        title-text="Produtos em Destaque"
+        title-description="Explore nosso grid completo de produtos oficiais da Fórmula 1 e encontre itens exclusivos das suas equipes e pilotos favoritos."
+        title-text-color="primaryText"
+        subTitle-text-color="tertiaryText"
+      />
       <div class="row g-4">
         <div
           class="col-12 col-md-4 col-lg-3"

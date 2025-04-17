@@ -52,7 +52,7 @@ function redirect() {
         <form @submit.prevent="sendRegister" class="w-100">
           <h2 class="h1">Cadastre-se</h2>
           <div class="form-inputs my-5">
-            <div class="row mb-4">
+            <div class="row">
               <div class="col-12 col-lg-6">
                 <FormInput
                   v-model="name"
@@ -65,7 +65,7 @@ function redirect() {
                 <FormInput form-label="Último nome:" input-for="lastName" input-type="text" />
               </div>
             </div>
-            <div class="row mb-4">
+            <div class="row">
               <div class="col-12">
                 <FormInput
                   v-model="email"
@@ -75,7 +75,7 @@ function redirect() {
                 />
               </div>
             </div>
-            <div class="row mb-4">
+            <div class="row">
               <div class="col-12 col-lg-6">
                 <FormInput
                   v-model="password"

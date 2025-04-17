@@ -59,6 +59,7 @@ const router = createRouter({
           path: 'admin',
           name: 'admin',
           component: ProfileAdmin,
+          redirect: '/profile/admin/adminUsers',
           children: [
             {
               path: 'adminUsers',

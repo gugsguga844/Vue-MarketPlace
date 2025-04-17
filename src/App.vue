@@ -16,10 +16,13 @@ onMounted(async () => {
   console.log(auth.isAuthenticated)
 
   if (auth.token) {
-    const response = await verifyToken(auth.token)
+    const token = auth.token
+    const response = await verifyToken(token)
+    console.log('Remember:', auth.rememberUser)
 
-    if (response.status !== 200 && auth.rememberUser == true) {
+    if (response.status === 401 && auth.rememberUser === true) {
       const renewResponse = await renewToken(auth.token)
+      console.log('Renew Response:', renewResponse)
 
       if (renewResponse.status === 200) {
         auth.renewToken(renewResponse.data)

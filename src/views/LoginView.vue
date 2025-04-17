@@ -20,7 +20,6 @@ async function sendForm() {
   const result = await login({ email: email.value, password: password.value })
 
   if (result.status === 200) {
-    console.log(result.status)
     auth.saveUser(result.data)
     toast.success(`Ótimas compras ${auth.user.name}`)
 
@@ -49,7 +48,7 @@ function redirect() {
         <form @submit.prevent="sendForm" class="w-100">
           <h2 class="h1 fw-bold">Acesse sua conta</h2>
           <div class="form-inputs my-5">
-            <div class="row mb-4">
+            <div class="row">
               <div class="col-12">
                 <FormInput
                   label-icon="bi bi-envelope"
@@ -61,7 +60,7 @@ function redirect() {
                 />
               </div>
             </div>
-            <div class="row mb-4">
+            <div class="row">
               <div class="col-12">
                 <FormInput
                   label-icon="bi bi-lock"

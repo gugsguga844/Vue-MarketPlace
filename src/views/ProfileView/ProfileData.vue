@@ -41,7 +41,7 @@ function checkChanges() {
 
 async function update() {
   const changes = checkChanges()
-  console.log('Mudanças: ', changes)
+  console.log('Mudanças: ', payload)
   const token = auth.token
 
   if (Object.keys(changes).length > 0) {
