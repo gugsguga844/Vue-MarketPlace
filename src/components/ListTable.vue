@@ -22,9 +22,9 @@ defineProps(['headers', 'rows'])
             <a class="bg-white rounded-3 border-1 border-dark-subtle p-2">
               <i class="bi bi-pencil-square text-black fa-lg"></i>
             </a>
-            <a class="bg-danger rounded-3 border-1 border-dark-subtle p-2">
+            <button @click.prevent="$emit('remove', row.id)" class="bg-danger rounded-3 border-1 border-dark-subtle p-2">
               <i class="bi bi-trash3 text-white fa-lg"></i>
-            </a>
+            </button>
           </div>
         </td>
       </tr>

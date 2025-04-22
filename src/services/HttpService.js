@@ -183,6 +183,19 @@ export async function createCategory(payload, token) {
   }
 }
 
+export async function deleteCategory(id, token) {
+  try {
+    const response = await api.delete(`/categories/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
 /* Product endpoints */
 export async function getProducts() {
   try {
@@ -191,5 +204,19 @@ export async function getProducts() {
   } catch (error) {
     console.error('Erro ao buscar itens: ', error)
     throw error
+  }
+}
+
+export async function createProduct(payload, token) {
+  try {
+    const response = await api.post('/products', payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      }
+    })
+    return response
+  } catch (error) {
+    return error
   }
 }

@@ -1,15 +1,28 @@
-<script setup></script>
+<script setup>
+import { computed } from 'vue'
+import { useCategoryStore } from '@/stores/CategoryStore'
+
+const useCategories = useCategoryStore()
+
+const currentPage = computed(() => Math.floor(useCategories.startValue / 3))
+const totalPages = computed(() => Math.ceil(useCategories.categories.length / 3))
+const pages = computed(() => Array.from({ length: totalPages.value }))
+</script>
 
 <template>
   <div class="d-flex justify-content-center align-items-center gap-3 mt-4">
-    <button class="btn btn-outline-light btn-sm px-3" disabled>
+    <button class="btn btn-outline-light btn-sm px-3" @click="useCategories.prevPage" :disabled="currentPage === 0">
       &lt;
     </button>
     <span class="d-flex align-items-center gap-2">
-      <span class="page-dot active"></span>
-      <span class="page-dot"></span>
+      <span
+        v-for="(_, idx) in pages"
+        :key="idx"
+        class="page-dot"
+        :class="{ active: idx === currentPage }"
+      ></span>
     </span>
-    <button class="btn btn-outline-light btn-sm px-3">
+    <button class="btn btn-outline-light btn-sm px-3" @click="useCategories.nextPage" :disabled="currentPage === totalPages - 1">
       &gt;
     </button>
   </div>

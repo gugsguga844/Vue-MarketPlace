@@ -6,27 +6,28 @@ import ListTable from '@/components/ListTable.vue';
 import { useCategoryStore } from '@/stores/CategoryStore';
 import { useProductStore } from '@/stores/ProductStore';
 import { onMounted, ref } from 'vue';
-import { createCategory } from '../../../services/HttpService';
-import { useAuthStore } from '../../../stores/auth';
+import { createCategory, deleteCategory } from '@/services/HttpService';
+import { useAuthStore } from '@/stores/auth';
 import { useToast } from 'vue-toastification';
 
 const auth = useAuthStore()
+const token = auth.token
 
 const useCategories = useCategoryStore()
 const useProducts = useProductStore()
 const name = ref('')
 const description = ref('')
 const toast = useToast()
-const token = auth.token
 
-const filteredCategories = ref([])
-const imageFile = ref(null)
+const categoriesWithProducts = ref([])
+const imageFile = ref('')
 const imagePreview = ref(null)
 
 function filterCategories() {
-  filteredCategories.value = useCategories.categories.map(category => {
+  categoriesWithProducts.value = useCategories.categories.map(category => {
     const products = useProducts.products.filter(product => product.category_id === category.id).length;
     return {
+      id: category.id,
       name: category.name,
       productAmount: products
     }
@@ -50,15 +51,29 @@ function onImageChange(event) {
 
 async function saveCategory() {
   const formData = new FormData()
+  formData.append('name', name.value)
+  formData.append('description', description.value)
   formData.append('image', imageFile.value)
-  const response = await createCategory({ name: name.value, description: description.value }, formData, token)
+  const response = await createCategory(formData, token)
 
   if (response.status === 201) {
     toast.success('Categoria criada com sucesso')
     useCategories.saveNewCategory(response.data)
-    console.log(response.data)
+    filterCategories()
   } else {
     toast.error('Erro ao criar categoria')
+  }
+}
+
+async function removeCategory(category_id) {
+  const response = await deleteCategory(category_id, token)
+
+  if (response.status === 204) {
+    toast.success('Categoria excluída com sucesso')
+    useCategories.removeCategory(category_id)
+    filterCategories()
+  } else {
+    toast.error('Erro ao excluir categoria')
   }
 }
 
@@ -129,7 +144,8 @@ onMounted(() => {
     <ProfileCardTitle profile-card-title="Gerenciar Categorias" profile-card-description="Gerencie as categorias do sistema." />
     <ListTable
       :headers="['Nome', 'Produtos']"
-      :rows="filteredCategories"
+      :rows="categoriesWithProducts"
+      @remove="removeCategory"
     />
   </div>
 </template>

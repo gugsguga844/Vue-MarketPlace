@@ -7,7 +7,7 @@ defineProps(['titleText', 'titleDescription', 'linkText', 'titleTextColor', 'sub
     <h1 :class="titleTextColor">
       {{ titleText }}
     </h1>
-    <p class="adjust-sub-title-text fs-5" :class="subTitleTextColor">
+    <p class="adjust-sub-title-text fs-6" :class="subTitleTextColor">
       {{ titleDescription }}
     </p>
 
