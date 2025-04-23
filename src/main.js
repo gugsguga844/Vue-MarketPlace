@@ -21,6 +21,9 @@ pinia.use(piniaPluginPersistedstate)
 
 app.use(pinia)
 app.use(router)
-app.use(Toast)
+app.use(Toast, {
+  pauseOnFocusLoss: false,
+  pauseOnHover: false,
+})
 
 app.mount('#app')

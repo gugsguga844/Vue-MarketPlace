@@ -19,9 +19,9 @@ defineProps(['headers', 'rows'])
         </td>
         <td>
           <div class="d-flex justify-content-center gap-2">
-            <a class="bg-white rounded-3 border-1 border-dark-subtle p-2">
+            <button @click.prevent="$emit('edit', row.id)" class="bg-white rounded-3 border-1 border-dark-subtle p-2">
               <i class="bi bi-pencil-square text-black fa-lg"></i>
-            </a>
+            </button>
             <button @click.prevent="$emit('remove', row.id)" class="bg-danger rounded-3 border-1 border-dark-subtle p-2">
               <i class="bi bi-trash3 text-white fa-lg"></i>
             </button>

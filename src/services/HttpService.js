@@ -183,6 +183,32 @@ export async function createCategory(payload, token) {
   }
 }
 
+export async function getCategory(category_id, token) {
+  try {
+    const response = await api.get(`/categories/${category_id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export async function updateCategory(category_id, payload, token) {
+  try {
+    const response = await api.put(`/categories/${category_id}`, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
 export async function deleteCategory(id, token) {
   try {
     const response = await api.delete(`/categories/${id}`, {

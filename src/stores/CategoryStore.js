@@ -7,6 +7,7 @@ export const useCategoryStore = defineStore(
   'category',
   () => {
     const categories = ref([])
+    const category = ref({})
     const filteredCategories = ref([])
     const startValue = ref(0)
     const endValue = ref(3)
@@ -18,6 +19,10 @@ export const useCategoryStore = defineStore(
       categories.value = apiResult
       console.log(apiResult)
       console.log(categories)
+    }
+
+    function saveCategory(categoryData) {
+      category.value = categoryData
     }
 
     function saveNewCategory(data) {
@@ -44,18 +49,34 @@ export const useCategoryStore = defineStore(
       }
     }
 
+    function updateCategories(category_id, payload) {
+      categories.value = categories.value.map(category => category.id === category_id ? payload : category)
+    }
+
+    function updateCategoryInStore(updatedCategory) {
+      categories.value = categories.value.map(category =>
+        category.id === updatedCategory.id ? { ...category, ...updatedCategory } : category
+      )
+    }
+
     function removeCategory(category_id) {
       categories.value = categories.value.filter(category => category.id !== category_id)
     }
 
     return {
       categories,
+      category,
       saveCategories,
+      saveCategory,
       saveNewCategory,
       filterCategories,
       nextPage,
       prevPage,
+      updateCategories,
+      updateCategoryInStore,
       removeCategory,
+      startValue,
+      endValue,
       filteredCategories
     }
   },

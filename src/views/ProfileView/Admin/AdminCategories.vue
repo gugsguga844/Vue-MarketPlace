@@ -6,9 +6,10 @@ import ListTable from '@/components/ListTable.vue';
 import { useCategoryStore } from '@/stores/CategoryStore';
 import { useProductStore } from '@/stores/ProductStore';
 import { onMounted, ref } from 'vue';
-import { createCategory, deleteCategory } from '@/services/HttpService';
+import { createCategory, deleteCategory, updateCategory, getCategory } from '@/services/HttpService';
 import { useAuthStore } from '@/stores/auth';
 import { useToast } from 'vue-toastification';
+import ModalComponent from '@/components/ModalComponent.vue';
 
 const auth = useAuthStore()
 const token = auth.token
@@ -17,11 +18,15 @@ const useCategories = useCategoryStore()
 const useProducts = useProductStore()
 const name = ref('')
 const description = ref('')
+const editName = ref('')
+const editDescription = ref('')
 const toast = useToast()
+const showModal = ref(false)
 
 const categoriesWithProducts = ref([])
-const imageFile = ref('')
+const imageFile = ref(null)
 const imagePreview = ref(null)
+const modalImage = ref(null)
 
 function filterCategories() {
   categoriesWithProducts.value = useCategories.categories.map(category => {
@@ -49,6 +54,19 @@ function onImageChange(event) {
   }
 }
 
+function onModalImageChange(event) {
+  const file = event.target.files[0]
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = e => {
+      modalImage.value = e.target.result
+    }
+    reader.readAsDataURL(file)
+  } else {
+    modalImage.value = null
+  }
+}
+
 async function saveCategory() {
   const formData = new FormData()
   formData.append('name', name.value)
@@ -60,8 +78,68 @@ async function saveCategory() {
     toast.success('Categoria criada com sucesso')
     useCategories.saveNewCategory(response.data)
     filterCategories()
+    name.value = ''
+    description.value = ''
+    imageFile.value = null
+    imagePreview.value = null
   } else {
     toast.error('Erro ao criar categoria')
+  }
+}
+
+async function editCategory(category_id) {
+  const token = auth.token
+  const response = await getCategory(category_id, token)
+
+  if (response.status === 200) {
+    useCategories.saveCategory(response.data)
+    editName.value = response.data.name || ''
+    editDescription.value = response.data.description || ''
+    // Se a categoria tiver imagem, mostra a preview
+    if (response.data.image_url) {
+      modalImage.value = response.data.image_url
+    } else {
+      modalImage.value = null
+    }
+    showModal.value = true
+  } else {
+    toast.error('Erro ao buscar categoria')
+  }
+}
+
+function checkCategoryChanges() {
+  const changes = {}
+
+  if (editName.value !== useCategories.category.name) {
+    changes.name = editName.value
+  }
+
+  if (editDescription.value !== useCategories.category.description) {
+    changes.description = editDescription.value
+  }
+
+  return changes
+}
+
+async function saveEditedCategory() {
+  const changes = checkCategoryChanges()
+  console.log('Mudanças: ', changes)
+  const token = auth.token
+  const categoryId = useCategories.category.id
+
+  if (Object.keys(changes).length > 0) {
+    const response = await updateCategory(categoryId, changes, token)
+
+    if (response.status === 200) {
+      toast.success('Categoria alterada com sucesso')
+      useCategories.updateCategoryInStore(response.data)
+      filterCategories()
+      showModal.value = false
+    } else {
+      toast.error('Erro ao editar categoria')
+    }
+  } else {
+    toast.info('Nenhuma mudança detectada')
   }
 }
 
@@ -134,7 +212,7 @@ onMounted(() => {
           />
         </div>
         <div v-if="imagePreview" class="mt-2 d-flex justify-content-center">
-          <img :src="imagePreview" alt="Pré-visualização" class="img-thumbnail" style="max-width: 200px; max-height: 120px;" />
+          <img :src="imagePreview" alt="Pré-visualização" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />
         </div>
       </div>
     </div>
@@ -143,10 +221,59 @@ onMounted(() => {
   <div class="container-fluid border-3 border-dark border-opacity-10 rounded-1 p-4">
     <ProfileCardTitle profile-card-title="Gerenciar Categorias" profile-card-description="Gerencie as categorias do sistema." />
     <ListTable
-      :headers="['Nome', 'Produtos']"
+      :headers="['ID', 'Nome', 'Produtos']"
       :rows="categoriesWithProducts"
+      @edit="editCategory"
       @remove="removeCategory"
     />
+    <ModalComponent
+      :show="showModal"
+      modal-title="Editar Categoria"
+      @close="showModal = false"
+      @save="saveEditedCategory"
+    >
+      <template #body>
+        <div class="row">
+          <div class="col-12">
+            <FormInput
+              input-for="nome"
+              input-type="text"
+              form-label="Nome da Categoria"
+              input-placeholder="Nome da categoria"
+              v-model="editName"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <FormInput
+              input-for="descricao"
+              input-type="text"
+              form-label="Descrição da Categoria"
+              input-placeholder="Descrição da categoria"
+              v-model="editDescription"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button type="button" class="btn btn-outline-primary w-100 mb-2" @click="$refs.modalImageInput.click()">
+              Selecionar Imagem
+            </button>
+            <input
+              ref="modalImageInput"
+              type="file"
+              class="form-control visually-hidden"
+              accept="image/*"
+              @change="onModalImageChange"
+            />
+          </div>
+        </div>
+        <div v-if="modalImage" class="mt-2 d-flex justify-content-center">
+          <img :src="modalImage" alt="Pré-visualização" class="img-thumbnail" style="max-width: 200px; max-height: 120px;" />
+        </div>
+      </template>
+    </ModalComponent>
   </div>
 </template>
 
