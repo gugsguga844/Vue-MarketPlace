@@ -2,7 +2,7 @@
 // import { ref, onMounted } from 'vue'
 // import { ChevronDown, Heart, Menu, ShoppingBag, Search, Store, ShoppingCart, User, X } from 'lucide-vue-next'
 import { useAuthStore } from '@/stores/auth'
-import { Store, Heart, Search, ShoppingCart, Menu } from 'lucide-vue-next'
+import { Heart, Search, ShoppingCart, Menu } from 'lucide-vue-next'
 
 const auth = useAuthStore()
 </script>

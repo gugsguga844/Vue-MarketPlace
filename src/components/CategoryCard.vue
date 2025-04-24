@@ -33,7 +33,7 @@ defineProps({
 }
 .category-card-bg:hover {
   transform: scale(1.04) translateY(-4px);
-  box-shadow: 0 8px 32px rgba(219, 35, 54, 0.18);
+  box-shadow: 0 8px 32px rgba(220,53,69,0.18);
 }
 .category-card-overlay {
   width: 100%;

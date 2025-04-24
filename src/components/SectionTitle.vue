@@ -27,7 +27,7 @@ defineProps(['titleText', 'titleDescription', 'linkText', 'titleTextColor', 'sub
 }
 
 .tertiaryText {
-  color: #A1A1AA;
+  color: #5e5e5e;
   font-weight: bold;
 }
 

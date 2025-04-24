@@ -11,7 +11,7 @@ const pages = computed(() => Array.from({ length: totalPages.value }))
 
 <template>
   <div class="d-flex justify-content-center align-items-center gap-3 mt-4">
-    <button class="btn btn-outline-light btn-sm px-3" @click="useCategories.prevPage" :disabled="currentPage === 0">
+    <button class="btn btn-outline-dark btn-sm px-3" @click="useCategories.prevPage" :disabled="currentPage === 0">
       &lt;
     </button>
     <span class="d-flex align-items-center gap-2">
@@ -22,7 +22,7 @@ const pages = computed(() => Array.from({ length: totalPages.value }))
         :class="{ active: idx === currentPage }"
       ></span>
     </span>
-    <button class="btn btn-outline-light btn-sm px-3" @click="useCategories.nextPage" :disabled="currentPage === totalPages - 1">
+    <button class="btn btn-outline-dark btn-sm px-3" @click="useCategories.nextPage" :disabled="currentPage === totalPages - 1">
       &gt;
     </button>
   </div>
@@ -35,11 +35,11 @@ const pages = computed(() => Array.from({ length: totalPages.value }))
   border-radius: 50%;
   display: inline-block;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #000000;
   transition: background 0.1s, border 0.1s;
 }
 .page-dot.active {
-  background: #fff;
-  border-color: #fff;
+  background: #000000;
+  border-color: #000000;
 }
 </style>

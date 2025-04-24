@@ -4,6 +4,7 @@ import HeaderNavComponent from './components/HeaderNavComponent.vue'
 import { onMounted } from 'vue'
 import { renewToken, verifyToken } from './services/HttpService'
 import { useAuthStore } from './stores/auth'
+import FooterComponent from './components/FooterComponent.vue'
 
 const route = useRoute()
 
@@ -40,6 +41,8 @@ onMounted(async () => {
   <main>
     <RouterView />
   </main>
+
+  <FooterComponent v-if="!route.meta.hideNav" />
 </template>
 
 <style scoped></style>
