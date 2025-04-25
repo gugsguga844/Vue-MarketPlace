@@ -6,10 +6,17 @@ import SectionTitle from '@/components/SectionTitle.vue'
 import { useCategoryStore } from '@/stores/CategoryStore'
 import { useProductStore } from '@/stores/ProductStore'
 import { useImageStore } from '@/stores/ImageStore'
+import { useRouter } from 'vue-router'
 
 const categoryData = useCategoryStore()
 const productData = useProductStore()
 const imageStore = useImageStore()
+const router = useRouter()
+
+function redirectProduct(id) {
+  productData.saveProduct(id)
+  router.push(`/product/${id}`)
+}
 
 onMounted(() => {
   categoryData.saveCategories()
@@ -59,7 +66,7 @@ import PaginatorComponent from '../components/PaginatorComponent.vue'
         subTitle-text-color="tertiaryText" />
       <div class="row g-4">
         <div
-          class="col-6 col-md-4 col-lg-4"
+          class="col-12 col-md-4 col-lg-4"
           v-for="category in categoryData.filteredCategories"
           :key="category.id"
         >
@@ -72,6 +79,37 @@ import PaginatorComponent from '../components/PaginatorComponent.vue'
 
   <section class="border-danger-subtle">
     <img src="@/assets/images/homeimage.jpeg" alt="" class="w-100">
+  </section>
+
+  <section class="py-12 bg-white">
+    <div class="container-fluid px-4 w-100 m-0">
+      <SectionTitle
+        title-text="Produtos em Destaque"
+        title-description="Explore nosso grid completo de produtos oficiais da Fórmula 1 e encontre itens exclusivos das suas equipes e pilotos favoritos."
+        title-text-color="secondaryText"
+        subTitle-text-color="tertiaryText"
+      />
+      <div class="row g-4">
+        <div
+          class="col-12 col-md-4 col-lg-3"
+          v-for="product in productData.filteredProducts"
+          :key="product.id"
+        >
+          <ProductCardComponent
+            :product-name="product.name"
+            :product-image="imageStore.imageURL(product.image_path)"
+            :product-price="product.price"
+            :category-name="product.category.name"
+            @click="redirectProduct(product.id)"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-danger-subtle d-flex">
+    <img src="@/assets/images/verstappen.jpg" alt="" class="w-50">
+    <img src="@/assets/images/perez.jpg" alt="" class="w-50">
   </section>
 
   <section class="py-12 bg-white">

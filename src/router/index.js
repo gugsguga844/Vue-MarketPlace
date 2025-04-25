@@ -14,6 +14,7 @@ import EditAddress from '@/views/ProfileView/EditAddress.vue'
 import AdminUsers from '@/views/ProfileView/Admin/AdminUsers.vue'
 import AdminCategories from '@/views/ProfileView/Admin/AdminCategories.vue'
 import AdminProducts from '@/views/ProfileView/Admin/AdminProducts.vue'
+import ProductView from '../views/ProductView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -103,8 +104,14 @@ const router = createRouter({
       ],
       meta: {
         requiresAuth: true,
+        hideFooter: true,
       },
     },
+    {
+      path: '/product/:id',
+      name: 'product',
+      component: ProductView,
+    }
   ],
 })
 

@@ -32,6 +32,10 @@ import { Banknote, CreditCard, Facebook, Instagram, RussianRuble, Twitter, Walle
             <li><a href="#" class="text-secondary">Ajuda</a></li>
             <li><a href="#" class="text-secondary">Track Order</a></li>
             <li><a href="#" class="text-secondary">Size Chart</a></li>
+            <li><a href="#" class="text-secondary">My Account</a></li>
+            <li><a href="#" class="text-secondary">About Us</a></li>
+            <li><a href="#" class="text-secondary">Affiliate Program</a></li>
+            <li><a href="#" class="text-secondary">Contact Us</a></li>
           </ul>
         </div>
         <div class="col-6 col-md-3">
@@ -44,16 +48,16 @@ import { Banknote, CreditCard, Facebook, Instagram, RussianRuble, Twitter, Walle
             <li><a href="#" class="text-secondary">Terms & Conditions</a></li>
           </ul>
         </div>
-        <div class="col-3">
+        <div class="col-6 col-md-3 text-center">
           <ul class="d-flex flex-column align-items-center p-0 gap-4">
-            <li class="text-white fw-bold">Information</li>
-            <li><a href="#" class="text-secondary">My Account</a></li>
-            <li><a href="#" class="text-secondary">About Us</a></li>
-            <li><a href="#" class="text-secondary">Affiliate Program</a></li>
-            <li><a href="#" class="text-secondary">Contact Us</a></li>
+            <li class="text-white fw-bold"><h4>Receba nossas ofertas no E-mail</h4></li>
+            <form class="border-bottom">
+              <input class="p-3" type="email" placeholder="Seu melhor e-mail aqui">
+              <button type="submit"><i class="fa-solid fa-arrow-right fa-lg p-3" style="color: #ffffff;"></i></button>
+            </form>
           </ul>
         </div>
-        <div class="col-3">
+        <div class="col-6 col-md-3">
           <ul class="d-flex flex-column align-items-center p-0 gap-4">
             <li class="text-white fw-bold">Follow Us</li>
             <ul class="d-flex gap-4 p-0">
@@ -62,17 +66,6 @@ import { Banknote, CreditCard, Facebook, Instagram, RussianRuble, Twitter, Walle
               <li class="rounded-circle bg-danger p-2"><a href="#" class="text-white"><Twitter /></a></li>
               <li class="rounded-circle bg-danger p-2"><a href="#" class="text-white"><Youtube /></a></li>
             </ul>
-          </ul>
-        </div>
-      </div>
-      <div class="row pt-5">
-        <div class="col-12 text-center">
-          <ul class="d-flex flex-column align-items-center p-0 gap-4">
-            <li class="text-white fw-bold"><h4>Receba nossas ofertas no E-mail</h4></li>
-            <form class="border-bottom">
-              <input class="p-3" type="email" placeholder="Seu melhor e-mail aqui">
-              <button type="submit"><i class="fa-solid fa-arrow-right fa-lg p-3" style="color: #ffffff;"></i></button>
-            </form>
           </ul>
         </div>
       </div>

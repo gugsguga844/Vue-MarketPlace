@@ -225,7 +225,7 @@ export async function deleteCategory(id, token) {
 /* Product endpoints */
 export async function getProducts() {
   try {
-    const response = await api.get('/products')
+    const response = await api.get('/products/user/4')
     return response.data
   } catch (error) {
     console.error('Erro ao buscar itens: ', error)
@@ -242,6 +242,15 @@ export async function createProduct(payload, token) {
       }
     })
     return response
+  } catch (error) {
+    return error
+  }
+}
+
+export async function getProduct(product_id) {
+  try {
+    const response = await api.get(`/products/${product_id}`)
+    return response.data
   } catch (error) {
     return error
   }

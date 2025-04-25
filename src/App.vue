@@ -42,7 +42,7 @@ onMounted(async () => {
     <RouterView />
   </main>
 
-  <FooterComponent v-if="!route.meta.hideNav" />
+  <FooterComponent v-if="!route.meta.hideFooter" />
 </template>
 
 <style scoped></style>

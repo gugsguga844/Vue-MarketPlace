@@ -21,7 +21,7 @@ defineProps(['productName', 'productImage', 'productPrice', 'categoryName'])
         <h6 class="product-name text-dark mb-2">{{ productName }}</h6>
       </div>
       <div class="mb-2">
-        <span class="h4 text-danger">R${{ productPrice }}</span>
+        <span class="h5 text-danger">R${{ productPrice }}</span>
       </div>
     </div>
   </div>
@@ -60,9 +60,14 @@ defineProps(['productName', 'productImage', 'productPrice', 'categoryName'])
   width: 100%;
   height: 100%;
   max-height: 210px;
-  object-fit: cover;
+  object-fit: contain;
   aspect-ratio: 4/3;
   display: block;
-  background: #f8f9fa;
+  background: #ffffff;
+  transition: 0.2s;
+}
+
+.product-img:hover {
+  transform: scale(1.07);
 }
 </style>
