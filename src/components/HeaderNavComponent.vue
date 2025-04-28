@@ -3,6 +3,7 @@
 // import { ChevronDown, Heart, Menu, ShoppingBag, Search, Store, ShoppingCart, User, X } from 'lucide-vue-next'
 import { useAuthStore } from '@/stores/auth'
 import { Heart, Search, ShoppingCart, Menu } from 'lucide-vue-next'
+import CartComponent from './CartComponent.vue'
 
 const auth = useAuthStore()
 </script>
@@ -109,7 +110,13 @@ const auth = useAuthStore()
                   <a class="nav-link active text-white" aria-current="page" href="#"> <Heart /></a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link text-white" href="#"><ShoppingCart /></a>
+                  <button
+                    class="nav-link text-white"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasWithBothOptions"
+                    aria-controls="offcanvasWithBothOptions">
+                    <ShoppingCart /></button>
                 </li>
               </ul>
               <div v-if="!auth.isAuthenticated" class="d-flex mt-3 justify-content-center gap-4">
@@ -156,6 +163,7 @@ const auth = useAuthStore()
         </div>
       </div>
     </nav>
+    <CartComponent />
   </header>
 </template>
 

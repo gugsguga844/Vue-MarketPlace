@@ -15,7 +15,7 @@ export const useCategoryStore = defineStore(
 
     async function saveCategories() {
       const token = auth.token
-      const apiResult = await getCategories(token, auth.user.id)
+      const apiResult = await getCategories()
       categories.value = apiResult
       console.log(apiResult)
       console.log(categories)

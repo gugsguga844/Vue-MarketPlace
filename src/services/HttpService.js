@@ -155,13 +155,9 @@ export async function deleteAddress(id, token) {
 }
 
 /* Category endpoints */
-export async function getCategories(token, user_id) {
+export async function getCategories() {
   try {
-    const response = await api.get(`/categories/user/${user_id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    const response = await api.get('/categories/user/4')
     return response.data
   } catch (error) {
     console.error('Erro ao buscar itens: ', error)
@@ -251,6 +247,59 @@ export async function getProduct(product_id) {
   try {
     const response = await api.get(`/products/${product_id}`)
     return response.data
+  } catch (error) {
+    return error
+  }
+}
+
+/* Cart endpoints */
+export async function getCart(token) {
+  try {
+    const response = await api.get('/cart', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export async function createCart(token) {
+  try {
+    const response = await api.post('/cart', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export async function getCartItems(token) {
+  try {
+    const response = await api.get('/cart/items', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (error) {
+    return error
+  }
+}
+
+export async function addCartItem(token, payload) {
+  try {
+    const response = await api.post('/cart/items', payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
   } catch (error) {
     return error
   }

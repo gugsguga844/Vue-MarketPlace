@@ -1,11 +1,14 @@
 <script setup>
 import { Star } from 'lucide-vue-next'
+import { useFormatPriceStore } from '@/stores/formatPrice'
+
+const formatPrice = useFormatPriceStore()
 
 defineProps(['productName', 'productImage', 'productPrice', 'categoryName'])
 </script>
 
 <template>
-  <div class="product-card rounded-3 shadow-sm bg-white border shadow-md text-dark h-100 d-flex flex-column">
+  <div class="product-card rounded-3 bg-white border shadow-md text-dark h-100 d-flex flex-column">
     <div class="product-card-img bg-light d-flex align-items-center justify-content-center">
       <img alt="" class="product-img" :src="productImage" />
     </div>
@@ -21,7 +24,7 @@ defineProps(['productName', 'productImage', 'productPrice', 'categoryName'])
         <h6 class="product-name text-dark mb-2">{{ productName }}</h6>
       </div>
       <div class="mb-2">
-        <span class="h5 text-danger">R${{ productPrice }}</span>
+        <span class="h5 text-danger">R${{ formatPrice.formatPrice(productPrice) }}</span>
       </div>
     </div>
   </div>

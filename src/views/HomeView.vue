@@ -32,7 +32,7 @@ import PaginatorComponent from '../components/PaginatorComponent.vue'
 </script>
 
 <template>
-  <section class="bg-white py-10 py-lg-20 border-bottom border-black">
+  <section class="bg-white py-10 py-lg-20">
     <div class="row container mx-auto">
       <div class="col-12 col-md-6">
         <div class="home-card-title">
@@ -57,7 +57,7 @@ import PaginatorComponent from '../components/PaginatorComponent.vue'
     </div>
   </section>
 
-  <section class="py-12 bg-light">
+  <section class="py-12 bg-body-secondary">
     <div class="container-fluid px-4 w-100 m-0">
       <SectionTitle
         title-text="Categorias de Produtos"
@@ -75,10 +75,6 @@ import PaginatorComponent from '../components/PaginatorComponent.vue'
         <PaginatorComponent />
       </div>
     </div>
-  </section>
-
-  <section class="border-danger-subtle">
-    <img src="@/assets/images/homeimage.jpeg" alt="" class="w-100">
   </section>
 
   <section class="py-12 bg-white">
@@ -107,10 +103,11 @@ import PaginatorComponent from '../components/PaginatorComponent.vue'
     </div>
   </section>
 
-  <section class="border-danger-subtle d-flex">
-    <img src="@/assets/images/verstappen.jpg" alt="" class="w-50">
-    <img src="@/assets/images/perez.jpg" alt="" class="w-50">
+  <section class="border-danger-subtle">
+    <img src="@/assets/images/homeimage.jpeg" alt="" class="w-100">
   </section>
+
+
 
   <section class="py-12 bg-white">
     <div class="container-fluid px-4 w-100 m-0">
@@ -135,6 +132,11 @@ import PaginatorComponent from '../components/PaginatorComponent.vue'
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="border-danger-subtle d-flex">
+    <img src="@/assets/images/verstappen.jpg" alt="" class="w-50">
+    <img src="@/assets/images/perez.jpg" alt="" class="w-50">
   </section>
 </template>
 

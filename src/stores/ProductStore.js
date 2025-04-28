@@ -22,7 +22,7 @@ export const useProductStore = defineStore(
 
     async function saveProduct(product_id) {
       const result = await getProduct(product_id)
-      product.value = result.data
+      product.value = result
     }
 
     function saveNewProduct(product) {
