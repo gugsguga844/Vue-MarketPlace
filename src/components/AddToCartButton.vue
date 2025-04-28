@@ -1,7 +1,7 @@
 <script setup>
 import { ShoppingCart } from 'lucide-vue-next'
 import { useCartStore } from '@/stores/CartStore'
-import { addCartItem } from '@/services/HttpService'
+import { addCartItem, updateQuantity } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
 import { useToast } from 'vue-toastification'
 
@@ -17,16 +17,32 @@ async function addToCart() {
     unit_price: props.product.price,
     quantity: props.quantity
   }
-  const response = await addCartItem(token, payload)
 
-  if (response.status === 204) {
-    toast.success('Produto adicionado ao carrinho')
-    cart.insertIntoCart(props.product)
-    console.log(cart.cartItems)
+  const updatePayload = {
+    product_id: props.product.id,
+    quantity: props.quantity
+  }
+  if (cart.cartItems && cart.cartItems.items && cart.cartItems.items.some(item => item.product_id === props.product.id)) {
+    const response = await updateQuantity(token, updatePayload)
+
+    if (response.status === 204) {
+      toast.success('Produto atualizado no carrinho')
+      cart.saveCartItems()
+    } else {
+      toast.error('Erro ao atualizar produto no carrinho')
+    }
+  } else {
+    const response = await addCartItem(token, payload)
+
+    if (response.status === 204) {
+      toast.success('Produto adicionado ao carrinho')
+      console.log(cart.cartItems)
+      cart.saveCartItems()
   } else {
     console.log('Erro ao adicionar produto ao carrinho', response, props.product)
     toast.error('Erro ao adicionar produto ao carrinho')
   }
+}
 }
 </script>
 

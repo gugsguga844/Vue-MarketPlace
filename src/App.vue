@@ -5,16 +5,20 @@ import { onMounted } from 'vue'
 import { renewToken, verifyToken } from './services/HttpService'
 import { useAuthStore } from './stores/auth'
 import FooterComponent from './components/FooterComponent.vue'
+import { useCartStore } from './stores/CartStore'
 
 const route = useRoute()
 
 const auth = useAuthStore()
 
 onMounted(async () => {
+  const cart = useCartStore()
   console.log('Token antes da verificação:', auth.token)
   console.log(auth.rememberUser)
   console.log(auth.user)
   console.log(auth.isAuthenticated)
+  cart.saveCart()
+  cart.saveCartItems()
 
   if (auth.token) {
     const token = auth.token

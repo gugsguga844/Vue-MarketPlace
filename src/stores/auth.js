@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { useCartStore } from './CartStore'
 
 export const useAuthStore = defineStore(
   'auth',
@@ -8,6 +9,7 @@ export const useAuthStore = defineStore(
     const user = ref({})
     const isAuthenticated = ref(false)
     const rememberUser = ref(false)
+    const cart = useCartStore()
 
     console.log('Carregando auth store:', {
       token: token.value,
@@ -31,6 +33,7 @@ export const useAuthStore = defineStore(
       user.value = {}
       isAuthenticated.value = false
       rememberUser.value = false
+      cart.cartItems.items = []
     }
 
     function renewToken(newToken) {

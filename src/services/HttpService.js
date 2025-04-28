@@ -304,3 +304,16 @@ export async function addCartItem(token, payload) {
     return error
   }
 }
+
+export async function updateQuantity(token, payload) {
+  try {
+    const response = await api.put('/cart/items', payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}

@@ -2,6 +2,7 @@ import { getCart, createCart, getCartItems } from '@/services/HttpService'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import { useProductStore } from '@/stores/ProductStore'
 
 export const useCartStore = defineStore(
   'cart',
@@ -9,6 +10,7 @@ export const useCartStore = defineStore(
     const cart = ref({})
     const token = useAuthStore().token
     const cartItems = ref([])
+    const useProducts = useProductStore()
 
     async function saveCart() {
       const result = await getCart(token)
@@ -27,14 +29,12 @@ export const useCartStore = defineStore(
 
     async function saveCartItems() {
       const result = await getCartItems(token)
+      console.log(result)
       cartItems.value = result
+      console.log('Carrinho: ', cartItems.value)
     }
 
-    function insertIntoCart(payload) {
-      cartItems.value = [...cartItems.value, payload]
-    }
-
-    return { cart, saveCart, createNewCart, saveCartItems, cartItems, insertIntoCart }
+    return { cart, saveCart, createNewCart, saveCartItems, cartItems }
   },
   { persist: true },
 )
