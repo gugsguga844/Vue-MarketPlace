@@ -317,3 +317,20 @@ export async function updateQuantity(token, payload) {
     return error
   }
 }
+
+export async function deleteCartItem(token, product_id) {
+  try {
+    const response = await api.delete('/cart/items', {
+      data: {
+        product_id
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+

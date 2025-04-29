@@ -14,14 +14,14 @@ const auth = useAuthStore()
 onMounted(async () => {
   const cart = useCartStore()
   console.log('Token antes da verificação:', auth.token)
-  console.log(auth.rememberUser)
-  console.log(auth.user)
-  console.log(auth.isAuthenticated)
-  cart.saveCart()
-  cart.saveCartItems()
+  console.log('Lembrar? ', auth.rememberUser)
+  console.log('Usuário: ', auth.user)
+  console.log('Tá autenticado? ', auth.isAuthenticated)
 
-  if (auth.token) {
+  if (auth.isAuthenticated) {
     const token = auth.token
+    cart.saveCart()
+    cart.saveCartItems()
     const response = await verifyToken(token)
     console.log('Remember:', auth.rememberUser)
 

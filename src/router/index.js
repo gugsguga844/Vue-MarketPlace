@@ -8,13 +8,14 @@ import { useAuthStore } from '@/stores/auth'
 import ProfileAddresses from '@/views/ProfileView/ProfileAddresses.vue'
 import ProfileAdmin from '@/views/ProfileView/ProfileAdmin.vue'
 import AddAddress from '@/views/ProfileView/AddAddress.vue'
-import ApiChecklist from '@/views/ProfileView/ApiChecklist.vue'
 import ProfileSecurity from '@/views/ProfileView/ProfileSecurity.vue'
 import EditAddress from '@/views/ProfileView/EditAddress.vue'
 import AdminUsers from '@/views/ProfileView/Admin/AdminUsers.vue'
 import AdminCategories from '@/views/ProfileView/Admin/AdminCategories.vue'
 import AdminProducts from '@/views/ProfileView/Admin/AdminProducts.vue'
 import ProductView from '../views/ProductView.vue'
+import AdminDiscounts from '@/views/ProfileView/Admin/AdminDiscounts.vue'
+import CartView from '@/views/CartView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,11 @@ const router = createRouter({
       meta: {
         hideNav: true,
       },
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: CartView,
     },
     {
       path: '/profile',
@@ -77,18 +83,17 @@ const router = createRouter({
               name: 'adminProducts',
               component: AdminProducts,
             },
-
+            {
+              path: 'adminDiscounts',
+              name: 'adminDiscounts',
+              component: AdminDiscounts,
+            },
           ],
         },
         {
           path: 'addAddress',
           name: 'addAddress',
           component: AddAddress,
-        },
-        {
-          path: 'apiChecklist',
-          name: 'apiChecklist',
-          component: ApiChecklist,
         },
         {
           path: 'security',

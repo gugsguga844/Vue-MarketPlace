@@ -87,12 +87,6 @@ const auth = useAuthStore()
             ><span class="ms-2 d-none d-sm-inline">Admin</span>
           </RouterLink>
         </li>
-        <li class="nav-item" v-if="auth.user.role === 'ADMIN'">
-          <RouterLink to="/profile/apiChecklist" class="nav-link px-sm-0 px-2">
-            <i class="fs-5 bi bi-person-add"></i
-            ><span class="ms-2 d-none d-sm-inline">Checklist</span>
-          </RouterLink>
-        </li>
         <li class="nav-item">
           <RouterLink href="#" class="nav-link px-sm-0 px-2 text-danger fw-bold">
             <i class="fs-5 bi bi-box-arrow-right"></i>

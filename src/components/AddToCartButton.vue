@@ -18,36 +18,44 @@ async function addToCart() {
     quantity: props.quantity
   }
 
-  const updatePayload = {
-    product_id: props.product.id,
-    quantity: props.quantity
-  }
-  if (cart.cartItems && cart.cartItems.items && cart.cartItems.items.some(item => item.product_id === props.product.id)) {
-    const response = await updateQuantity(token, updatePayload)
+  const existingItem = cart.cartItems.items
+    ? cart.cartItems.items.find(item => item.product_id === props.product.id)
+    : null;
+
+  if (existingItem) {
+    const newQuantity = existingItem.quantity + props.quantity;
+    const updatePayload = {
+      product_id: props.product.id,
+      quantity: newQuantity
+    };
+    const response = await updateQuantity(token, updatePayload);
 
     if (response.status === 204) {
-      toast.success('Produto atualizado no carrinho')
-      cart.saveCartItems()
+      cart.saveCartItems();
     } else {
-      toast.error('Erro ao atualizar produto no carrinho')
+      toast.error('Erro ao atualizar produto');
     }
   } else {
     const response = await addCartItem(token, payload)
 
     if (response.status === 204) {
       toast.success('Produto adicionado ao carrinho')
-      console.log(cart.cartItems)
       cart.saveCartItems()
-  } else {
-    console.log('Erro ao adicionar produto ao carrinho', response, props.product)
-    toast.error('Erro ao adicionar produto ao carrinho')
+    } else {
+      toast.error('Erro ao adicionar produto ao carrinho')
+    }
   }
-}
 }
 </script>
 
 <template>
-  <button @click="addToCart" class="rounded-3 bg-danger p-3 d-flex gap-2 text-white w-100 justify-content-center">
+  <button
+    @click="addToCart"
+    class="rounded-3 bg-danger p-3 d-flex gap-2 text-white w-100 justify-content-center nav-link"
+    type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasWithBothOptions"
+    aria-controls="offcanvasWithBothOptions">
     <ShoppingCart />
     <span>Adicionar ao Carrinho</span>
   </button>
