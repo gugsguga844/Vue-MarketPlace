@@ -31,6 +31,7 @@ const router = createRouter({
       component: RegisterView,
       meta: {
         hideNav: true,
+        hideFooter: true,
       },
     },
     {
@@ -39,6 +40,7 @@ const router = createRouter({
       component: LoginView,
       meta: {
         hideNav: true,
+        hideFooter: true,
       },
     },
     {
