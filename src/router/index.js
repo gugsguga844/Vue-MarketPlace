@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import RegisterView from '@/views/RegisterView.vue'
-import LoginView from '@/views/LoginView.vue'
 import ProfileView from '@/views/ProfileView/ProfileView.vue'
 import ProfileData from '@/views/ProfileView/ProfileData.vue'
 import { useAuthStore } from '@/stores/auth'
@@ -28,7 +26,7 @@ const router = createRouter({
     {
       path: '/register',
       name: 'register',
-      component: RegisterView,
+      component: () => import('@/views/AuthView.vue'),
       meta: {
         hideNav: true,
         hideFooter: true,
@@ -37,7 +35,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: LoginView,
+      component: () => import('@/views/AuthView.vue'),
       meta: {
         hideNav: true,
         hideFooter: true,
