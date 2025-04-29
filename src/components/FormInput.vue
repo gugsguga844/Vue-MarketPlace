@@ -4,7 +4,7 @@ const model = defineModel()
 </script>
 
 <template>
-  <div class="form-field d-flex flex-column">
+  <div class="form-field d-flex flex-column mb-4">
     <label class="text-start fw-bold mb-2" :for="inputFor"
       ><i :class="labelIcon"></i> {{ formLabel }}
     </label>

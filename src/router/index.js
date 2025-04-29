@@ -6,10 +6,16 @@ import ProfileView from '@/views/ProfileView/ProfileView.vue'
 import ProfileData from '@/views/ProfileView/ProfileData.vue'
 import { useAuthStore } from '@/stores/auth'
 import ProfileAddresses from '@/views/ProfileView/ProfileAddresses.vue'
-import AddModeratorView from '@/views/ProfileView/AddModeratorView.vue'
+import ProfileAdmin from '@/views/ProfileView/ProfileAdmin.vue'
 import AddAddress from '@/views/ProfileView/AddAddress.vue'
-import ApiChecklist from '@/views/ProfileView/ApiChecklist.vue'
 import ProfileSecurity from '@/views/ProfileView/ProfileSecurity.vue'
+import EditAddress from '@/views/ProfileView/EditAddress.vue'
+import AdminUsers from '@/views/ProfileView/Admin/AdminUsers.vue'
+import AdminCategories from '@/views/ProfileView/Admin/AdminCategories.vue'
+import AdminProducts from '@/views/ProfileView/Admin/AdminProducts.vue'
+import ProductView from '../views/ProductView.vue'
+import AdminDiscounts from '@/views/ProfileView/Admin/AdminDiscounts.vue'
+import CartView from '@/views/CartView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,6 +31,7 @@ const router = createRouter({
       component: RegisterView,
       meta: {
         hideNav: true,
+        hideFooter: true,
       },
     },
     {
@@ -33,7 +40,13 @@ const router = createRouter({
       component: LoginView,
       meta: {
         hideNav: true,
+        hideFooter: true,
       },
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: CartView,
     },
     {
       path: '/profile',
@@ -52,9 +65,32 @@ const router = createRouter({
           component: ProfileAddresses,
         },
         {
-          path: 'addModerator',
-          name: 'addModerator',
-          component: AddModeratorView,
+          path: 'admin',
+          name: 'admin',
+          component: ProfileAdmin,
+          redirect: '/profile/admin/adminUsers',
+          children: [
+            {
+              path: 'adminUsers',
+              name: 'adminUsers',
+              component: AdminUsers,
+            },
+            {
+              path: 'adminCategories',
+              name: 'adminCategories',
+              component: AdminCategories,
+            },
+            {
+              path: 'adminProducts',
+              name: 'adminProducts',
+              component: AdminProducts,
+            },
+            {
+              path: 'adminDiscounts',
+              name: 'adminDiscounts',
+              component: AdminDiscounts,
+            },
+          ],
         },
         {
           path: 'addAddress',
@@ -62,20 +98,27 @@ const router = createRouter({
           component: AddAddress,
         },
         {
-          path: 'apiChecklist',
-          name: 'apiChecklist',
-          component: ApiChecklist,
-        },
-        {
           path: 'security',
           name: 'security',
           component: ProfileSecurity,
         },
+        {
+          path: 'editAddress',
+          name: 'editAddress',
+          component: EditAddress,
+          props: true,
+        },
       ],
       meta: {
         requiresAuth: true,
+        hideFooter: true,
       },
     },
+    {
+      path: '/product/:id',
+      name: 'product',
+      component: ProductView,
+    }
   ],
 })
 

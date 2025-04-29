@@ -1,6 +1,6 @@
 <script setup>
 import ButtonComponent from '@/components/ButtonComponent.vue'
-import { deleteAddress } from '@/services/HttpService'
+import { deleteAddress, getAddress } from '@/services/HttpService'
 import { useAddressStore } from '@/stores/AdressStore'
 import { useAuthStore } from '@/stores/auth'
 import { onMounted } from 'vue'
@@ -30,6 +30,25 @@ async function removeAddress(address_id) {
     alert('Erro ao deletar endereço')
   }
 }
+
+async function editAddress(address_id) {
+  const token = auth.token
+  const response = await getAddress(address_id, token)
+
+  if (response.status === 200) {
+    useAddresses.saveAddress(response.data)
+    router.push({ name: 'editAddress', params: { id: address_id } })
+  }
+}
+
+function defineMainAddress(address_id) {
+  useAddresses.saveMainAddress(address_id)
+}
+
+function isMainAddress(address_id) {
+  return useAddresses.checkMainAddress(address_id)
+}
+
 
 onMounted(() => {
   useAddresses.saveAddresses(auth.token)
@@ -68,11 +87,11 @@ onMounted(() => {
                     {{ address.state }}, {{ address.zip }}
                   </p>
                   <div class="buttons d-flex gap-2">
-                    <button class="border-1 border-dark-subtle rounded-3 px-3 fs-7">
+                    <button @click.prevent="editAddress(address.id)" class="border-1 border-dark-subtle rounded-3 px-3 fs-7">
                       <i class="bi bi-pencil-square"></i>
                       <span class=""> Editar</span>
                     </button>
-                    <button class="border-1 border-dark-subtle p-2 rounded-3 px-3 fs-7">
+                    <button @click.prevent="defineMainAddress(address.id)" class="border-1 border-dark-subtle p-2 rounded-3 px-3 fs-7">
                       <i class="bi bi-pencil-square"></i>
                       <span class=""> Definir como padrão</span>
                     </button>
@@ -81,6 +100,9 @@ onMounted(() => {
                       <span class=""> Remover</span>
                     </button>
                   </div>
+                </div>
+                <div v-if="isMainAddress(address.id)" class="d-flex align-items-start">
+                  <span class="bg-black text-white px-3 py-1 rounded-5">Padrão</span>
                 </div>
               </div>
             </div>

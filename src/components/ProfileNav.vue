@@ -6,7 +6,7 @@ const auth = useAuthStore()
 
 <template>
   <div
-    class="col-12 fixed vh-100 col-sm-2 col-xl-2 border-2 border-top-0 border-dark border-opacity-10 px-sm-2 px-0 d-flex z-0 overflow-hidden"
+    class="col-12 fixed vh-100 col-sm-2 col-xl-2 border-3 border-top-0 border-dark border-opacity-10 px-sm-2 px-0 d-flex z-0 overflow-hidden"
   >
     <div
       class="d-flex flex-column flex-row align-items-center align-items-sm-start px-2 pt-2 text-white w-100"
@@ -35,7 +35,7 @@ const auth = useAuthStore()
         id="menu"
       >
         <li class="nav-item">
-          <RouterLink to="profileData" href="#" class="nav-link px-sm-0 px-2">
+          <RouterLink to="/profile/profileData" href="#" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi-house"></i><span class="ms-2 d-none d-sm-inline">Dados Pessoais</span>
           </RouterLink>
         </li>
@@ -53,7 +53,7 @@ const auth = useAuthStore()
         </li>
 
         <li class="nav-item">
-          <RouterLink to="addresses" class="nav-link px-sm-0 px-2">
+          <RouterLink to="/profile/addresses" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-geo-alt"></i
             ><span class="ms-2 d-none d-sm-inline">Endereços</span></RouterLink
           >
@@ -71,7 +71,7 @@ const auth = useAuthStore()
           </RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="security" class="nav-link px-sm-0 px-2">
+          <RouterLink to="/profile/security" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-lock"></i><span class="ms-2 d-none d-sm-inline">Segurança</span>
           </RouterLink>
         </li>
@@ -82,15 +82,9 @@ const auth = useAuthStore()
           </RouterLink>
         </li>
         <li class="nav-item" v-if="auth.user.role === 'ADMIN'">
-          <RouterLink to="addModerator" class="nav-link px-sm-0 px-2">
+          <RouterLink to="/profile/admin" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-person-add"></i
-            ><span class="ms-2 d-none d-sm-inline">Moderador</span>
-          </RouterLink>
-        </li>
-        <li class="nav-item" v-if="auth.user.role === 'ADMIN'">
-          <RouterLink to="apiChecklist" class="nav-link px-sm-0 px-2">
-            <i class="fs-5 bi bi-person-add"></i
-            ><span class="ms-2 d-none d-sm-inline">Checklist</span>
+            ><span class="ms-2 d-none d-sm-inline">Admin</span>
           </RouterLink>
         </li>
         <li class="nav-item">

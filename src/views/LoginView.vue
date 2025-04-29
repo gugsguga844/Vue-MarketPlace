@@ -5,11 +5,13 @@ import { login } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
 
 const email = ref('')
 const password = ref('')
 const router = useRouter()
 const remember = ref(false)
+const toast = useToast()
 
 const auth = useAuthStore()
 
@@ -18,9 +20,8 @@ async function sendForm() {
   const result = await login({ email: email.value, password: password.value })
 
   if (result.status === 200) {
-    console.log(result.status)
-    alert('Login sucesso')
     auth.saveUser(result.data)
+    toast.success(`Ótimas compras ${auth.user.name}`)
 
     router.push({
       name: 'home',
@@ -29,8 +30,7 @@ async function sendForm() {
       auth.rememberUser = true
     }
   } else {
-    alert('Login falhou')
-    router.push('/')
+    toast.error('Login falhou')
   }
 }
 
@@ -48,7 +48,7 @@ function redirect() {
         <form @submit.prevent="sendForm" class="w-100">
           <h2 class="h1 fw-bold">Acesse sua conta</h2>
           <div class="form-inputs my-5">
-            <div class="row mb-4">
+            <div class="row">
               <div class="col-12">
                 <FormInput
                   label-icon="bi bi-envelope"
@@ -60,7 +60,7 @@ function redirect() {
                 />
               </div>
             </div>
-            <div class="row mb-4">
+            <div class="row">
               <div class="col-12">
                 <FormInput
                   label-icon="bi bi-lock"

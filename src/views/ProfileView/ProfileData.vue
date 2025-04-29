@@ -2,7 +2,7 @@
 import ButtonComponent from '@/components/ButtonComponent.vue'
 import FormInput from '@/components/FormInput.vue'
 import ImageCropperModal from '@/components/ImageCropperModal.vue'
-import { deleteUser, updateUser, uploadImage } from '@/services/HttpService'
+import { updateUser, uploadImage } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
 
@@ -41,13 +41,13 @@ function checkChanges() {
 
 async function update() {
   const changes = checkChanges()
-  console.log('Mudanças: ', changes)
+  console.log('Mudanças: ', payload)
   const token = auth.token
 
   if (Object.keys(changes).length > 0) {
     const result = await updateUser(changes, token)
 
-  if (result.status === 200) {
+    if (result.status === 200) {
       alert('Login sucesso')
       console.log(result.data)
       auth.saveUpdatedUser(result.data)
@@ -58,16 +58,6 @@ async function update() {
 function handleSubmit() {
   update()
   updateProfileImage()
-}
-
-async function deleteAccount() {
-  const result = await deleteUser(auth.token)
-
-  if (result.status === 204) {
-    console.log(result.status)
-    alert('Usuario Deletado')
-    auth.logout()
-  }
 }
 
 function getUserImage(path) {
@@ -176,13 +166,7 @@ function handleCroppedImage(blob) {
         </div>
       </div>
       <div class="row mt-5">
-        <div class="col-12 d-flex justify-content-between">
-          <ButtonComponent
-            @click.prevent="deleteAccount"
-            class="border-1"
-            button-style="buttonDelete bigRadius"
-            button-text="Excluir Conta"
-          />
+        <div class="col-12 d-flex justify-content-end">
           <ButtonComponent
             button-type="submit"
             button-style="buttonBlack bigRadius"

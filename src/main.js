@@ -1,8 +1,9 @@
 import './assets/main.css'
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/js/bootstrap.bundle.js'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap-accessibility-plugin'
+import './assets/custom-bootstrap.scss'
 import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
 
@@ -20,6 +21,9 @@ pinia.use(piniaPluginPersistedstate)
 
 app.use(pinia)
 app.use(router)
-app.use(Toast)
+app.use(Toast, {
+  pauseOnFocusLoss: false,
+  pauseOnHover: false,
+})
 
 app.mount('#app')

@@ -4,22 +4,30 @@ import HeaderNavComponent from './components/HeaderNavComponent.vue'
 import { onMounted } from 'vue'
 import { renewToken, verifyToken } from './services/HttpService'
 import { useAuthStore } from './stores/auth'
+import FooterComponent from './components/FooterComponent.vue'
+import { useCartStore } from './stores/CartStore'
 
 const route = useRoute()
 
 const auth = useAuthStore()
 
 onMounted(async () => {
+  const cart = useCartStore()
   console.log('Token antes da verificação:', auth.token)
-  console.log(auth.rememberUser)
-  console.log(auth.user)
-  console.log(auth.isAuthenticated)
+  console.log('Lembrar? ', auth.rememberUser)
+  console.log('Usuário: ', auth.user)
+  console.log('Tá autenticado? ', auth.isAuthenticated)
 
-  if (auth.token) {
-    const response = await verifyToken(auth.token)
+  if (auth.isAuthenticated) {
+    const token = auth.token
+    cart.saveCart()
+    cart.saveCartItems()
+    const response = await verifyToken(token)
+    console.log('Remember:', auth.rememberUser)
 
-    if (response.status !== 200 && auth.rememberUser == true) {
+    if (response.status === 401 && auth.rememberUser === true) {
       const renewResponse = await renewToken(auth.token)
+      console.log('Renew Response:', renewResponse)
 
       if (renewResponse.status === 200) {
         auth.renewToken(renewResponse.data)
@@ -37,6 +45,8 @@ onMounted(async () => {
   <main>
     <RouterView />
   </main>
+
+  <FooterComponent v-if="!route.meta.hideFooter" />
 </template>
 
 <style scoped></style>
