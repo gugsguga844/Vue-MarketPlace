@@ -41,6 +41,15 @@ async function editAddress(address_id) {
   }
 }
 
+function defineMainAddress(address_id) {
+  useAddresses.saveMainAddress(address_id)
+}
+
+function isMainAddress(address_id) {
+  return useAddresses.checkMainAddress(address_id)
+}
+
+
 onMounted(() => {
   useAddresses.saveAddresses(auth.token)
   console.log(useAddresses.addresses)
@@ -82,7 +91,7 @@ onMounted(() => {
                       <i class="bi bi-pencil-square"></i>
                       <span class=""> Editar</span>
                     </button>
-                    <button class="border-1 border-dark-subtle p-2 rounded-3 px-3 fs-7">
+                    <button @click.prevent="defineMainAddress(address.id)" class="border-1 border-dark-subtle p-2 rounded-3 px-3 fs-7">
                       <i class="bi bi-pencil-square"></i>
                       <span class=""> Definir como padrão</span>
                     </button>
@@ -91,6 +100,9 @@ onMounted(() => {
                       <span class=""> Remover</span>
                     </button>
                   </div>
+                </div>
+                <div v-if="isMainAddress(address.id)" class="d-flex align-items-start">
+                  <span class="bg-black text-white px-3 py-1 rounded-5">Padrão</span>
                 </div>
               </div>
             </div>

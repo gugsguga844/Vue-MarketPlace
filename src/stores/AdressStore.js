@@ -9,6 +9,8 @@ export const useAddressStore = defineStore(
     const address = ref({})
     const addresses = ref([])
     const countries = ref([])
+    const mainAddress = ref({})
+    const orderAddress = ref({})
 
     async function saveAddress(addressData) {
       address.value = addressData
@@ -28,7 +30,33 @@ export const useAddressStore = defineStore(
       countries.value = response.data.data.map(item => item.country)
     }
 
-    return { addresses, address, saveAddress,saveAddresses, removeArrayAddress, countries, saveCountries }
+    function saveMainAddress(address_id) {
+      mainAddress.value = addresses.value.find(address => address.id === address_id)
+      console.log('Endereço padrão: ', mainAddress.value)
+    }
+
+    function checkMainAddress(address_id) {
+      return mainAddress.value.id === address_id
+    }
+
+    function selectedAddress(address_id) {
+      orderAddress.value = addresses.value.find(address => address.id === address_id)
+    }
+
+    return {
+      addresses,
+      address,
+      saveMainAddress,
+      mainAddress,
+      checkMainAddress,
+      saveAddress,
+      saveAddresses,
+      removeArrayAddress,
+      countries,
+      saveCountries,
+      selectedAddress,
+      orderAddress
+    }
   },
   { persist: true },
 )
