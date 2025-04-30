@@ -1,78 +1,3 @@
-<template>
-  <div class="login-bg d-flex align-items-center justify-content-center min-vh-100">
-    <div class="container py-4">
-      <div class="row justify-content-center align-items-center">
-        <div class="col-12 col-md-8 col-lg-5">
-          <div class="card shadow-lg border-0 rounded-4 p-4 p-lg-5 bg-light">
-            <div class="text-center mb-4">
-              <img src="@/assets/images/f1-logo.png" alt="F1 Market" class="login-logo mb-3" />
-              <h1 class="fw-bold text-danger mb-1">F1 Market</h1>
-              <div class="text-secondary mb-2">Acesse sua conta ou cadastre-se</div>
-            </div>
-            <div class="d-flex justify-content-center mb-4">
-              <button :class="['btn', activeTab==='login' ? 'btn-danger' : 'btn-outline-danger', 'me-2', 'fw-bold']" @click="activeTab='login'">Entrar</button>
-              <button :class="['btn', activeTab==='register' ? 'btn-danger' : 'btn-outline-danger', 'fw-bold']" @click="activeTab='register'">Cadastrar</button>
-            </div>
-            <form v-if="activeTab==='login'" @submit.prevent="sendForm">
-              <div class="mb-3">
-                <label for="email" class="form-label text-secondary">E-mail</label>
-                <input v-model="email" type="email" class="form-control form-control-lg rounded-3" id="email" placeholder="seu@email.com" required />
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label text-secondary">Senha</label>
-                <input v-model="password" type="password" class="form-control form-control-lg rounded-3" id="password" placeholder="********" required />
-              </div>
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="remember" v-model="remember" />
-                  <label class="form-check-label text-secondary" for="remember">Permanecer conectado</label>
-                </div>
-                <RouterLink to="/" class="text-danger small fw-semibold">Esqueci minha senha</RouterLink>
-              </div>
-              <button type="submit" class="btn btn-danger w-100 py-2 fw-bold shadow-sm mb-3">Entrar</button>
-              <div class="text-center text-secondary mb-2">ou entre com</div>
-              <div class="d-flex justify-content-center gap-3 mb-3">
-                <button type="button" class="btn btn-outline-primary rounded-circle p-2 border-0"><i class="bi bi-facebook fs-4"></i></button>
-                <button type="button" class="btn btn-outline-danger rounded-circle p-2 border-0"><img src="@/assets/images/google.svg" width="28" alt="Google" /></button>
-                <button type="button" class="btn btn-outline-dark rounded-circle p-2 border-0"><i class="bi bi-twitter-x fs-4"></i></button>
-              </div>
-            </form>
-            <form v-else @submit.prevent="sendRegister">
-              <div class="mb-3">
-                <label for="name" class="form-label text-secondary">Nome</label>
-                <input v-model="name" type="text" class="form-control form-control-lg rounded-3" id="name" placeholder="Seu nome" required />
-              </div>
-              <div class="mb-3">
-                <label for="emailRegister" class="form-label text-secondary">E-mail</label>
-                <input v-model="emailRegister" type="email" class="form-control form-control-lg rounded-3" id="emailRegister" placeholder="seu@email.com" required />
-              </div>
-              <div class="mb-3">
-                <label for="passwordRegister" class="form-label text-secondary">Senha</label>
-                <input v-model="passwordRegister" type="password" class="form-control form-control-lg rounded-3" id="passwordRegister" placeholder="********" required />
-              </div>
-              <div class="mb-3">
-                <label for="passwordConfirm" class="form-label text-secondary">Confirme a Senha</label>
-                <input v-model="passwordConfirm" type="password" class="form-control form-control-lg rounded-3" id="passwordConfirm" placeholder="********" required />
-              </div>
-              <button type="submit" class="btn btn-danger w-100 py-2 fw-bold shadow-sm mb-3">Cadastrar</button>
-              <div class="text-center text-secondary mb-2">ou cadastre-se com</div>
-              <div class="d-flex justify-content-center gap-3 mb-3">
-                <button type="button" class="btn btn-outline-primary rounded-circle p-2 border-0"><i class="bi bi-facebook fs-4"></i></button>
-                <button type="button" class="btn btn-outline-danger rounded-circle p-2 border-0"><img src="@/assets/images/google.svg" width="28" alt="Google" /></button>
-                <button type="button" class="btn btn-outline-dark rounded-circle p-2 border-0"><i class="bi bi-twitter-x fs-4"></i></button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="d-none d-lg-flex col-lg-7 align-items-center justify-content-center">
-          <div class="login-side-image rounded-4 shadow-lg overflow-hidden">
-            <img src="@/assets/images/drivers.jpg" alt="Pilotos F1" class="img-fluid w-100 h-100 object-fit-cover" style="min-height: 500px;" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
 
 <script setup>
 import { ref } from 'vue'
@@ -80,6 +5,8 @@ import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { login, register } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
+import FormInput from '@/components/FormInput.vue'
+import FormButton from '@/components/FormButton.vue'
 
 const activeTab = ref('login')
 
@@ -102,7 +29,7 @@ async function sendForm() {
   const result = await login({ email: email.value, password: password.value })
   if (result.status === 200) {
     auth.saveUser(result.data)
-    toast.success(`Ótimas compras ${auth.user.name}`)
+    toast.success(`Ótimas compras, ${auth.user.name}!`)
     router.push({ name: 'home' })
     if (remember.value) {
       auth.rememberUser = true
@@ -136,24 +63,153 @@ async function sendRegister() {
 }
 </script>
 
+<template>
+  <div class="auth-bg d-flex align-items-center justify-content-center py-5">
+    <div class="container">
+      <div class="row justify-content-center align-items-start g-4 flex-wrap">
+        <div class="col-12 col-md-6">
+          <div :class="['auth-card', activeTab==='login' ? 'active-card' : '']">
+            <div class="text-center mb-4">
+              <h2 class="fw-bold mb-2" style="color:#ff0000">Entrar</h2>
+              <div class="mb-3 text-secondary">Acesse sua conta</div>
+            </div>
+            <form @submit.prevent="sendForm">
+              <FormInput
+                  label-icon="bi bi-envelope"
+                  form-label="E-mail:"
+                  input-for="email"
+                  input-type="email"
+                  input-placeholder="exemplo@gmail.com"
+                  v-model="email"
+                />
+              <FormInput
+                  label-icon="bi bi-lock"
+                  form-label="Senha:"
+                  input-for="password"
+                  input-type="password"
+                  input-placeholder="••••••••"
+                  v-model="password"
+                />
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="rememberLogin" />
+                  <label class="form-check-label text-secondary" for="rememberLogin">Permanecer conectado</label>
+                </div>
+                <RouterLink to="/" class="btn-link small fw-semibold" style="color:#ff0000">Esqueci minha senha</RouterLink>
+              </div>
+              <FormButton button-type="submit" form-button-text="Entrar" button-style="redButton" />
+              <div class="text-center text-secondary mb-2">ou entre com</div>
+              <div class="d-flex justify-content-center gap-3 mb-3">
+                <button type="button" class="btn btn-outline-primary rounded-circle p-2 border-0"><i class="bi bi-facebook fs-4"></i></button>
+                <button type="button" class="btn btn-outline-danger rounded-circle p-2 border-0"><img src="@/assets/images/google.svg" width="28" alt="Google" /></button>
+                <button type="button" class="btn btn-outline-dark rounded-circle p-2 border-0"><i class="bi bi-twitter-x fs-4"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div :class="['auth-card', activeTab==='register' ? 'active-card' : '']">
+            <div class="text-center mb-4">
+              <h2 class="fw-bold mb-2" style="color:#ff0000">Cadastrar</h2>
+              <div class="mb-3 text-secondary">Crie sua conta</div>
+            </div>
+            <form @submit.prevent="sendRegister">
+              <FormInput
+                label-icon="bi bi-person"
+                form-label="Nome:"
+                input-for="name"
+                input-type="text"
+                input-placeholder="Seu nome"
+                v-model="name"
+              />
+              <FormInput
+                label-icon="bi bi-envelope"
+                form-label="E-mail:"
+                input-for="emailRegister"
+                input-type="email"
+                input-placeholder="seu@email.com"
+                v-model="emailRegister"
+              />
+              <FormInput
+                  label-icon="bi bi-lock"
+                  form-label="Senha:"
+                  input-for="passwordRegister"
+                  input-type="password"
+                  input-placeholder="••••••••"
+                  v-model="passwordRegister"
+                />
+              <FormInput
+                label-icon="bi bi-lock"
+                form-label="Confirme a Senha:"
+                input-for="passwordConfirm"
+                input-type="password"
+                input-placeholder="••••••••"
+                v-model="passwordConfirm"
+              />
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="rememberRegister" />
+                <label class="form-check-label text-secondary" for="rememberRegister">Concordo com os termos de serviço</label>
+              </div>
+              <FormButton button-type="submit" form-button-text="Cadastrar" button-style="redButton" />
+              <div class="text-center text-secondary mb-2">ou cadastre-se com</div>
+              <div class="d-flex justify-content-center gap-3 mb-3">
+                <button type="button" class="btn btn-outline-primary rounded-circle p-2 border-0"><i class="bi bi-facebook fs-4"></i></button>
+                <button type="button" class="btn btn-outline-danger rounded-circle p-2 border-0"><img src="@/assets/images/google.svg" width="28" alt="Google" /></button>
+                <button type="button" class="btn btn-outline-dark rounded-circle p-2 border-0"><i class="bi bi-twitter-x fs-4"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <style scoped>
-.login-bg {
-  background: linear-gradient(120deg, #1a1a1a 60%, #ff0000 100%);
+.auth-bg {
+  background: #ffffff;
   min-height: 100vh;
 }
-.login-logo {
-  width: 70px;
-  height: auto;
+.auth-card {
+  background: transparent;
+  color: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 24px 0 rgba(0,0,0,0.2);
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin-bottom: 2rem;
+  border: 2px solid transparent;
+  transition: border 0.2s, box-shadow 0.2s;
 }
-.login-side-image {
-  min-width: 400px;
-  min-height: 500px;
-  max-width: 600px;
-  max-height: 700px;
+.auth-card .form-label {
+  color: #ccc;
+  font-weight: 500;
+}
+.input-dark {
+  background: #222;
+  color: #fff;
+  border: 1.5px solid #222;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.input-dark:focus {
+  border-color: #ff0000;
+  box-shadow: 0 0 0 0.15rem rgba(255,0,0,0.15);
+  background: #252525;
+  color: #fff;
+}
+
+.btn-link {
+  text-decoration: none;
+}
+.btn-link:hover {
+  text-decoration: underline;
 }
 @media (max-width: 991px) {
-  .login-side-image {
-    display: none;
+  .auth-bg {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .auth-card {
+    margin-bottom: 1.5rem;
   }
 }
 </style>

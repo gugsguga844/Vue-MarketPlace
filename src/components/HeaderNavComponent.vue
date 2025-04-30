@@ -2,9 +2,11 @@
 // import { ref, onMounted } from 'vue'
 // import { ChevronDown, Heart, Menu, ShoppingBag, Search, Store, ShoppingCart, User, X } from 'lucide-vue-next'
 import { useAuthStore } from '@/stores/auth'
-import { Heart, Search, ShoppingCart, Menu } from 'lucide-vue-next'
+import { Heart, Search, ShoppingCart, Menu, Lock } from 'lucide-vue-next'
 import CartComponent from './CartComponent.vue'
+import { useCategoryStore } from '@/stores/CategoryStore'
 
+const useCategories = useCategoryStore()
 const auth = useAuthStore()
 </script>
 
@@ -28,10 +30,10 @@ const auth = useAuthStore()
           class="d-flex text-white link-underline link-underline-opacity-0 fw-bold"
           to="/"
         >
-          <img src="../assets/images/f1-logo.png" alt="F1 Logo" style="height: 40px; margin-right: 10px" />
-          <span class="pl-2 display-6 fw-bold d-flex justify-content-center align-items-center"
-            >STORE</span
-          >
+          <span class="text-danger fs-1">F1</span>
+          <span class="display-6 fw-bold d-flex justify-content-center align-items-center">
+            Fanatics
+          </span>
         </RouterLink>
 
         <!-- Sidebar -->
@@ -47,7 +49,7 @@ const auth = useAuthStore()
               class="d-flex link-underline link-underline-opacity-0 text-white fw-bold"
               to="/"
             >
-              <img src="../assets/images/f1-logo.png" alt="F1 Logo" style="height: 30px; margin-right: 10px" />
+              <span class="text-danger">F</span>
               <span class="pl-2">STORE</span>
             </RouterLink>
             <button
@@ -62,25 +64,28 @@ const auth = useAuthStore()
             <ul class="ul-justify navbar-nav flex-column flex-grow-1 px-3">
               <form class="d-flex p-3 w-75" role="search">
                 <input
-                  class="form-control bg-dark text-white border-white"
+                  class="bg-white form-control text-dark border-dark"
                   type="search"
-                  placeholder="Pesquisar produtos..."
+                  placeholder="Pesquisar produtos"
                   aria-label="Search"
                   autofocus
                 />
               </form>
-              <ul class="d-lg-flex p-0 fw-bold">
+              <ul class="d-lg-flex p-0">
                 <li class="nav-item mx-2">
-                  <a class="nav-link active text-white" aria-current="page" href="#">Equipes</a>
+                  <a class="nav-link active text-white" aria-current="page" href="#">Ofertas</a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link text-white" href="#">Pilotos</a>
+                  <a class="nav-link text-white" href="#">Cupons</a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link text-white" href="#">Circuitos</a>
+                  <a class="nav-link text-white" href="#">Mais vendidos</a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link text-white" href="#">Colecionáveis</a>
+                  <a class="nav-link text-white" href="#">Novidades</a>
+                </li>
+                <li class="nav-item mx-2">
+                  <a class="nav-link text-white" href="#">Atendimento</a>
                 </li>
                 <li class="nav-item mx-2 dropdown">
                   <a
@@ -92,12 +97,18 @@ const auth = useAuthStore()
                   >
                     Categorias
                   </a>
-                  <ul class="dropdown-menu bg-dark">
-                    <li><a class="dropdown-item text-white" href="#">Camisetas</a></li>
-                    <li><a class="dropdown-item text-white" href="#">Bonés</a></li>
-                    <li><a class="dropdown-item text-white" href="#">Miniaturas</a></li>
-                    <li><a class="dropdown-item text-white" href="#">Acessórios</a></li>
+                  <ul
+                    class="dropdown-menu bg-dark"
+                    v-for="category in useCategories.filteredCategories"
+                    :key="category.id"
+                  >
+                    <li>
+                      <RouterLink class="dropdown-item text-white" href="#">{{ category.name }}</RouterLink>
+                    </li>
                   </ul>
+                </li>
+                <li class="nav-item mx-2" v-if="auth.user.role === 'ADMIN'">
+                  <RouterLink to="/profile/admin" class="nav-link text-danger d-flex gap-1" href="#"><Lock /> Admin</RouterLink>
                 </li>
               </ul>
             </ul>
@@ -115,8 +126,10 @@ const auth = useAuthStore()
                     type="button"
                     data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasWithBothOptions"
-                    aria-controls="offcanvasWithBothOptions">
-                    <ShoppingCart /></button>
+                    aria-controls="offcanvasWithBothOptions"
+                  >
+                    <ShoppingCart />
+                  </button>
                 </li>
               </ul>
               <div v-if="!auth.isAuthenticated" class="d-flex mt-3 justify-content-center gap-4">
@@ -125,35 +138,72 @@ const auth = useAuthStore()
               </div>
               <div class="dropdown d-flex justify-content-center mt-lg-3" v-else>
                 <button
-                  class="btn border-2 border-white rounded-5 dropdown-toggle text-white px-4"
+                  class="btn border-2 border-white rounded-5 dropdown-toggle text-white px-3 d-flex align-items-center gap-2"
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
+                  <div class="profile-image-container bg-dark position-relative">
+                    <img :src="auth.getUserImage()" alt="Foto de Perfil" class="profile-image" />
+                  </div>
                   Olá, {{ auth.user.name }}
                 </button>
+
                 <ul class="dropdown-menu dropdown-menu-lg-start p-0 overflow-hidden bg-dark">
                   <li class="border-bottom border-danger">
-                    <RouterLink to="profile" class="dropdown-item fw-bold py-2 text-white" href="#"
+                    <RouterLink to="/profile/profileData" class="dropdown-item fw-bold py-2 text-white" href="#"
                       ><i class="bi bi-person-circle mr-1"></i> Minha Conta</RouterLink
                     >
                   </li>
                   <li>
                     <a class="dropdown-item py-2 text-white" href="#"
-                      ><i class="bi bi-bag-check-fill mr-1"></i> Meus Pedidos</a
+                      ><i class="fs-5 bi bi-box"></i>
+                      <span class="ms-2 d-none d-sm-inline">Meus Pedidos</span></a
                     >
                   </li>
                   <li>
-                    <a class="dropdown-item py-2 text-white" href="#"
-                      ><i class="bi bi-arrow-left-right mr-1"></i> Trocas</a
-                    >
+                    <a class="dropdown-item py-2 text-white" href="#">
+                      <i class="fs-5 bi bi-arrow-left-right"></i>
+                      <span class="ms-2 d-none d-sm-inline">Trocas Efetuadas</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item py-2 text-white" href="#">
+                      <i class="fs-5 bi bi-geo-alt"></i>
+                      <span class="ms-2 d-none d-sm-inline">Endereços</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item py-2 text-white" href="#">
+                      <i class="fs-5 bi bi-credit-card"></i
+                      ><span class="ms-2 d-none d-sm-inline">Pagamentos</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item py-2 text-white" href="#">
+                      <i class="fs-5 bi bi-heart"></i
+                      ><span class="ms-2 d-none d-sm-inline">Lista de Desejos</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item py-2 text-white" href="#">
+                      <i class="fs-5 bi bi-lock"></i>
+                      <span class="ms-2 d-none d-sm-inline">Segurança</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item py-2 text-white" href="#">
+                      <i class="fs-5 bi bi-question-circle"></i
+                      ><span class="ms-2 d-none d-sm-inline">Ajuda</span>
+                    </a>
                   </li>
                   <li class="border-top border-danger text-center overflow-hidden">
                     <a
-                      class="dropdown-item py-2 fw-bold text-danger cursor-pointer"
+                      class="dropdown-item py-2 fw-bold text-danger cursor-pointer d-flex align-items-center justify-content-center"
                       @click="auth.logout"
                     >
-                      Sair
+                      <i class="fs-5 bi bi-box-arrow-right"></i>
+                      <span class="ms-2 d-sm-inline">Sair</span>
                     </a>
                   </li>
                 </ul>
@@ -180,6 +230,10 @@ const auth = useAuthStore()
   color: #ff0000 !important;
 }
 
+input::placeholder {
+  color: #ffffff;
+}
+
 .dropdown-menu {
   background-color: #000000 !important;
 }
@@ -201,6 +255,26 @@ const auth = useAuthStore()
 @media (max-width: 991px) {
   .sidebar {
     background-color: #000000;
+  }
+}
+.profile-image-container {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+@media (max-width: 576px) {
+  .profile-image-container {
+    width: 40px;
+    height: 40px;
   }
 }
 </style>

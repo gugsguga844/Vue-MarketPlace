@@ -23,7 +23,7 @@ const divide = computed(() => {
 onMounted(() => {
   const id = route.params.id
   productData.saveProduct(id)
-  console.log('Produto: ', productData.product.category.name)
+  console.log('Produto com categoria: ', productData.product.category.name)
 })
 </script>
 
@@ -109,7 +109,6 @@ onMounted(() => {
           <span class="fs-6 text-primary">ou 10x de R$ {{ formatPrice.formatPrice(divide) }} no cartão</span>
         </div>
         <p class="fs-6 text-secondary mb-2">{{ productData.product.description }}</p>
-
         <div class="d-flex mb-2 gap-5">
           <div class="d-flex flex-column mb-2">
             <span class="fs-6 text-primary mb-1">Tamanho: </span>

@@ -252,6 +252,19 @@ export async function getProduct(product_id) {
   }
 }
 
+export async function updateProduct(product_id, payload, token) {
+  try {
+    const response = await api.put(`/products/${product_id}`, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
 /* Cart endpoints */
 export async function getCart(token) {
   try {
@@ -333,4 +346,85 @@ export async function deleteCartItem(token, product_id) {
     return error
   }
 }
+
+export async function getDiscounts(token) {
+  try {
+    const response = await api.get('/discounts', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (error) {
+    return error
+  }
+}
+
+export async function createDiscount(token, payload) {
+  try {
+    const response = await api.post('/discounts', payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export async function removeDiscount(token, discount_id) {
+  try {
+    const response = await api.delete(`/discounts/${discount_id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export async function getCoupons(token) {
+  try {
+    const response = await api.get('/coupons', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (error) {
+    return error
+  }
+}
+
+export async function createCoupon(token, payload) {
+  try {
+    const response = await api.post('/coupons', payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export async function getCoupon(token, coupon_id) {
+  try {
+    const response = await api.get(`/coupons/${coupon_id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (error) {
+    return error
+  }
+}
+
+
+
 

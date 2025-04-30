@@ -1,7 +1,6 @@
 import { getCategories } from '@/services/HttpService'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { useAuthStore } from './auth'
 
 export const useCategoryStore = defineStore(
   'category',
@@ -11,14 +10,10 @@ export const useCategoryStore = defineStore(
     const filteredCategories = ref([])
     const startValue = ref(0)
     const endValue = ref(3)
-    const auth = useAuthStore()
 
     async function saveCategories() {
-      const token = auth.token
       const apiResult = await getCategories()
       categories.value = apiResult
-      console.log(apiResult)
-      console.log(categories)
     }
 
     function saveCategory(categoryData) {

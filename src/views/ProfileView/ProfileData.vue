@@ -5,7 +5,9 @@ import ImageCropperModal from '@/components/ImageCropperModal.vue'
 import { updateUser, uploadImage } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
+import { useToast } from 'vue-toastification'
 
+const toast = useToast()
 const auth = useAuthStore()
 const name = ref('')
 const email = ref('')
@@ -23,7 +25,7 @@ async function updateProfileImage() {
   if (result.status === 200) {
     auth.user.image_path = result.data.image_path
     console.log(auth.user.image_path)
-    alert('Imagem atualizada com sucesso')
+    toast.success('Imagem atualizada com sucesso')
   }
 }
 

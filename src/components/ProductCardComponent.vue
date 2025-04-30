@@ -4,7 +4,14 @@ import { useFormatPriceStore } from '@/stores/formatPrice'
 
 const formatPrice = useFormatPriceStore()
 
-defineProps(['productName', 'productImage', 'productPrice', 'categoryName'])
+defineProps([
+  'productName',
+  'productImage',
+  'productPrice',
+  'categoryName',
+  'discountPercentage',
+  'discountedPrice'
+])
 </script>
 
 <template>
@@ -24,7 +31,13 @@ defineProps(['productName', 'productImage', 'productPrice', 'categoryName'])
         <h6 class="product-name text-dark mb-2">{{ productName }}</h6>
       </div>
       <div class="mb-2">
-        <span class="h5 text-danger">R${{ formatPrice.formatPrice(productPrice) }}</span>
+        <template v-if="discountPercentage && discountedPrice">
+          <span class="text-dark text-decoration-line-through me-2">R${{ formatPrice.formatPrice(productPrice) }}</span>
+          <span class="h5 text-danger">R${{ formatPrice.formatPrice(discountedPrice) }}</span>
+        </template>
+        <template v-else>
+          <span class="h5 text-danger">R${{ formatPrice.formatPrice(productPrice) }}</span>
+        </template>
       </div>
     </div>
   </div>
@@ -43,6 +56,7 @@ defineProps(['productName', 'productImage', 'productPrice', 'categoryName'])
 
 .product-name {
   display: -webkit-box;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
