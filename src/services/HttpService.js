@@ -278,6 +278,19 @@ export async function updateProduct(product_id, payload, token) {
   }
 }
 
+export async function deleteProduct(product_id, token) {
+  try {
+    const response = await api.delete(`/products/${product_id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
 /* Cart endpoints */
 export async function getCart(token) {
   try {
@@ -350,6 +363,19 @@ export async function deleteCartItem(token, product_id) {
       data: {
         product_id
       },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export async function clearCart(token) {
+  try {
+    const response = await api.delete('/cart/clear', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -450,6 +476,33 @@ export async function getAllOrders(token) {
     return error
   }
 }
+
+export async function getOrders(token) {
+  try {
+    const response = await api.get('/orders', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (error) {
+    return error
+  }
+}
+
+export async function createOrder(token, payload) {
+  try {
+    const response = await api.post('/orders', payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+  
   
 
 

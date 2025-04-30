@@ -4,7 +4,7 @@ import { Minus, Plus, ShoppingCart } from 'lucide-vue-next';
 import { useImageStore } from '@/stores/ImageStore'
 import { useFormatPriceStore } from '@/stores/formatPrice';
 import { useAuthStore } from '@/stores/auth';
-import { deleteCartItem, updateQuantity } from '@/services/HttpService';
+import { clearCart, deleteCartItem, updateQuantity } from '@/services/HttpService';
 import { useToast } from 'vue-toastification';
 import { RouterLink } from 'vue-router';
 
@@ -29,7 +29,7 @@ async function deleteFromCart(product_id) {
 async function decrementQuantity(product_id) {
   const token = auth.token;
   const item = cart.cartItems.items.find(i => i.product_id === product_id);
-  if (!item || item.quantity <= 1) return; // Não deixa decrementar abaixo de 1
+  if (!item || item.quantity <= 1) return;
 
   const response = await updateQuantity(token, {
     product_id,
@@ -57,6 +57,18 @@ async function incrementQuantity(product_id) {
     cart.saveCartItems();
   } else {
     toast.error('Erro ao incrementar quantidade');
+  }
+}
+
+async function removeCartItems() {
+  const token = auth.token
+  const response = await clearCart(token)
+
+  if (response.status === 204) {
+    toast.success('Carrinho limpo')
+    cart.clearCartItems()
+  } else {
+    toast.error('Erro ao limpar carrinho')
   }
 }
 
@@ -120,7 +132,7 @@ async function incrementQuantity(product_id) {
         </div>
 
         <RouterLink to="/cart" class="btn btn-dark w-100 mt-2">Finalizar Pedido</RouterLink>
-        <button class="btn btn-danger w-100 mt-2 text-white" @click="clearCart">Limpar Carrinho</button>
+        <button class="btn btn-danger w-100 mt-2 text-white" @click="removeCartItems">Limpar Carrinho</button>
       </template>
     </div>
   </div>

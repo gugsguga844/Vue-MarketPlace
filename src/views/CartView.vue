@@ -7,10 +7,11 @@ import { useAddressStore } from '@/stores/AdressStore'
 import ModalComponent from '@/components/ModalComponent.vue';
 import { ref } from 'vue';
 import { useCouponStore } from '@/stores/couponStore';
-import { getCoupon } from '@/services/HttpService';
+import { createOrder, getCoupon } from '@/services/HttpService';
 import { useAuthStore } from '@/stores/auth';
 import { useToast } from 'vue-toastification';
 import { onMounted } from 'vue';
+import { useOrderStore } from '@/stores/orderStore';
 
 const auth = useAuthStore()
 const cart = useCartStore()
@@ -23,6 +24,8 @@ const useCoupons = useCouponStore()
 const couponIsValid = ref(false)
 const couponPercentage = ref(0)
 const toast = useToast()
+const orderStore = useOrderStore()
+const payload = ref({})
 
 function openModal() {
   selectedAddressId.value = useAddresses.orderAddress.id || useAddresses.mainAddress.id
@@ -61,8 +64,29 @@ async function applyCoupon() {
   }
 }
 
+function createPayload() {
+  payload.value = {
+    address_id: useAddresses.orderAddress.id || useAddresses.mainAddress.id,
+    coupon_id: useCoupons.coupon.id,
+    products: cart.cartItems.items || [],
+  }
+}
+
+async function sendOrder() {
+  createPayload()
+  const token = auth.token
+  const response = await createOrder(token, payload.value)
+  if (response.status === 201) {
+    toast.success('Pedido criado com sucesso')
+    orderStore.saveIntoOrders(response.data)
+  } else {
+    toast.error('Erro ao criar pedido')
+  }
+}
+
 onMounted(() => {
   useCoupons.saveCoupons()
+  useAddresses.saveAddresses(auth.token)
 })
 
 </script>
@@ -182,7 +206,7 @@ onMounted(() => {
 
               <button @click="openModal" v-if="useAddresses.mainAddress.id" class="btn btn-dark w-100 mt-2">Alterar</button>
               <button v-else class="btn btn-dark w-100 mt-2" @click="redirect">Adicionar Endereço de Entrega</button>
-              <button class="btn btn-danger w-100 mt-2 text-white" @click="clearCart">Finalizar Pedido</button>
+              <button class="btn btn-danger w-100 mt-2 text-white" @click="sendOrder">Finalizar Pedido</button>
               <ModalComponent
                 :show="showModal"
                 modal-title="Selecione o Endereço de Entrega"

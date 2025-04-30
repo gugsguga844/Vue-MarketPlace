@@ -8,7 +8,7 @@ const orderStore = useOrderStore()
 const imageStore = useImageStore()
 
 onMounted(() => {
-  orderStore.saveOrders()
+  orderStore.saveAllOrders()
 })
 
 const statusIcons = {
@@ -36,7 +36,6 @@ const formatDate = (dateString) => {
 }
 
 const calculateTotal = (products) => {
-  if (!products || !Array.isArray(products)) return '0.00'
   return products.reduce((total, product) => total + parseFloat(product.price), 0).toFixed(2)
 }
 </script>
@@ -44,15 +43,15 @@ const calculateTotal = (products) => {
 <template>
   <div class="container-fluid py-4">
     <h2 class="mb-4 fw-bold d-flex align-items-center">
-      <ShoppingBag class="me-2" /> Meus Pedidos
+      <ShoppingBag class="me-2" /> Todos os Pedidos
     </h2>
     
-    <div v-if="orderStore.orders.length === 0" class="alert alert-info text-center">
+    <div v-if="orderStore.allOrders.length === 0" class="alert alert-info text-center">
       Você ainda não possui pedidos.
     </div>
 
     <div v-else class="row g-4">
-      <div v-for="order in orderStore.orders" :key="order.id" class="col-12">
+      <div v-for="order in orderStore.allOrders" :key="order.id" class="col-12">
         <div class="card shadow-sm mb-3">
           <div class="card-header d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
@@ -70,7 +69,7 @@ const calculateTotal = (products) => {
                 <h5 class="card-title mb-3">Produtos</h5>
                 <div class="row g-3">
                   <div 
-                    v-for="product in order.products || []" 
+                    v-for="product in order.products" 
                     :key="product.id" 
                     class="col-md-4 col-sm-6"
                   >

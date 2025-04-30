@@ -30,7 +30,11 @@ export const useCartStore = defineStore(
       cartItems.value = result
     }
 
-    return { cart, saveCart, createNewCart, saveCartItems, cartItems }
+    function clearCartItems() {
+      cartItems.value = []
+    }
+
+    return { cart, saveCart, createNewCart, clearCartItems, saveCartItems, cartItems }
   },
   { persist: true },
 )

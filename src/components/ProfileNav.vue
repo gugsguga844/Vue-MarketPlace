@@ -82,9 +82,15 @@ const auth = useAuthStore()
           </RouterLink>
         </li>
         <li class="nav-item" v-if="auth.user.role === 'ADMIN'">
-          <RouterLink to="/profile/admin" class="nav-link px-sm-0 px-2">
+          <RouterLink to="/profile/admin" class="nav-link px-sm-0 px-2 text-danger">
             <i class="fs-5 bi bi-person-add"></i
             ><span class="ms-2 d-none d-sm-inline">Admin</span>
+          </RouterLink>
+        </li>
+        <li class="nav-item" v-if="auth.user.role === 'ADMIN'">
+          <RouterLink to="/profile/allOrders" class="nav-link px-sm-0 px-2 text-danger">
+            <i class="fs-5 bi bi-box"></i
+            ><span class="ms-2 d-none d-sm-inline">Todos os Pedidos</span>
           </RouterLink>
         </li>
         <li class="nav-item">

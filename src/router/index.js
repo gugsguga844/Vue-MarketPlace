@@ -18,6 +18,7 @@ import AuthView from '@/views/AuthView.vue'
 import ProductsView from '@/views/ProductsView.vue'
 import AdminCoupons from '@/views/ProfileView/Admin/AdminCoupons.vue'
 import ProfileOrders from '@/views/ProfileView/ProfileOrders.vue'
+import ProfileAllOrders from '@/views/ProfileView/ProfileAllOrders.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -73,28 +74,46 @@ const router = createRouter({
               path: 'adminUsers',
               name: 'adminUsers',
               component: AdminUsers,
+              meta: {
+                requiresAdmin: true,
+              },
             },
             {
               path: 'adminCategories',
               name: 'adminCategories',
               component: AdminCategories,
+              meta: {
+                requiresAdmin: true,
+              },
             },
             {
               path: 'adminProducts',
               name: 'adminProducts',
               component: AdminProducts,
+              meta: {
+                requiresAdmin: true,
+              },
             },
             {
               path: 'adminDiscounts',
               name: 'adminDiscounts',
               component: AdminDiscounts,
+              meta: {
+                requiresAdmin: true,
+              },
             },
             {
               path: 'adminCoupons',
               name: 'adminCoupons',
               component: AdminCoupons,
+              meta: {
+                requiresAdmin: true,
+              },
             },
           ],
+          meta: {
+            requiresAdmin: true,
+          },
         },
         {
           path: 'addAddress',
@@ -111,6 +130,11 @@ const router = createRouter({
           name: 'editAddress',
           component: EditAddress,
           props: true,
+        },
+        {
+          path: 'allOrders',
+          name: 'allOrders',
+          component: ProfileAllOrders,
         },
       ],
       meta: {
@@ -135,6 +159,12 @@ router.beforeEach(async (to, from, next) => {
   const auth = useAuthStore()
 
   if (to.meta.requiresAuth && !auth.isAuthenticated) {
+    next({ name: 'home' })
+  } else {
+    next()
+  }
+
+  if (to.meta.requiresAdmin && auth.user.role === 'CLIENT') {
     next({ name: 'home' })
   } else {
     next()
