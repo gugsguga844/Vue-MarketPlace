@@ -154,7 +154,7 @@ async function saveEditedProduct() {
 
 onMounted(() => {
   useProducts.filterAdminProducts()
-  console.log('Produtos daqui: ', useProducts.product.data.category)
+  console.log('Produtos daqui: ', useProducts.adminProductsList)
 })
 </script>
 
