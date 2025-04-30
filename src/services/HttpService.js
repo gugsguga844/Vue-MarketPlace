@@ -74,6 +74,19 @@ export async function deleteUser(token) {
   }
 }
 
+export async function createModerator(payload, token) {
+  try {
+    const response = await api.post('/users/create-moderator', payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
 export async function uploadImage(payload, token) {
   try {
     const response = await api.put('/users/image', payload, {
@@ -425,6 +438,18 @@ export async function getCoupon(token, coupon_id) {
   }
 }
 
-
+export async function getAllOrders(token) {
+  try {
+    const response = await api.get('/orders/all', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (error) {
+    return error
+  }
+}
+  
 
 

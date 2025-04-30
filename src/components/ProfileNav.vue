@@ -40,7 +40,7 @@ const auth = useAuthStore()
           </RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink href="#submenu1" data-bs-toggle="collapse" class="nav-link px-sm-0 px-2">
+          <RouterLink to="/profile/orders" href="#" class="nav-link px-sm-0 px-2">
             <i class="fs-5 bi bi-box"></i>
             <span class="ms-2 d-none d-sm-inline">Meus Pedidos</span>
           </RouterLink>

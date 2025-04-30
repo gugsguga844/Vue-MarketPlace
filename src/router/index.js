@@ -17,6 +17,7 @@ import CartView from '@/views/CartView.vue'
 import AuthView from '@/views/AuthView.vue'
 import ProductsView from '@/views/ProductsView.vue'
 import AdminCoupons from '@/views/ProfileView/Admin/AdminCoupons.vue'
+import ProfileOrders from '@/views/ProfileView/ProfileOrders.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,6 +52,11 @@ const router = createRouter({
           path: 'profileData',
           name: 'profileData',
           component: ProfileData,
+        },
+        {
+          path: 'orders',
+          name: 'orders',
+          component: ProfileOrders,
         },
         {
           path: 'addresses',

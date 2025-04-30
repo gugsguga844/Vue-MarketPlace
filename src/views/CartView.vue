@@ -10,6 +10,7 @@ import { useCouponStore } from '@/stores/couponStore';
 import { getCoupon } from '@/services/HttpService';
 import { useAuthStore } from '@/stores/auth';
 import { useToast } from 'vue-toastification';
+import { onMounted } from 'vue';
 
 const auth = useAuthStore()
 const cart = useCartStore()
@@ -60,7 +61,9 @@ async function applyCoupon() {
   }
 }
 
-
+onMounted(() => {
+  useCoupons.saveCoupons()
+})
 
 </script>
 

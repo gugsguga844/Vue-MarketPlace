@@ -3,6 +3,18 @@ import ButtonComponent from '@/components/ButtonComponent.vue';
 import FormInput from '@/components/FormInput.vue';
 import ProfileCardTitle from '@/components/ProfileCardTitle.vue';
 import ListTable from '@/components/ListTable.vue';
+import { createModerator } from '@/services/HttpService';
+import { useToast } from 'vue-toastification'
+import { useAuthStore } from '@/stores/auth'
+import { ref } from 'vue'
+
+const toast = useToast()
+
+const auth = useAuthStore()
+
+const name = ref('')
+const email = ref('')
+const password = ref('')
 
 const rows = [
   {
@@ -30,10 +42,26 @@ const rows = [
     status: 'Ativo',
   },
 ]
+
+async function createNewModerator() {
+  const token = auth.token
+  const response = await createModerator({
+    name: name.value,
+    email: email.value,
+    password: password.value,
+    role: 'MODERATOR',
+  }, token)
+  if (response.status === 201) {
+    toast.success('Moderador criado com sucesso')
+  } else {
+    toast.error('Erro ao criar moderador')
+  }
+}
+
 </script>
 
 <template>
-  <form class="container-fluid border-3 border-dark border-opacity-10 rounded-1 p-4 mb-4">
+  <form @submit.prevent="createNewModerator" class="container-fluid border-3 border-dark border-opacity-10 rounded-1 p-4 mb-4">
     <ProfileCardTitle
       profileCardTitle="Adicionar Novo Usuário Moderador"
         profileCardDescription="Adicione novos usuários moderadores ao sistema."
@@ -45,6 +73,7 @@ const rows = [
           input-type="text"
           form-label="Nome Completo"
           input-placeholder="Nome do moderador"
+          v-model="name"
         />
       </div>
       <div class="col-md-6">
@@ -53,6 +82,7 @@ const rows = [
           input-type="email"
           form-label="E-mail"
           input-placeholder="Email do usuário"
+          v-model="email"
         />
       </div>
     </div>
@@ -62,7 +92,7 @@ const rows = [
           input-for="Senha"
           input-type="password"
           form-label="Senha"
-
+          v-model="password"
           input-placeholder="Senha do usuário"
         />
       </div>
