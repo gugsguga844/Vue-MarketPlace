@@ -23,10 +23,11 @@ onMounted(() => {
   categoryData.filterCategories()
   productData.saveProducts()
   productData.filterProducts()
-  console.log('Pordutos: ', productData.filteredProducts)
+  productData.filterProductsByDiscount()
+  console.log('Pordutos: ', productData.productsWithDiscount)
 })
 
-import { Truck, Star, ShoppingBag } from 'lucide-vue-next'
+import { Truck, Star, ShoppingBag, ArrowRight } from 'lucide-vue-next'
 import { onMounted } from 'vue'
 import PaginatorComponent from '../components/PaginatorComponent.vue'
 </script>
@@ -80,15 +81,15 @@ import PaginatorComponent from '../components/PaginatorComponent.vue'
   <section class="py-12 bg-white">
     <div class="container-fluid px-4 w-100 m-0">
       <SectionTitle
-        title-text="Produtos em Destaque"
-        title-description="Explore nosso grid completo de produtos oficiais da Fórmula 1 e encontre itens exclusivos das suas equipes e pilotos favoritos."
+        title-text="Ofertas Especiais"
+        title-description="Ofertas especialmente selecionadas para você aproveitar!"
         title-text-color="secondaryText"
         subTitle-text-color="tertiaryText"
       />
       <div class="row g-4">
         <div
           class="col-12 col-md-4 col-lg-3"
-          v-for="product in productData.filteredProducts"
+          v-for="product in productData.productsWithDiscount"
           :key="product.id"
         >
           <ProductCardComponent
@@ -96,8 +97,17 @@ import PaginatorComponent from '../components/PaginatorComponent.vue'
             :product-image="imageStore.imageURL(product.image_path)"
             :product-price="product.price"
             :category-name="product.category.name"
+            :discount-percentage="product.discounts[0]?.discount_percentage"
+            :discounted-price="product.discounts[0] ? (product.price * (1 - product.discounts[0].discount_percentage / 100)) : null"
             @click="redirectProduct(product.id)"
           />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 mt-5 text-center">
+          <RouterLink to="/products" class="text-decoration-none text-dark fw-bold d-flex gap-1 justify-content-center">
+            Conferir todas as ofertas <ArrowRight />
+          </RouterLink>
         </div>
       </div>
     </div>
@@ -106,8 +116,6 @@ import PaginatorComponent from '../components/PaginatorComponent.vue'
   <section class="border-danger-subtle">
     <img src="@/assets/images/homeimage.jpeg" alt="" class="w-100">
   </section>
-
-
 
   <section class="py-12 bg-white">
     <div class="container-fluid px-4 w-100 m-0">
@@ -120,7 +128,7 @@ import PaginatorComponent from '../components/PaginatorComponent.vue'
       <div class="row g-4">
         <div
           class="col-12 col-md-4 col-lg-3"
-          v-for="product in productData.filteredProducts"
+          v-for="product in productData.filteredProducts.filter(p => !p.discounts || !p.discounts.length)"
           :key="product.id"
         >
           <ProductCardComponent
@@ -128,10 +136,18 @@ import PaginatorComponent from '../components/PaginatorComponent.vue'
             :product-image="imageStore.imageURL(product.image_path)"
             :product-price="product.price"
             :category-name="product.category.name"
+            @click="redirectProduct(product.id)"
           />
         </div>
       </div>
     </div>
+    <div class="row">
+        <div class="col-12 mt-5 text-center">
+          <RouterLink to="/products" class="text-decoration-none text-dark fw-bold d-flex gap-1 justify-content-center">
+            Conferir todos os produtos <ArrowRight />
+          </RouterLink>
+        </div>
+      </div>
   </section>
 
   <section class="border-danger-subtle d-flex">

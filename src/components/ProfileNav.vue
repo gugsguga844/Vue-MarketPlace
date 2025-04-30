@@ -54,9 +54,9 @@ const auth = useAuthStore()
 
         <li class="nav-item">
           <RouterLink to="/profile/addresses" class="nav-link px-sm-0 px-2">
-            <i class="fs-5 bi bi-geo-alt"></i
-            ><span class="ms-2 d-none d-sm-inline">Endereços</span></RouterLink
-          >
+            <i class="fs-5 bi bi-geo-alt"></i>
+            <span class="ms-2 d-none d-sm-inline">Endereços</span>
+          </RouterLink>
         </li>
         <li class="nav-item">
           <RouterLink href="#" class="nav-link px-sm-0 px-2">

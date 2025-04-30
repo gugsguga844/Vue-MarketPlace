@@ -95,7 +95,6 @@ async function editCategory(category_id) {
     useCategories.saveCategory(response.data)
     editName.value = response.data.name || ''
     editDescription.value = response.data.description || ''
-    // Se a categoria tiver imagem, mostra a preview
     if (response.data.image_url) {
       modalImage.value = response.data.image_url
     } else {
