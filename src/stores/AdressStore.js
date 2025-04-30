@@ -43,6 +43,12 @@ export const useAddressStore = defineStore(
       orderAddress.value = addresses.value.find(address => address.id === address_id)
     }
 
+    function clearAddresses() {
+      addresses.value = []
+      mainAddress.value = {}
+      orderAddress.value = {}
+    }
+
     return {
       addresses,
       address,

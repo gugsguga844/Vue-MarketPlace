@@ -7,7 +7,7 @@ import { useCategoryStore } from '@/stores/CategoryStore';
 import { useProductStore } from '@/stores/ProductStore';
 import { computed, onMounted, ref } from 'vue';
 import FormSelect from '@/components/FormSelect.vue';
-import { createProduct, getProduct, updateProduct } from '@/services/HttpService';
+import { createProduct, deleteProduct, getProduct, updateProduct } from '@/services/HttpService';
 import { useAuthStore } from '@/stores/auth';
 import { useToast } from 'vue-toastification';
 import ModalComponent from '@/components/ModalComponent.vue';
@@ -95,7 +95,7 @@ function filterProductsByCategory(category) {
 async function editProduct(product_id) {
   const token = auth.token
   const response = await getProduct(product_id, token)
-  console.log(response.status)
+  console.log('resposta do edit: ', response.status)
 
   if (response.status === 200) {
     useProducts.saveRequestedProduct(response.data)
@@ -104,6 +104,7 @@ async function editProduct(product_id) {
     editPrice.value = response.data.price || ''
     editCategory.value = response.data.category_id || ''
     showModal.value = true
+    console.log(response.status)
   } else {
     toast.error('Erro ao buscar produto')
   }
@@ -149,6 +150,18 @@ async function saveEditedProduct() {
     }
   } else {
     toast.info('Parece que você não fez nenhuma alteração')
+  }
+}
+
+async function removeProduct(product_id) {
+  const token = auth.token
+  const response = await deleteProduct(product_id, token)
+
+  if (response.status === 200) {
+    toast.success('Produto removido com sucesso')
+    useProducts.filterAdminProducts()
+  } else {
+    toast.error('Erro ao remover produto')
   }
 }
 

@@ -156,9 +156,9 @@ const auth = useAuthStore()
                     >
                   </li>
                   <li>
-                    <a class="dropdown-item py-2 text-white" href="#"
+                    <RouterLink to="/profile/orders" class="dropdown-item py-2 text-white" href="#"
                       ><i class="fs-5 bi bi-box"></i>
-                      <span class="ms-2 d-none d-sm-inline">Meus Pedidos</span></a
+                      <span class="ms-2 d-none d-sm-inline">Meus Pedidos</span></RouterLink
                     >
                   </li>
                   <li>
@@ -168,10 +168,10 @@ const auth = useAuthStore()
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item py-2 text-white" href="#">
+                    <RouterLink to="/profile/addresses" class="dropdown-item py-2 text-white" href="#">
                       <i class="fs-5 bi bi-geo-alt"></i>
                       <span class="ms-2 d-none d-sm-inline">Endereços</span>
-                    </a>
+                    </RouterLink>
                   </li>
                   <li>
                     <a class="dropdown-item py-2 text-white" href="#">

@@ -17,13 +17,13 @@ const count = useCounterStore()
 const formatPrice = useFormatPriceStore()
 
 const divide = computed(() => {
-  return productData.product.price / 10
+  return productData.product.data.price / 10
 })
 
 onMounted(() => {
   const id = route.params.id
   productData.saveProduct(id)
-  console.log('Produto com categoria: ', productData.product.category.name)
+  console.log('Produto com categoria: ', productData.product.data.category.name)
 })
 </script>
 
@@ -33,11 +33,11 @@ onMounted(() => {
       <RouterLink class="text-secondary text-decoration-none" to="/">Home </RouterLink>
       <span class="text-secondary"> > </span>
       <RouterLink class="text-secondary text-decoration-none" to="/">{{
-        productData.product.category.name
+        productData.product.data.category.name
       }}</RouterLink>
       <span class="text-secondary"> > </span>
       <RouterLink class="fw-bold text-decoration-none" to="/">
-        {{ productData.product.name }}</RouterLink
+        {{ productData.product.data.name }}</RouterLink
       >
     </div>
     <div class="row">
@@ -45,7 +45,7 @@ onMounted(() => {
         <div class="product-img-container shadow">
           <img
             class="product-img"
-            :src="imageStore.imageURL(productData.product.image_path)"
+            :src="imageStore.imageURL(productData.product.data.image_path)"
             alt=""
           />
         </div>
@@ -54,7 +54,7 @@ onMounted(() => {
             <div class="alt-image shadow">
               <img
                 class="alt-img"
-                :src="imageStore.imageURL(productData.product.image_path)"
+                :src="imageStore.imageURL(productData.product.data.image_path)"
                 alt=""
               />
             </div>
@@ -63,7 +63,7 @@ onMounted(() => {
             <div class="alt-image shadow">
               <img
                 class="alt-img"
-                :src="imageStore.imageURL(productData.product.image_path)"
+                :src="imageStore.imageURL(productData.product.data.image_path)"
                 alt=""
               />
             </div>
@@ -72,7 +72,7 @@ onMounted(() => {
             <div class="alt-image shadow">
               <img
                 class="alt-img"
-                :src="imageStore.imageURL(productData.product.image_path)"
+                :src="imageStore.imageURL(productData.product.data.image_path)"
                 alt=""
               />
             </div>
@@ -81,7 +81,7 @@ onMounted(() => {
             <div class="alt-image shadow">
               <img
                 class="alt-img"
-                :src="imageStore.imageURL(productData.product.image_path)"
+                :src="imageStore.imageURL(productData.product.data.image_path)"
                 alt=""
               />
             </div>
@@ -92,23 +92,23 @@ onMounted(() => {
         <div
           class="product-info d-flex justify-content-between align-items-center mb-3 border-bottom pb-3"
         >
-          <h6 class="text-danger mb-0">{{ productData.product.category.name }}</h6>
+          <h6 class="text-danger mb-0">{{ productData.product.data.category.name }}</h6>
           <div class="d-flex gap-1 align-items-center">
             <Star style="width: 18px; height: 18px; color: #ff0000" />
             <p class="h6 text-secondary mb-0">4.8 (127 avaliações)</p>
           </div>
         </div>
         <div class="d-flex mb-2 justify-content-between">
-          <h4 class="fw-bold fs-5 mb-2">{{ productData.product.name }}</h4>
+          <h4 class="fw-bold fs-5 mb-2">{{ productData.product.data.name }}</h4>
           <span class="fs-6 text-primary"
-            >{{ productData.product.stock }} unidades disponíveis
+            >{{ productData.product.data.stock }} unidades disponíveis
           </span>
         </div>
         <div class="product-price d-flex flex-column mb-2">
-          <span class="fs-4 text-danger fw-semibold">R$ {{ formatPrice.formatPrice(productData.product.price) }}</span>
+          <span class="fs-4 text-danger fw-semibold">R$ {{ formatPrice.formatPrice(productData.product.data.price) }}</span>
           <span class="fs-6 text-primary">ou 10x de R$ {{ formatPrice.formatPrice(divide) }} no cartão</span>
         </div>
-        <p class="fs-6 text-secondary mb-2">{{ productData.product.description }}</p>
+        <p class="fs-6 text-secondary mb-2">{{ productData.product.data.description }}</p>
         <div class="d-flex mb-2 gap-5">
           <div class="d-flex flex-column mb-2">
             <span class="fs-6 text-primary mb-1">Tamanho: </span>
@@ -159,7 +159,7 @@ onMounted(() => {
         </div>
 
         <div class="d-flex gap-2 mb-4 align-items-center">
-          <AddToCartButton :product="productData.product" class="btn-sm" :quantity="count.count" />
+          <AddToCartButton :product="productData.product.data" class="btn-sm" :quantity="count.count" />
           <button class="btn btn-outline-light border-1 border-dark-subtle p-3 rounded-2">
             <Heart color="red" />
           </button>
@@ -173,7 +173,7 @@ onMounted(() => {
     <div class="container details py-12">
       <div class="description">
         <h2>Descrição</h2>
-        <p>{{ productData.product.description }}</p>
+        <p>{{ productData.product.data.description }}</p>
       </div>
 
       <div class="characteristics">

@@ -259,7 +259,7 @@ export async function createProduct(payload, token) {
 export async function getProduct(product_id) {
   try {
     const response = await api.get(`/products/${product_id}`)
-    return response.data
+    return response
   } catch (error) {
     return error
   }
