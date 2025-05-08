@@ -7,6 +7,7 @@ import { login, register } from '@/services/HttpService'
 import { useAuthStore } from '@/stores/auth'
 import FormInput from '@/components/FormInput.vue'
 import FormButton from '@/components/FormButton.vue'
+import { useCartStore } from '@/stores/CartStore'
 
 const activeTab = ref('login')
 
@@ -25,6 +26,8 @@ const router = useRouter()
 const toast = useToast()
 const auth = useAuthStore()
 
+const useCart = useCartStore()
+
 async function sendForm() {
   const result = await login({ email: email.value, password: password.value })
   if (result.status === 200) {
@@ -37,6 +40,8 @@ async function sendForm() {
   } else {
     toast.error('Login falhou')
   }
+
+  useCart.saveCart()
 }
 
 async function sendRegister() {
@@ -51,7 +56,6 @@ async function sendRegister() {
   })
   if (registerResult.status === 201) {
     toast.success('Usuário cadastrado com sucesso!')
-    // Login automático após cadastro
     const loginResult = await login({ email: emailRegister.value, password: passwordRegister.value })
     if (loginResult.status === 200) {
       auth.saveUser(loginResult.data)

@@ -153,6 +153,10 @@ const router = createRouter({
       component: ProductsView,
     },
   ],
+  // eslint-disable-next-line no-unused-vars
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 }
+  },
 })
 
 router.beforeEach(async (to, from, next) => {

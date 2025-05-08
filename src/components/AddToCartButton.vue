@@ -27,7 +27,7 @@ async function addToCart() {
     const updatePayload = {
       product_id: props.product.id,
       quantity: newQuantity
-    };98122
+    };
     const response = await updateQuantity(token, updatePayload);
 
     if (response.status === 204) {

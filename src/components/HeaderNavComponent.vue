@@ -1,6 +1,5 @@
 <script setup>
-// import { ref, onMounted } from 'vue'
-// import { ChevronDown, Heart, Menu, ShoppingBag, Search, Store, ShoppingCart, User, X } from 'lucide-vue-next'
+import { onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { Heart, Search, ShoppingCart, Menu, Lock } from 'lucide-vue-next'
 import CartComponent from './CartComponent.vue'
@@ -8,6 +7,10 @@ import { useCategoryStore } from '@/stores/CategoryStore'
 
 const useCategories = useCategoryStore()
 const auth = useAuthStore()
+
+onMounted(() => {
+  useCategories.saveCategories()
+})
 </script>
 
 <template>
@@ -72,6 +75,24 @@ const auth = useAuthStore()
                 />
               </form>
               <ul class="d-lg-flex p-0">
+                <li class="nav-item mx-2 dropdown">
+                  <a
+                    class="nav-link dropdown-toggle text-white"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Categorias
+                  </a>
+                  <ul class="dropdown-menu bg-dark">
+                    <li v-for="category in useCategories.categories" :key="category.id">
+                      <RouterLink class="dropdown-item text-white" href="#">{{
+                        category.name
+                      }}</RouterLink>
+                    </li>
+                  </ul>
+                </li>
                 <li class="nav-item mx-2">
                   <a class="nav-link active text-white" aria-current="page" href="#">Ofertas</a>
                 </li>
@@ -87,28 +108,16 @@ const auth = useAuthStore()
                 <li class="nav-item mx-2">
                   <a class="nav-link text-white" href="#">Atendimento</a>
                 </li>
-                <li class="nav-item mx-2 dropdown">
-                  <a
-                    class="nav-link dropdown-toggle text-white"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Categorias
-                  </a>
-                  <ul
-                    class="dropdown-menu bg-dark"
-                    v-for="category in useCategories.filteredCategories"
-                    :key="category.id"
-                  >
-                    <li>
-                      <RouterLink class="dropdown-item text-white" href="#">{{ category.name }}</RouterLink>
-                    </li>
-                  </ul>
+                <li class="nav-item mx-2">
+                  <a class="nav-link text-white" href="#">Regulamentos</a>
+                </li>
+                <li class="nav-item mx-2">
+                  <a class="nav-link text-white" href="#">Acessibilidade</a>
                 </li>
                 <li class="nav-item mx-2" v-if="auth.user.role === 'ADMIN'">
-                  <RouterLink to="/profile/admin" class="nav-link text-danger d-flex gap-1" href="#"><Lock /> Admin</RouterLink>
+                  <RouterLink to="/profile/admin" class="nav-link text-danger d-flex gap-1" href="#"
+                    ><Lock /> Admin</RouterLink
+                  >
                 </li>
               </ul>
             </ul>
@@ -151,7 +160,10 @@ const auth = useAuthStore()
 
                 <ul class="dropdown-menu dropdown-menu-lg-start p-0 overflow-hidden bg-dark">
                   <li class="border-bottom border-danger">
-                    <RouterLink to="/profile/profileData" class="dropdown-item fw-bold py-2 text-white" href="#"
+                    <RouterLink
+                      to="/profile/profileData"
+                      class="dropdown-item fw-bold py-2 text-white"
+                      href="#"
                       ><i class="bi bi-person-circle mr-1"></i> Minha Conta</RouterLink
                     >
                   </li>
@@ -168,7 +180,11 @@ const auth = useAuthStore()
                     </a>
                   </li>
                   <li>
-                    <RouterLink to="/profile/addresses" class="dropdown-item py-2 text-white" href="#">
+                    <RouterLink
+                      to="/profile/addresses"
+                      class="dropdown-item py-2 text-white"
+                      href="#"
+                    >
                       <i class="fs-5 bi bi-geo-alt"></i>
                       <span class="ms-2 d-none d-sm-inline">Endereços</span>
                     </RouterLink>

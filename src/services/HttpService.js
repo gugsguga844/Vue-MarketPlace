@@ -307,7 +307,7 @@ export async function getCart(token) {
 
 export async function createCart(token) {
   try {
-    const response = await api.post('/cart', {
+    const response = await api.post('/cart', null, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -502,7 +502,7 @@ export async function createOrder(token, payload) {
     return error
   }
 }
-  
-  
+
+
 
 

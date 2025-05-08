@@ -13,10 +13,16 @@ export const useCartStore = defineStore(
     async function saveCart() {
       const result = await getCart(auth.token)
 
+      console.log(result.status)
       if (result.status === 200) {
         cart.value = result.data
-      } else {
-        createNewCart()
+      }
+
+      if (result.status === 404) {
+        console.log('ó o token', auth.token)
+        const result = await createCart(auth.token)
+        console.log(result.status)
+        cart.value = result.data
       }
     }
 

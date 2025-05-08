@@ -102,7 +102,7 @@ async function removeCartItems() {
       <template v-else>
         <template v-for="item in (cart.cartItems && cart.cartItems.items ? cart.cartItems.items : [])" :key="item.product_id">
           <div class="d-flex border-2 border-dark-subtle py-3 px-2 mb-3 rounded-3">
-            <div class="cartImage">
+            <div class="cartImage mr-2">
               <img :src="imageStore.imageURL(item.image_path)" alt="">
             </div>
             <div class="cartInfo d-flex flex-column align-items-start justify-content-between gap-3">

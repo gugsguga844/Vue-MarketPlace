@@ -11,6 +11,7 @@ export const useDiscountStore = defineStore(
     const auth = useAuthStore()
 
     async function saveDiscounts() {
+      console.log('Token: ', auth.token)
       const apiResult = await getDiscounts(auth.token)
       discounts.value = apiResult
     }

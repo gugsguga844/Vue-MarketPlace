@@ -23,7 +23,6 @@ const divide = computed(() => {
 onMounted(() => {
   const id = route.params.id
   productData.saveProduct(id)
-  console.log('Produto com categoria: ', productData.product.data.category.name)
 })
 </script>
 

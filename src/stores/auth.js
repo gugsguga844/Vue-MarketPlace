@@ -21,6 +21,7 @@ export const useAuthStore = defineStore(
     })
 
     function saveUser(result) {
+      console.log('Token do login: ', result.token)
       user.value = result.user
       isAuthenticated.value = true
       token.value = result.token
